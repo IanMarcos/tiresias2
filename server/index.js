@@ -1,5 +1,6 @@
 const cors = require('cors');
 const express = require('express');
+const configDB = require('../db');
 
 class Server {
 
@@ -22,6 +23,9 @@ class Server {
     //Middlewares
     this.#middlewares();
     this.#routes();
+
+    //Configure de Data Base
+    configDB();
   }
 
   #middlewares() {
