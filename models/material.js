@@ -19,7 +19,7 @@ class Material extends Model {
             modelClass: PersonaMaterial,
             from: 'PersonaMaterial.material_id',
             to: 'PersonaMaterial.persona_id',
-            extra: {funcion: 'funcion_id'}
+            extra: {rol: 'rol_persona_id'}
           },
           to: 'Persona.id'
         }

@@ -7,6 +7,7 @@ const router = Router();
 
 router.get('/', [
   body('searchTerm', 'El término de búsqueda es obligatorio').notEmpty(),
+  body('searchTerm', 'El término de búsqueda es muy largo').isLength({min: 3, max: 100}),
   validateResults
 ], searchMaterialsAndAuthors);
 

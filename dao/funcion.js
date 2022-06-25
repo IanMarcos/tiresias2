@@ -1,8 +1,8 @@
-const Funcion = require('../models/funcion');
+const RolPersona = require('../models/rol-persona');
 
 const getAuthorId = async() => {
   try {
-    const authorId = await Funcion.query()
+    const authorId = await RolPersona.query()
       .where('nombre', 'Autor');
     return authorId[0].id;
   } catch (error) {
