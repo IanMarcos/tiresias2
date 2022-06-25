@@ -1,7 +1,7 @@
 const { Model } = require('objection');
 
 class RolPersona extends Model {
-  static get tableName(){
+  static get tableName() {
     return 'RolPersona';
   }
 }

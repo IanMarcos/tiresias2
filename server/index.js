@@ -1,36 +1,37 @@
+/* eslint-disable global-require */
 const cors = require('cors');
 const express = require('express');
 const configDB = require('../db');
 
 class Server {
-
   #app;
+
   #paths;
+
   #port;
 
   constructor(port) {
-    //Variables de clase
+    // Variables de clase
     this.#port = port;
     this.#paths = {
       auth: '/auth',
       search: '/search',
-      users: '/users'
+      users: '/users',
     };
 
-    //Creación del servidor de express con socket.io
     this.#app = express();
 
-    //Middlewares
+    // Middlewares
     this.#middlewares();
     this.#routes();
 
-    //Configure de Data Base
+    // Configure de Data Base
     configDB();
   }
 
   #middlewares() {
     this.#app.use(cors());
-    //Lectura y Parsing de JSON en el body
+    // Lectura y Parsing de JSON en el body
     this.#app.use(express.json());
   }
 

@@ -1,7 +1,7 @@
 const { raw } = require('objection');
 const Material = require('../models/material');
 
-const search = async({ searchTerm, limit, page }) => {
+const search = async ({ searchTerm, limit, page }) => {
   try {
     const materials = await Material.query()
       .withGraphFetched('personas')
@@ -9,16 +9,14 @@ const search = async({ searchTerm, limit, page }) => {
       .innerJoin('Editorial', 'Material.editorial_id', 'Editorial.id')
       .where(raw(`MATCH(titulo) AGAINST ('${searchTerm}' IN NATURAL LANGUAGE MODE)`))
       .limit(limit)
-      .offset(limit*page);
+      .offset(limit * page);
 
     return materials;
-
   } catch (error) {
-    return {err: 'Error 50001'};
+    return { err: 'Error 50001' };
   }
-}
-
-module.exports = {
-  search
 };
 
+module.exports = {
+  search,
+};

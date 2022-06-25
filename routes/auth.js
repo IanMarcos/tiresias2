@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { body } = require('express-validator');
+// const { body } = require('express-validator');
 // const {  } = require('./../controllers/auth');
 // const { validateResults, validateJWT } = require('./../middlewares');
 

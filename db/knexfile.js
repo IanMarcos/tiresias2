@@ -9,14 +9,14 @@ module.exports = {
   connection: {
     database: process.env.TIRESIAS_DB_NAME,
     user: process.env.TIRESIAS_DB_USER,
-    password: process.env.TIRESIAS_DB_PASSWORD
+    password: process.env.TIRESIAS_DB_PASSWORD,
   },
   pool: {
     min: 2,
-    max: 10
+    max: 10,
   },
   migrations: {
-    tableName: 'knex_migrations'
+    tableName: 'knex_migrations',
   },
-  ...knexSnakeCaseMappers
+  ...knexSnakeCaseMappers,
 };
