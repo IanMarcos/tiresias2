@@ -1,9 +1,13 @@
 /* eslint-disable global-require */
-const { Model } = require('objection');
+const { Model, snakeCaseMappers } = require('objection');
 
 class Material extends Model {
   static get tableName() {
     return 'Material';
+  }
+
+  static get columnNameMappers() {
+    return snakeCaseMappers();
   }
 
   static get relationMappings() {

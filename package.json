@@ -1,6 +1,6 @@
 {
   "name": "tiresias",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Backend para el repositorio de materiales bibliográfico para personas con discapacidad visual",
   "main": "index.js",
   "scripts": {

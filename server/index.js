@@ -15,6 +15,7 @@ class Server {
     this.#port = port;
     this.#paths = {
       auth: '/auth',
+      materials: '/materials',
       search: '/search',
       users: '/users',
     };
@@ -37,6 +38,7 @@ class Server {
 
   #routes() {
     this.#app.use(this.#paths.auth, require('../routes/auth'));
+    this.#app.use(this.#paths.materials, require('../routes/materials'));
     this.#app.use(this.#paths.search, require('../routes/search'));
     this.#app.use(this.#paths.users, require('../routes/users'));
   }

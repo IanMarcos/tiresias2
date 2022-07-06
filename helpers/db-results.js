@@ -8,9 +8,10 @@ const insertAuthors = (authorId, materials) => (
       }
       return false;
     });
-    material.autores = authors;
-    delete material.personas;
-    return material;
+    const updatedMat = material;
+    updatedMat.autores = authors;
+    delete updatedMat.personas;
+    return updatedMat;
   })
 );
 

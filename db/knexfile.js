@@ -1,5 +1,3 @@
-const { knexSnakeCaseMappers } = require('objection');
-
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
@@ -18,5 +16,4 @@ module.exports = {
   migrations: {
     tableName: 'knex_migrations',
   },
-  ...knexSnakeCaseMappers,
 };
