@@ -11,7 +11,7 @@ class UnifiedSearchService {
       if (materials.length !== 0) {
         // Objection no trae soporte para convertir la funcion_id de las personas a su respectivo
         // nombre. Se hace manualmente
-        const authorId = await RolPersonaDAO.getRoleAuthorId(RolPersona);
+        const authorId = await RolPersonaDAO.getRoleId(RolPersona, 'Autor');
         materials = insertAuthors(authorId, materials);
       }
 

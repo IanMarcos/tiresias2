@@ -1,4 +1,4 @@
-const { Model } = require('objection');
+const { Model, snakeCaseMappers } = require('objection');
 
 class PersonaMaterial extends Model {
   static get tableName() {
@@ -7,6 +7,10 @@ class PersonaMaterial extends Model {
 
   static get idColumn() {
     return ['persona_id', 'material_id'];
+  }
+
+  static get columnNameMappers() {
+    return snakeCaseMappers();
   }
 }
 

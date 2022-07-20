@@ -1,11 +1,42 @@
 // Middleware Customs
-const isValidYear = (value) => {
-  // Verifica que un material no pueda tener un año invalido asociado
+const isValidAuthors = (authors) => {
+  if (typeof authors !== 'string' && !Array.isArray(authors)) {
+    throw new Error('40003');
+  }
+
+  if (Array.isArray(authors) && authors.length === 0) {
+    throw new Error('40003');
+  }
+  return true;
+};
+
+const isValidYear = (year) => {
   const currentDate = new Date();
-  if (value > currentDate.getFullYear() || value < 0) {
+  if (year > currentDate.getFullYear() || year < 0) {
     throw new Error('40004');
   }
   return true;
+};
+
+const sanitizeAuthors = (req) => {
+  if (typeof req.body.authors === 'string') {
+    req.body.authors = [req.body.authors.trim()];
+    // next();
+  }
+
+  if (Array.isArray(req.body.authors)) {
+    req.body.authors.forEach((author) => author.trim());
+  }
+  // next();
+};
+
+const sanitizeContributors = (req) => {
+  if (typeof req.body.contributors === 'string') {
+    req.body.contributors = [req.body.contributors.trim()];
+    return;
+  }
+
+  req.body.contributors.forEach((contributor) => contributor.trim());
 };
 
 const sanitizeOptFields = (req, res, next) => {
@@ -22,7 +53,11 @@ const sanitizeOptFields = (req, res, next) => {
 
   // Formato de campos opcionales no incluidos en el body
   if (!edition) req.body.edition = '';
-  if (!contributors || !Array.isArray(contributors)) req.body.contributors = [];
+  if (contributors) {
+    sanitizeContributors(req);
+  } else {
+    req.body.contributors = [];
+  }
   if (!recipients) req.body.recipients = '';
   if (!categories || !Array.isArray(categories)) req.body.categories = [];
   if (!narrator) req.body.narrator = '';
@@ -30,15 +65,10 @@ const sanitizeOptFields = (req, res, next) => {
   if (!resume) req.body.resume = '';
   if (!productionState) req.body.productionState = 'Disponible';
 
-  return next();
+  next();
 };
 
-/** Validar con express-validator de la forma: body('campo').metodoX()
-*   hace que el campo 'campo' tenga que estar obligatoriamente en el body.
-*   Por esto se hace un middleware aparte que no será llamado en un .custom()
-*/
 const validateOptFields = (req, res, next) => {
-  // Gestión de campos opcionales
   const {
     edition,
     contributors,
@@ -54,8 +84,14 @@ const validateOptFields = (req, res, next) => {
     return res.status(400).json({ results: { err: '40004 (edition)' } });
   }
 
-  if (contributors && !Array.isArray(contributors)) {
-    return res.status(400).json({ results: { err: '40003 (contributors)' } });
+  if (contributors) {
+    if (typeof contributors !== 'string' && !Array.isArray(contributors)) {
+      return res.status(400).json({ results: { err: '40003 (contributors)' } });
+    }
+
+    if (Array.isArray(contributors) && contributors.length === 0) {
+      return res.status(400).json({ results: { err: '40003 (contributors)' } });
+    }
   }
 
   if (recipients && (typeof (recipients) !== 'string' || recipients.length() > 80)) {
@@ -70,8 +106,7 @@ const validateOptFields = (req, res, next) => {
     return res.status(400).json({ results: { err: '40004 (narrator)' } });
   }
 
-  // Se valida que la duración esté en formato HH:MM:SS
-  const timeFormat = /[0-9]?[0-9][0-9]:[0-5][0-9]:[0-5][0-9]$/; // TODO get out of here
+  const timeFormat = /[0-9]?[0-9][0-9]:[0-5][0-9]:[0-5][0-9]$/;
   if (duration && !timeFormat.test(duration)) {
     return res.status(400).json({ results: { err: '40003 (duration)' } });
   }
@@ -89,7 +124,9 @@ const validateOptFields = (req, res, next) => {
 };
 
 module.exports = {
+  isValidAuthors,
   isValidYear,
+  sanitizeAuthors,
   sanitizeOptFields,
   validateOptFields,
 };

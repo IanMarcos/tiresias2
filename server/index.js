@@ -11,8 +11,7 @@ class Server {
   #port;
 
   constructor(port) {
-    // Variables de clase
-    this.#port = port;
+    this.#port = port || 8080;
     this.#paths = {
       auth: '/auth',
       materials: '/materials',
@@ -21,18 +20,13 @@ class Server {
     };
 
     this.#app = express();
-
-    // Middlewares
     this.#middlewares();
     this.#routes();
-
-    // Configure de Data Base
     configDB();
   }
 
   #middlewares() {
     this.#app.use(cors());
-    // Lectura y Parsing de JSON en el body
     this.#app.use(express.json());
   }
 

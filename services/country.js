@@ -13,7 +13,7 @@ class CountryService {
   * @param {Object} args - Arguments to perform the queries.
   * @param {string} args.country - May be a name or a two characters code.
   */
-  async verifyCountry({ country }) {
+  async getCountryCode({ country }) {
     try {
       if (country.length === 2) {
         // Buscar por código

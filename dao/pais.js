@@ -1,4 +1,5 @@
 const Dao = require('./dao');
+const { extractSqlError } = require('../helpers/sql-helpers');
 
 class PaisDAO extends Dao {
   /**
@@ -14,7 +15,8 @@ class PaisDAO extends Dao {
       if (!country) return false;
       return true;
     } catch (error) {
-      throw new Error('EDA05');
+      const erroMsg = extractSqlError(error) || 'EDA05';
+      throw new Error(erroMsg);
     }
   }
 }

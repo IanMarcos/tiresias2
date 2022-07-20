@@ -14,7 +14,7 @@ class PublisherService {
   * @param {Object} args - Arguments to perform the queries.
   * @param {string} args.name - Name of the publisher to be searched/created.
   */
-  async verifyPublisher({ name }) { // TODO reconsider this name
+  async getPublisherId({ name }) { // TODO reconsider this name
     try {
       const publisher = await EditorialDAO.getByName(this.#modelInstance, { name, errCode: 'EDA04' });
       if (publisher) {

@@ -3,6 +3,7 @@ const CityService = require('./city');
 const CountryService = require('./country');
 const FormatService = require('./format');
 const MaterialService = require('./material');
+const PersonMaterialService = require('./person-material');
 const ProducerService = require('./producer');
 const ProductionStateService = require('./production-state');
 const PublisherService = require('./publisher');
@@ -13,6 +14,7 @@ module.exports = {
   CountryService,
   FormatService,
   MaterialService,
+  PersonMaterialService,
   ProducerService,
   ProductionStateService,
   PublisherService,

@@ -1,3 +1,5 @@
+const { extractSqlError } = require('../helpers/sql-helpers');
+
 class Dao {
   /**
   * Creates a new record in the given table and returns it's id.
@@ -10,7 +12,8 @@ class Dao {
     try {
       return await Model.query().insert({ nombre: name });
     } catch (error) {
-      throw new Error(errCode);
+      const erroMsg = extractSqlError(error) || errCode;
+      throw new Error(erroMsg);
     }
   }
 
@@ -27,7 +30,8 @@ class Dao {
         .where('nombre', name);
       return record;
     } catch (error) {
-      throw new Error(errCode);
+      const erroMsg = extractSqlError(error) || errCode;
+      throw new Error(erroMsg);
     }
   }
 }

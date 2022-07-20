@@ -19,7 +19,7 @@ class CityService {
   * @param {string} args.name - Name of the city to be searched/created.
   * @param {string} args.country - City's country. Can be a name or 2 characters code.
   */
-  async verifyCity({ name, country }) {
+  async getCityId({ name, country }) {
     const countryService = new CountryService(this.#countryModelInstance);
     try {
       const city = await CiudadDAO.getByName(this.#modelInstance, { name, errCode: 'EDA06' });
@@ -27,7 +27,7 @@ class CityService {
         return city.id;
       }
 
-      const countryCode = await countryService.verifyCountry({ country });
+      const countryCode = await countryService.getCountryCode({ country });
       const newCity = await CiudadDAO.create(this.#modelInstance, { name, countryCode });
       return newCity.id;
     } catch (error) {

@@ -1,5 +1,16 @@
+const { extractSqlError } = require('../helpers/sql-helpers');
+
 class PersonaMaterialDAO {
-  // Busca personas de acuerdo a un término de busqueda y a un rol
+  static async create(PersonaMaterial, { personId, materialId, roleId }) {
+    try {
+      return await PersonaMaterial.query()
+        .insert({ personaId: personId, materialId, rolPersonaId: roleId });
+    } catch (error) {
+      const erroMsg = extractSqlError(error) || 'EDA03';
+      throw new Error(erroMsg);
+    }
+  }
+
   static async searchPeopleByRol(PersonaMaterial, { searchTerm, personRol = 'Autor' }) {
     try {
       const people = await PersonaMaterial.query()
@@ -16,7 +27,8 @@ class PersonaMaterialDAO {
 
       return people;
     } catch (error) {
-      throw new Error('EDA03');
+      const erroMsg = extractSqlError(error) || 'EDA03';
+      throw new Error(erroMsg);
     }
   }
 }

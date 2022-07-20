@@ -1,4 +1,5 @@
 const Dao = require('./dao');
+const { extractSqlError } = require('../helpers/sql-helpers');
 
 class CiudadDAO extends Dao {
   /**
@@ -12,7 +13,8 @@ class CiudadDAO extends Dao {
     try {
       return await Ciudad.query().insert({ nombre: name, paisCodigo: countryCode });
     } catch (error) {
-      throw new Error('EDA06');
+      const erroMsg = extractSqlError(error) || 'EDA06';
+      throw new Error(erroMsg);
     }
   }
 }

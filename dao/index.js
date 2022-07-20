@@ -5,6 +5,7 @@ const EstadoProduccionDAO = require('./estado-produccion');
 const FormatoAccesibleDAO = require('./formato-accesible');
 const MaterialDAO = require('./material');
 const PaisDAO = require('./pais');
+const PersonaDAO = require('./persona');
 const PersonaMaterialDAO = require('./persona-material');
 const ProductoraDAO = require('./productora');
 const RolPersonaDAO = require('./rol-persona');
@@ -16,6 +17,7 @@ module.exports = {
   FormatoAccesibleDAO,
   MaterialDAO,
   PaisDAO,
+  PersonaDAO,
   PersonaMaterialDAO,
   ProductoraDAO,
   RolPersonaDAO,

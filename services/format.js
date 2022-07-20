@@ -13,7 +13,7 @@ class FormatService {
   * @param {Object} args - Arguments to perform the queries.
   * @param {string} args.name - Name of the format to be searched.
   */
-  async verifyFormat({ name }) {
+  async getFormatId({ name }) {
     try {
       const format = await FormatoAccesibleDAO
         .getByName(this.#modelInstance, { name, errCode: 'EDA07' });

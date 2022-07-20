@@ -13,7 +13,7 @@ class ProductionStateService {
   * @param {Object} args - Arguments to perform the queries.
   * @param {string} args.name - Name of the state to be searched.
   */
-  async verifyProductionState({ name }) {
+  async getProductionStateId({ name }) {
     try {
       const state = await EstadoProduccionDAO.getByName(this.#modelInstance, { name, errCode: 'EDA08' });
       if (state) {

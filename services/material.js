@@ -1,10 +1,11 @@
 const { transaction } = require('objection');
 const { MaterialDAO } = require('../dao');
 const {
-  Ciudad, Editorial, Material, Productora,
+  Ciudad, Editorial, Material, Productora, PersonaMaterial, Persona,
 } = require('../models');
 const {
-  CityService, FormatService, PublisherService, ProductionStateService, ProducerService,
+  CityService, FormatService, PublisherService, ProductionStateService,
+  ProducerService, PersonMaterialService,
 } = require('.');
 
 class MaterialService {
@@ -25,32 +26,41 @@ class MaterialService {
       materialData.urlArchivo = 'api.example/files/1234';
       // TODO Determine file size in MB
       materialData.tamañoFichero = 5;
+
       const results = await transaction(
         Material,
         Editorial,
         Ciudad,
         Productora,
+        Persona,
+        PersonaMaterial,
         async (
           MaterialModel,
           EditorialModel,
           CiudadModel,
           ProductoraModel,
+          PersonaModel,
+          PersonaMaterialModel,
         ) => {
           const formatService = new FormatService();
           const publisherService = new PublisherService(EditorialModel);
           const cityService = new CityService(CiudadModel);
           const producerService = new ProducerService(ProductoraModel);
           const productionStateService = new ProductionStateService();
+          const personMaterialService = new PersonMaterialService(
+            PersonaMaterialModel,
+            PersonaModel,
+          );
 
           // TODO Idioma
           materialData.idiomaCodigo = 'ES';
           const ids = await Promise.all([
-            formatService.verifyFormat({ name: req.format }),
-            publisherService.verifyPublisher({ name: req.publisher }),
-            cityService.verifyCity({ name: req.publishCity, country: req.publishCountry }),
-            cityService.verifyCity({ name: req.productionCity, country: req.productionCountry }),
-            producerService.verifyProducer({ name: req.producer }),
-            productionStateService.verifyProductionState({ name: req.productionState }),
+            formatService.getFormatId({ name: req.format }),
+            publisherService.getPublisherId({ name: req.publisher }),
+            cityService.getCityId({ name: req.publishCity, country: req.publishCountry }),
+            cityService.getCityId({ name: req.productionCity, country: req.productionCountry }),
+            producerService.getProducerId({ name: req.producer }),
+            productionStateService.getProductionStateId({ name: req.productionState }),
           ]);
 
           const [formatoAccesibleId, editorialId, ciudadPublicacionId, ciudadProduccionId,
@@ -67,7 +77,26 @@ class MaterialService {
           };
 
           const newMaterial = await MaterialDAO.create(MaterialModel, materialData);
-          // TODO Verifica/Guarda autores
+
+          await personMaterialService.joinPeopleToMaterialByRole({
+            peopleArray: req.authors,
+            materialId: newMaterial.id,
+            role: 'Autor',
+          });
+
+          await personMaterialService.joinPeopleToMaterialByRole({
+            peopleArray: req.contributors,
+            materialId: newMaterial.id,
+            role: 'Contribuidor',
+          });
+
+          if (req.narrator.length > 0) {
+            await personMaterialService.joinPeopleToMaterialByRole({
+              peopleArray: [req.narrator],
+              materialId: newMaterial.id,
+              role: 'Narrador',
+            });
+          }
           // TODO Verifica/Guarda categorias
           // TODO Log de la transacción
           return newMaterial;

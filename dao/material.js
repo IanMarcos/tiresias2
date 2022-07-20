@@ -1,12 +1,13 @@
 const { raw } = require('objection');
+const { extractSqlError } = require('../helpers/sql-helpers');
 
 class MaterialDAO {
   static async create(Material, materialData) {
     try {
       return await Material.query().insert(materialData);
     } catch (error) {
-      // TODO Pass down errors by constrains
-      throw new Error('EDA01');
+      const erroMsg = extractSqlError(error) || 'EDA01';
+      throw new Error(erroMsg);
     }
   }
 
@@ -22,7 +23,8 @@ class MaterialDAO {
 
       return materials;
     } catch (error) {
-      throw new Error('EDA01');
+      const erroMsg = extractSqlError(error) || 'EDA01';
+      throw new Error(erroMsg);
     }
   }
 }

@@ -14,7 +14,7 @@ class ProducerService {
   * @param {Object} args - Arguments to perform the queries.
   * @param {string} args.name - Name of the producer to be searched/created.
   */
-  async verifyProducer({ name }) {
+  async getProducerId({ name }) {
     try {
       const producer = await ProductoraDAO.getByName(this.#modelInstance, { name, errCode: 'EDA04' });
       if (producer) {
