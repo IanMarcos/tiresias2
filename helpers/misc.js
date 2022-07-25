@@ -1,3 +1,9 @@
+const convertBytesToMB = (bytes) => bytes / 1024 ** 2;
+
+const getFileFormatFromMimetype = (mimetype) => (
+  mimetype.split('/')[1]
+);
+
 const splitPersonNames = (person) => {
   let [lastName, names] = person.split(',');
   lastName = lastName.trim().toUpperCase();
@@ -6,5 +12,7 @@ const splitPersonNames = (person) => {
 };
 
 module.exports = {
+  convertBytesToMB,
+  getFileFormatFromMimetype,
   splitPersonNames,
 };

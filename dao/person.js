@@ -1,19 +1,19 @@
 const Dao = require('./dao');
 const { extractSqlError } = require('../helpers/sql-helpers');
 
-class PersonaDAO extends Dao {
-  static async create(PersonaModel, { names, lastName }) {
+class PersonDAO extends Dao {
+  static async create(PersonModel, { names, lastName }) {
     try {
-      return await PersonaModel.query().insert({ apellido: lastName, nombres: names });
+      return await PersonModel.query().insert({ apellido: lastName, nombres: names });
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);
     }
   }
 
-  static async getByName(PersonaModel, { names, lastName }) {
+  static async getByName(PersonModel, { names, lastName }) {
     try {
-      const [person] = await PersonaModel.query()
+      const [person] = await PersonModel.query()
         .where('nombres', names)
         .where('apellido', lastName);
       return person;
@@ -24,4 +24,4 @@ class PersonaDAO extends Dao {
   }
 }
 
-module.exports = PersonaDAO;
+module.exports = PersonDAO;

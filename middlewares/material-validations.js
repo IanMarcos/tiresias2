@@ -1,4 +1,13 @@
+const { convertBytesToMB, getFileFormatFromMimetype } = require('../helpers/misc');
+
 // Middleware Customs
+const fileNotEmpty = (req, res, next) => {
+  if (!req.file) {
+    return res.status(400).json({ results: { err: '40001 (materialFile)' } });
+  }
+  return next();
+};
+
 const isValidAuthors = (authors) => {
   if (typeof authors !== 'string' && !Array.isArray(authors)) {
     throw new Error('40003');
@@ -19,30 +28,34 @@ const isValidYear = (year) => {
 };
 
 const sanitizeAuthors = (req) => {
-  if (typeof req.body.authors === 'string') {
-    req.body.authors = [req.body.authors.trim()];
+  if (typeof req.body.author === 'string') {
+    req.body.authors = [req.body.author.trim()];
+    delete req.body.author;
     // next();
   }
 
-  if (Array.isArray(req.body.authors)) {
-    req.body.authors.forEach((author) => author.trim());
+  if (Array.isArray(req.body.author)) {
+    req.body.authors = req.body.author.map((author) => author.trim());
+    delete req.body.author;
   }
   // next();
 };
 
 const sanitizeContributors = (req) => {
-  if (typeof req.body.contributors === 'string') {
-    req.body.contributors = [req.body.contributors.trim()];
+  if (typeof req.body.contributor === 'string') {
+    req.body.contributors = [req.body.contributor.trim()];
+    delete req.body.contributor;
     return;
   }
 
-  req.body.contributors.forEach((contributor) => contributor.trim());
+  req.body.contributors = req.body.contributor.map((contributor) => contributor.trim());
+  delete req.body.contributor;
 };
 
 const sanitizeOptFields = (req, res, next) => {
   const {
     edition,
-    contributors,
+    contributor,
     recipients,
     categories,
     narrator,
@@ -51,9 +64,8 @@ const sanitizeOptFields = (req, res, next) => {
     productionState,
   } = req.body;
 
-  // Formato de campos opcionales no incluidos en el body
   if (!edition) req.body.edition = '';
-  if (contributors) {
+  if (contributor) {
     sanitizeContributors(req);
   } else {
     req.body.contributors = [];
@@ -65,7 +77,26 @@ const sanitizeOptFields = (req, res, next) => {
   if (!resume) req.body.resume = '';
   if (!productionState) req.body.productionState = 'Disponible';
 
+  req.body.fileSize = convertBytesToMB(req.file.size);
+
   next();
+};
+
+const validateFiles = (req, res, next) => {
+  if (!req.file) {
+    next();
+  }
+
+  if (req.file.path.includes('\\')) {
+    req.file.path = req.file.path.replace('\\', '/');
+  }
+
+  const validFormats = ['docx', 'pdf'];
+
+  if (!validFormats.includes(getFileFormatFromMimetype(req.file.mimetype))) {
+    return res.status(400).json({ results: { err: '40003 (materialFile)' } });
+  }
+  return next();
 };
 
 const validateOptFields = (req, res, next) => {
@@ -124,9 +155,11 @@ const validateOptFields = (req, res, next) => {
 };
 
 module.exports = {
+  fileNotEmpty,
   isValidAuthors,
   isValidYear,
   sanitizeAuthors,
   sanitizeOptFields,
+  validateFiles,
   validateOptFields,
 };

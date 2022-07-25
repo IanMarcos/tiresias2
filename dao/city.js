@@ -1,17 +1,17 @@
 const Dao = require('./dao');
 const { extractSqlError } = require('../helpers/sql-helpers');
 
-class CiudadDAO extends Dao {
+class CityDAO extends Dao {
   /**
   * Creates a new record in the given table and returns it's id.
-  * @param {Model} Ciudad - Instance of objection.js model for 'Ciudad'.
+  * @param {Model} City - Instance of objection.js model for 'Ciudad'.
   * @param {Object} args - Arguments to perform the queries.
   * @param {string} args.name - Name of the entity to be created.
   * @param {string} args.countryCode - Country's two character code.
   */
-  static async create(Ciudad, { name, countryCode }) {
+  static async create(City, { name, countryCode }) {
     try {
-      return await Ciudad.query().insert({ nombre: name, paisCodigo: countryCode });
+      return await City.query().insert({ nombre: name, paisCodigo: countryCode });
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA06';
       throw new Error(erroMsg);
@@ -19,4 +19,4 @@ class CiudadDAO extends Dao {
   }
 }
 
-module.exports = CiudadDAO;
+module.exports = CityDAO;

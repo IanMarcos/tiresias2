@@ -1,11 +1,11 @@
-const { Editorial } = require('../models');
-const { EditorialDAO } = require('../dao');
+const { Publisher } = require('../models');
+const { PublisherDAO } = require('../dao');
 
 class PublisherService {
   #modelInstance;
 
-  constructor(EditorialInstance = Editorial) {
-    this.#modelInstance = EditorialInstance;
+  constructor(publisherInstance = Publisher) {
+    this.#modelInstance = publisherInstance;
   }
 
   /**
@@ -16,12 +16,12 @@ class PublisherService {
   */
   async getPublisherId({ name }) { // TODO reconsider this name
     try {
-      const publisher = await EditorialDAO.getByName(this.#modelInstance, { name, errCode: 'EDA04' });
+      const publisher = await PublisherDAO.getByName(this.#modelInstance, { name, errCode: 'EDA04' });
       if (publisher) {
         return publisher.id;
       }
 
-      const newPublisher = await EditorialDAO.create(this.#modelInstance, { name, errCode: 'EDA04' });
+      const newPublisher = await PublisherDAO.create(this.#modelInstance, { name, errCode: 'EDA04' });
       return newPublisher.id;
     } catch (error) {
       throw new Error(error.message);

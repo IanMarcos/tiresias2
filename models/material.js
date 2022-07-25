@@ -11,17 +11,17 @@ class Material extends Model {
   }
 
   static get relationMappings() {
-    const Persona = require('./persona');
-    const PersonaMaterial = require('./persona-material');
+    const Person = require('./person');
+    const PersonMaterial = require('./person-material');
 
     return {
       personas: {
         relation: Model.ManyToManyRelation,
-        modelClass: Persona,
+        modelClass: Person,
         join: {
           from: 'Material.id',
           through: {
-            modelClass: PersonaMaterial,
+            modelClass: PersonMaterial,
             from: 'PersonaMaterial.material_id',
             to: 'PersonaMaterial.persona_id',
             extra: { rol: 'rol_persona_id' },

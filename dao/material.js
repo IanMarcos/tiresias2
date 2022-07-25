@@ -2,6 +2,7 @@ const { raw } = require('objection');
 const { extractSqlError } = require('../helpers/sql-helpers');
 
 class MaterialDAO {
+  // TODO document this class
   static async create(Material, materialData) {
     try {
       return await Material.query().insert(materialData);

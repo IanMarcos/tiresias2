@@ -1,11 +1,11 @@
-const { Productora } = require('../models');
-const { ProductoraDAO } = require('../dao');
+const { Producer } = require('../models');
+const { ProducerDAO } = require('../dao');
 
 class ProducerService {
   #modelInstance;
 
-  constructor(ProductoraInstance = Productora) {
-    this.#modelInstance = ProductoraInstance;
+  constructor(producerInstance = Producer) {
+    this.#modelInstance = producerInstance;
   }
 
   /**
@@ -16,11 +16,11 @@ class ProducerService {
   */
   async getProducerId({ name }) {
     try {
-      const producer = await ProductoraDAO.getByName(this.#modelInstance, { name, errCode: 'EDA04' });
+      const producer = await ProducerDAO.getByName(this.#modelInstance, { name, errCode: 'EDA04' });
       if (producer) {
         return producer.id;
       }
-      const newProducer = await ProductoraDAO.create(this.#modelInstance, { name, errCode: 'EDA04' });
+      const newProducer = await ProducerDAO.create(this.#modelInstance, { name, errCode: 'EDA04' });
       return newProducer.id;
     } catch (error) {
       throw new Error(error.message);

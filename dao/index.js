@@ -1,24 +1,25 @@
-// Archivo para tener importaciónes más limpias
-const CiudadDAO = require('./ciudad');
-const EditorialDAO = require('./editorial');
-const EstadoProduccionDAO = require('./estado-produccion');
-const FormatoAccesibleDAO = require('./formato-accesible');
+const AccesibleFormatDAO = require('./accesible-format');
+const CityDAO = require('./city');
+const CountryDAO = require('./country');
+const LanguageDAO = require('./language');
 const MaterialDAO = require('./material');
-const PaisDAO = require('./pais');
-const PersonaDAO = require('./persona');
-const PersonaMaterialDAO = require('./persona-material');
-const ProductoraDAO = require('./productora');
-const RolPersonaDAO = require('./rol-persona');
+const PersonDAO = require('./person');
+const PersonMaterialDAO = require('./person-material');
+const PersonRoleDAO = require('./person-role');
+const ProducerDAO = require('./producer');
+const ProductionStateDAO = require('./production-state');
+const PublisherDAO = require('./publisher');
 
 module.exports = {
-  CiudadDAO,
-  EditorialDAO,
-  EstadoProduccionDAO,
-  FormatoAccesibleDAO,
+  AccesibleFormatDAO,
+  CityDAO,
+  CountryDAO,
+  LanguageDAO,
   MaterialDAO,
-  PaisDAO,
-  PersonaDAO,
-  PersonaMaterialDAO,
-  ProductoraDAO,
-  RolPersonaDAO,
+  PersonDAO,
+  PersonMaterialDAO,
+  PersonRoleDAO,
+  ProducerDAO,
+  ProductionStateDAO,
+  PublisherDAO,
 };

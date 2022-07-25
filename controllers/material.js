@@ -12,7 +12,7 @@ const createMaterial = async (req, res) => {
    * Para replicar el error ejecute sanitizeAuthors en la lista de middlewares de la ruta y
    * asegurese de mandar un único autor. Si sanitizeAuthors está en los middleware pero se mandan
    * varios autores todo funciona normal. Si se ejecuta aquí no habrá errores independiente
-   * de la cantidad de autores. El error nunca ocurra con los colaboradores...
+   * de la cantidad de autores. El error nunca ocurre con los colaboradores...
    */
   sanitizeAuthors(req);
 

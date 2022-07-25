@@ -1,11 +1,11 @@
-const { EstadoProduccion } = require('../models');
-const { EstadoProduccionDAO } = require('../dao');
+const { ProductionState } = require('../models');
+const { ProductionStateDAO } = require('../dao');
 
 class ProductionStateService {
   #modelInstance;
 
-  constructor(EstadoProduccionInstance = EstadoProduccion) {
-    this.#modelInstance = EstadoProduccionInstance;
+  constructor(productioStateInstance = ProductionState) {
+    this.#modelInstance = productioStateInstance;
   }
 
   /**
@@ -15,7 +15,7 @@ class ProductionStateService {
   */
   async getProductionStateId({ name }) {
     try {
-      const state = await EstadoProduccionDAO.getByName(this.#modelInstance, { name, errCode: 'EDA08' });
+      const state = await ProductionStateDAO.getByName(this.#modelInstance, { name, errCode: 'EDA08' });
       if (state) {
         return state.id;
       }

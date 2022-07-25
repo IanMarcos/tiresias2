@@ -1,9 +1,9 @@
 const { Model } = require('objection');
 
-class EstadoProduccion extends Model {
+class ProductionState extends Model {
   static get tableName() {
     return 'EstadoProduccion';
   }
 }
 
-module.exports = EstadoProduccion;
+module.exports = ProductionState;

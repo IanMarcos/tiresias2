@@ -1,11 +1,11 @@
 const { transaction } = require('objection');
 const { MaterialDAO } = require('../dao');
 const {
-  Ciudad, Editorial, Material, Productora, PersonaMaterial, Persona,
+  City, Publisher, Material, Producer, PersonMaterial, Person,
 } = require('../models');
 const {
   CityService, FormatService, PublisherService, ProductionStateService,
-  ProducerService, PersonMaterialService,
+  ProducerService, PersonMaterialService, LanguageService,
 } = require('.');
 
 class MaterialService {
@@ -18,43 +18,42 @@ class MaterialService {
       añoProduccion: req.productionYear,
       destinatarios: req.recipients,
       duracion: req.duration,
+      tamañoFichero: req.fileSize,
       resumen: req.resume,
     };
 
     try {
       // TODO Save file in storage
       materialData.urlArchivo = 'api.example/files/1234';
-      // TODO Determine file size in MB
-      materialData.tamañoFichero = 5;
 
       const results = await transaction(
+        City,
         Material,
-        Editorial,
-        Ciudad,
-        Productora,
-        Persona,
-        PersonaMaterial,
+        Person,
+        PersonMaterial,
+        Producer,
+        Publisher,
         async (
+          CityModel,
           MaterialModel,
-          EditorialModel,
-          CiudadModel,
-          ProductoraModel,
-          PersonaModel,
-          PersonaMaterialModel,
+          PersonModel,
+          PersonMaterialModel,
+          ProducerModel,
+          PublisherModel,
         ) => {
+          const cityService = new CityService(CityModel);
           const formatService = new FormatService();
-          const publisherService = new PublisherService(EditorialModel);
-          const cityService = new CityService(CiudadModel);
-          const producerService = new ProducerService(ProductoraModel);
+          const languageService = new LanguageService();
+          const producerService = new ProducerService(ProducerModel);
           const productionStateService = new ProductionStateService();
+          const publisherService = new PublisherService(PublisherModel);
           const personMaterialService = new PersonMaterialService(
-            PersonaMaterialModel,
-            PersonaModel,
+            PersonMaterialModel,
+            PersonModel,
           );
 
-          // TODO Idioma
-          materialData.idiomaCodigo = 'ES';
           const ids = await Promise.all([
+            languageService.getLanguageCode({ language: req.language }),
             formatService.getFormatId({ name: req.format }),
             publisherService.getPublisherId({ name: req.publisher }),
             cityService.getCityId({ name: req.publishCity, country: req.publishCountry }),
@@ -63,11 +62,12 @@ class MaterialService {
             productionStateService.getProductionStateId({ name: req.productionState }),
           ]);
 
-          const [formatoAccesibleId, editorialId, ciudadPublicacionId, ciudadProduccionId,
-            productoraId, estadoProduccionId] = ids;
+          const [idiomaCodigo, formatoAccesibleId, editorialId, ciudadPublicacionId,
+            ciudadProduccionId, productoraId, estadoProduccionId] = ids;
 
           materialData = {
             ...materialData,
+            idiomaCodigo,
             formatoAccesibleId,
             editorialId,
             ciudadPublicacionId,

@@ -1,24 +1,25 @@
-// Archivo para tener importaciónes más limpias
-const Ciudad = require('./ciudad');
-const Editorial = require('./editorial');
-const EstadoProduccion = require('./estado-produccion');
-const FormatoAccesible = require('./formato-accesible');
+const AccesibleFormat = require('./accesible-format');
+const City = require('./city');
+const Country = require('./country');
+const Language = require('./language');
 const Material = require('./material');
-const Pais = require('./pais');
-const Persona = require('./persona');
-const PersonaMaterial = require('./persona-material');
-const Productora = require('./productora');
-const RolPersona = require('./rol-persona');
+const Person = require('./person');
+const PersonMaterial = require('./person-material');
+const PersonRole = require('./person-role');
+const Producer = require('./producer');
+const ProductionState = require('./production-state');
+const Publisher = require('./publisher');
 
 module.exports = {
-  Ciudad,
-  Editorial,
-  EstadoProduccion,
-  FormatoAccesible,
+  AccesibleFormat,
+  City,
+  Country,
+  Language,
   Material,
-  Pais,
-  Persona,
-  PersonaMaterial,
-  Productora,
-  RolPersona,
+  Person,
+  PersonMaterial,
+  PersonRole,
+  Producer,
+  ProductionState,
+  Publisher,
 };

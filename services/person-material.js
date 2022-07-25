@@ -1,5 +1,5 @@
-const { Persona, PersonaMaterial, RolPersona } = require('../models');
-const { PersonaDAO, PersonaMaterialDAO, RolPersonaDAO } = require('../dao');
+const { Person, PersonMaterial, PersonRole } = require('../models');
+const { PersonDAO, PersonMaterialDAO, PersonRoleDAO } = require('../dao');
 const { splitPersonNames } = require('../helpers/misc');
 
 class PersonMaterialService {
@@ -7,9 +7,9 @@ class PersonMaterialService {
 
   #personModelInstance;
 
-  constructor(PersonaMaterialInstance = PersonaMaterial, PersonaInstance = Persona) {
-    this.#modelInstance = PersonaMaterialInstance;
-    this.#personModelInstance = PersonaInstance;
+  constructor(personMaterialInstance = PersonMaterial, personInstance = Person) {
+    this.#modelInstance = personMaterialInstance;
+    this.#personModelInstance = personInstance;
   }
 
   // TODO update this
@@ -25,7 +25,7 @@ class PersonMaterialService {
       const { lastName, names } = splitPersonNames(person);
 
       try {
-        const foundPerson = await PersonaDAO.getByName(
+        const foundPerson = await PersonDAO.getByName(
           this.#personModelInstance,
           { names, lastName },
         );
@@ -50,7 +50,7 @@ class PersonMaterialService {
       const { lastName, names } = splitPersonNames(person);
 
       try {
-        const newPer = await PersonaDAO.create(this.#personModelInstance, { names, lastName });
+        const newPer = await PersonDAO.create(this.#personModelInstance, { names, lastName });
         return newPer.id;
       } catch (error) {
         return null;
@@ -59,11 +59,11 @@ class PersonMaterialService {
 
     if (peopleIds.includes(null)) throw new Error('EDA09');
 
-    const roleId = await RolPersonaDAO.getRoleId(RolPersona, role);
+    const roleId = await PersonRoleDAO.getRoleId(PersonRole, role);
 
     const results = await Promise.all(peopleIds.map(async (personId) => {
       try {
-        return await PersonaMaterialDAO.create(
+        return await PersonMaterialDAO.create(
           this.#modelInstance,
           { personId, materialId, roleId },
         );

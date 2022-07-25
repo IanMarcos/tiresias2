@@ -1,20 +1,19 @@
 /* eslint-disable no-param-reassign */
-const insertAuthors = (authorId, materials) => (
-  materials.map((material) => {
+const replacePropertyPersonasWithAutores = (authorRoleId, materials) => (
+  materials.forEach((material) => {
     const authors = material.personas.filter((persona) => {
-      if (persona.rol === authorId) {
+      if (persona.rol === authorRoleId) {
         delete persona.rol;
         return true;
       }
       return false;
     });
-    const updatedMat = material;
-    updatedMat.autores = authors;
-    delete updatedMat.personas;
-    return updatedMat;
+
+    material.autores = authors;
+    delete material.personas;
   })
 );
 
 module.exports = {
-  insertAuthors,
+  replacePropertyPersonasWithAutores,
 };

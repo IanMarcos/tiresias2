@@ -1,6 +1,6 @@
 const { Model, snakeCaseMappers } = require('objection');
 
-class Ciudad extends Model {
+class City extends Model {
   static get tableName() {
     return 'Ciudad';
   }
@@ -10,4 +10,4 @@ class Ciudad extends Model {
   }
 }
 
-module.exports = Ciudad;
+module.exports = City;

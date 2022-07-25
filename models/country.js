@@ -1,9 +1,9 @@
 const { Model } = require('objection');
 
-class Pais extends Model {
+class Country extends Model {
   static get tableName() {
     return 'Pais';
   }
 }
 
-module.exports = Pais;
+module.exports = Country;

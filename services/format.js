@@ -1,11 +1,11 @@
-const { FormatoAccesible } = require('../models');
-const { FormatoAccesibleDAO } = require('../dao');
+const { AccesibleFormat } = require('../models');
+const { AccesibleFormatDAO } = require('../dao');
 
 class FormatService {
   #modelInstance;
 
-  constructor(FormatoAccesibleInstance = FormatoAccesible) {
-    this.#modelInstance = FormatoAccesibleInstance;
+  constructor(accesibleFormatInstance = AccesibleFormat) {
+    this.#modelInstance = accesibleFormatInstance;
   }
 
   /**
@@ -15,7 +15,7 @@ class FormatService {
   */
   async getFormatId({ name }) {
     try {
-      const format = await FormatoAccesibleDAO
+      const format = await AccesibleFormatDAO
         .getByName(this.#modelInstance, { name, errCode: 'EDA07' });
 
       if (format) return format.id;

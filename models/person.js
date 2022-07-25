@@ -1,14 +1,14 @@
 /* eslint-disable global-require */
 const { Model } = require('objection');
 
-class Persona extends Model {
+class Person extends Model {
   static get tableName() {
     return 'Persona';
   }
 
   static get relationMappings() {
     const Material = require('./material');
-    const PersonaMaterial = require('./persona-material');
+    const PersonMaterial = require('./person-material');
 
     return {
       materiales: {
@@ -17,7 +17,7 @@ class Persona extends Model {
         join: {
           from: 'Persona.id',
           through: {
-            modelClass: PersonaMaterial,
+            modelClass: PersonMaterial,
             from: 'PersonaMaterial.persona_id',
             to: 'PersonaMaterial.material_id',
             extra: { funcion: 'funcion_id' },
@@ -28,4 +28,4 @@ class Persona extends Model {
     };
   }
 }
-module.exports = Persona;
+module.exports = Person;

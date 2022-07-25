@@ -1,9 +1,9 @@
 const { Model } = require('objection');
 
-class Productora extends Model {
+class Producer extends Model {
   static get tableName() {
     return 'Productora';
   }
 }
 
-module.exports = Productora;
+module.exports = Producer;

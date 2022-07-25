@@ -1,24 +1,24 @@
 const Dao = require('./dao');
 const { extractSqlError } = require('../helpers/sql-helpers');
 
-class PaisDAO extends Dao {
+class LanguageDAO extends Dao {
   /**
   * Checks if the provided country exist in the data base.
-  * @param {Model} Model - Instance of objection.js model for 'Pais'.
+  * @param {Model} Language - Instance of objection.js model for 'Idioma'.
   * @param {Object} args - Arguments to perform the queries.
   * @param {string} args.code - Country's two character code.
   */
-  static async doesExist(Pais, { code }) {
+  static async doesExist(Language, { code }) {
     try {
-      const [country] = await Pais.query()
+      const [country] = await Language.query()
         .where('codigo', code);
       if (!country) return false;
       return true;
     } catch (error) {
-      const erroMsg = extractSqlError(error) || 'EDA05';
+      const erroMsg = extractSqlError(error) || 'EDA10';
       throw new Error(erroMsg);
     }
   }
 }
 
-module.exports = PaisDAO;
+module.exports = LanguageDAO;

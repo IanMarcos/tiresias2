@@ -2,6 +2,7 @@
 const cors = require('cors');
 const express = require('express');
 const configDB = require('../db');
+const { startUnusedFilesCleaner } = require('./config');
 
 class Server {
   #app;
@@ -23,6 +24,7 @@ class Server {
     this.#middlewares();
     this.#routes();
     configDB();
+    startUnusedFilesCleaner('uploads');
   }
 
   #middlewares() {

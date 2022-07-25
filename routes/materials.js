@@ -1,24 +1,25 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
 const { createMaterial } = require('../controllers/material');
-const { getMulterMiddleware } = require('../middlewares/multer');
+const { uploadFile } = require('../middlewares/multer');
 const { validateResults } = require('../middlewares/fields-validator');
 const {
+  fileNotEmpty,
   isValidAuthors,
   isValidYear,
   sanitizeOptFields,
+  validateFiles,
   validateOptFields,
 } = require('../middlewares/material-validations');
 
 const router = Router();
-const upload = getMulterMiddleware();
 // POST Material
 router.post('/', [
-  upload.single('material'),
+  uploadFile,
   body('title', '40002').isLength({ min: 3, max: 80 }).trim(),
-  body('authors').custom(isValidAuthors),
+  body('author').custom(isValidAuthors),
   body('isbn', '40003').isNumeric().toInt(),
-  body('language', '40002').isLength({ min: 2, max: 2 }), // TODO Check this and countries
+  body('language', '40002').notEmpty().trim(),
   body('format', '40001').notEmpty().trim(),
   body('publisher', '40001').notEmpty().trim(),
   body('publishCity', '40001').notEmpty().trim(),
@@ -30,6 +31,8 @@ router.post('/', [
   body('productionCountry', '40001').notEmpty().trim(),
   body('productionYear', '40003').isNumeric().toInt(),
   body('productionYear').custom(isValidYear),
+  fileNotEmpty,
+  validateFiles,
   validateResults,
   validateOptFields,
   // sanitizeAuthors,

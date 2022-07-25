@@ -1,9 +1,9 @@
 const { extractSqlError } = require('../helpers/sql-helpers');
 
-class PersonaMaterialDAO {
-  static async create(PersonaMaterial, { personId, materialId, roleId }) {
+class PersonMaterialDAO {
+  static async create(PersonMaterial, { personId, materialId, roleId }) {
     try {
-      return await PersonaMaterial.query()
+      return await PersonMaterial.query()
         .insert({ personaId: personId, materialId, rolPersonaId: roleId });
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA03';
@@ -11,9 +11,11 @@ class PersonaMaterialDAO {
     }
   }
 
-  static async searchPeopleByRol(PersonaMaterial, { searchTerm, personRol = 'Autor' }) {
+  // TODO document this class and rename personRol
+
+  static async searchPeopleByRol(PersonMaterial, { searchTerm, personRol = 'Autor' }) {
     try {
-      const people = await PersonaMaterial.query()
+      const people = await PersonMaterial.query()
         .select('persona_id', 'Persona.apellido', 'Persona.nombres')
         .join('Persona', 'Persona.id', 'PersonaMaterial.persona_id')
         .join('RolPersona', 'RolPersona.id', 'PersonaMaterial.rol_persona_id')
@@ -33,4 +35,4 @@ class PersonaMaterialDAO {
   }
 }
 
-module.exports = PersonaMaterialDAO;
+module.exports = PersonMaterialDAO;

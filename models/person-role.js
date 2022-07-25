@@ -1,9 +1,9 @@
 const { Model } = require('objection');
 
-class RolPersona extends Model {
+class PersonRole extends Model {
   static get tableName() {
     return 'RolPersona';
   }
 }
 
-module.exports = RolPersona;
+module.exports = PersonRole;

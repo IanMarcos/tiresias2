@@ -1,5 +1,5 @@
-const { Ciudad, Pais } = require('../models');
-const { CiudadDAO } = require('../dao');
+const { City, Country } = require('../models');
+const { CityDAO } = require('../dao');
 const CountryService = require('./country');
 
 class CityService {
@@ -7,9 +7,9 @@ class CityService {
 
   #countryModelInstance;
 
-  constructor(CiudadInstance = Ciudad, PaisInstance = Pais) {
-    this.#modelInstance = CiudadInstance;
-    this.#countryModelInstance = PaisInstance;
+  constructor(cityInstance = City, countryInstance = Country) {
+    this.#modelInstance = cityInstance;
+    this.#countryModelInstance = countryInstance;
   }
 
   /**
@@ -22,13 +22,13 @@ class CityService {
   async getCityId({ name, country }) {
     const countryService = new CountryService(this.#countryModelInstance);
     try {
-      const city = await CiudadDAO.getByName(this.#modelInstance, { name, errCode: 'EDA06' });
+      const city = await CityDAO.getByName(this.#modelInstance, { name, errCode: 'EDA06' });
       if (city) {
         return city.id;
       }
 
       const countryCode = await countryService.getCountryCode({ country });
-      const newCity = await CiudadDAO.create(this.#modelInstance, { name, countryCode });
+      const newCity = await CityDAO.create(this.#modelInstance, { name, countryCode });
       return newCity.id;
     } catch (error) {
       throw new Error(error.message);

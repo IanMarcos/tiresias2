@@ -1,12 +1,12 @@
 const { Model, snakeCaseMappers } = require('objection');
 
-class PersonaMaterial extends Model {
+class PersonMaterial extends Model {
   static get tableName() {
     return 'PersonaMaterial';
   }
 
   static get idColumn() {
-    return ['persona_id', 'material_id'];
+    return ['persona_id', 'material_id', 'rol_persona_id'];
   }
 
   static get columnNameMappers() {
@@ -14,4 +14,4 @@ class PersonaMaterial extends Model {
   }
 }
 
-module.exports = PersonaMaterial;
+module.exports = PersonMaterial;

@@ -1,11 +1,11 @@
-const { Pais } = require('../models');
-const { PaisDAO } = require('../dao');
+const { Country } = require('../models');
+const { CountryDAO } = require('../dao');
 
 class CountryService {
   #modelInstance;
 
-  constructor(PaisInstance = Pais) {
-    this.#modelInstance = PaisInstance;
+  constructor(countryInstance = Country) {
+    this.#modelInstance = countryInstance;
   }
 
   /**
@@ -17,13 +17,13 @@ class CountryService {
     try {
       if (country.length === 2) {
         // Buscar por código
-        const exists = await PaisDAO.doesExist(this.#modelInstance, { code: country });
+        const exists = await CountryDAO.doesExist(this.#modelInstance, { code: country });
         if (exists) {
           return country.toUpperCase();
         }
       } else {
         // Busca por nombre
-        const result = await PaisDAO.getByName(this.#modelInstance, { name: country, errCode: 'EDA05' });
+        const result = await CountryDAO.getByName(this.#modelInstance, { name: country, errCode: 'EDA05' });
         if (result) return result.codigo;
       }
       throw new Error('Pais no encontrado/404');

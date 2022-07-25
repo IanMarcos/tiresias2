@@ -1,9 +1,9 @@
 const { Model } = require('objection');
 
-class Editorial extends Model {
+class Publisher extends Model {
   static get tableName() {
     return 'Editorial';
   }
 }
 
-module.exports = Editorial;
+module.exports = Publisher;
