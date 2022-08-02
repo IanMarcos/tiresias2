@@ -107,6 +107,16 @@ class MaterialService {
       return { err: error.message };
     }
   }
+
+  static async deleteMaterial(id) {
+    try {
+      const result = await MaterialDAO.delete(Material, id);
+      if (result === 0) return { err: 'Material no encontrado' };
+      return {};
+    } catch (error) {
+      return { err: error.message };
+    }
+  }
 }
 
 module.exports = MaterialService;

@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
-const { createMaterial } = require('../controllers/material');
+const { createMaterial, deleteMaterial } = require('../controllers/material');
 const { uploadFile } = require('../middlewares/multer');
 const { validateResults } = require('../middlewares/fields-validator');
 const {
@@ -38,5 +38,7 @@ router.post('/', [
   // sanitizeAuthors,
   sanitizeOptFields,
 ], createMaterial);
+
+router.delete('/:id', deleteMaterial);
 
 module.exports = router;

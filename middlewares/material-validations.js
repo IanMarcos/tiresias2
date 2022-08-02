@@ -91,6 +91,7 @@ const validateFiles = (req, res, next) => {
     req.file.path = req.file.path.replace('\\', '/');
   }
 
+  // TODO no quemar aquí
   const validFormats = ['docx', 'pdf'];
 
   if (!validFormats.includes(getFileFormatFromMimetype(req.file.mimetype))) {

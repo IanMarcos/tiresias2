@@ -33,9 +33,26 @@ const createMaterial = async (req, res) => {
     }
   }
 
-  return res.status(statusCode).json({ results });
+  res.status(statusCode).json({ results });
+};
+
+const deleteMaterial = async (req, res) => {
+  const { id } = req.params;
+
+  let statusCode = 200;
+  if (!id) statusCode = 404;
+
+  const results = await MaterialService.deleteMaterial(id);
+
+  if (results.err) {
+    statusCode = 404;
+    return res.status(statusCode).json({ results });
+  }
+
+  return res.status(statusCode).send();
 };
 
 module.exports = {
   createMaterial,
+  deleteMaterial,
 };
