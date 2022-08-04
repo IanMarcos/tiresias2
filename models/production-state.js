@@ -1,4 +1,4 @@
-const { Model } = require('objection');
+import { Model } from 'objection';
 
 class ProductionState extends Model {
   static get tableName() {
@@ -6,4 +6,4 @@ class ProductionState extends Model {
   }
 }
 
-module.exports = ProductionState;
+export default ProductionState;

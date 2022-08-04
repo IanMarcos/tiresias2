@@ -1,5 +1,6 @@
-/* eslint-disable global-require */
-const { Model } = require('objection');
+import { Model } from 'objection';
+import Material from './material.js';
+import PersonMaterial from './person-material.js';
 
 class Person extends Model {
   static get tableName() {
@@ -7,9 +8,6 @@ class Person extends Model {
   }
 
   static get relationMappings() {
-    const Material = require('./material');
-    const PersonMaterial = require('./person-material');
-
     return {
       materiales: {
         relation: Model.ManyToManyRelation,
@@ -28,4 +26,4 @@ class Person extends Model {
     };
   }
 }
-module.exports = Person;
+export default Person;

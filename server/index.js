@@ -1,8 +1,11 @@
-/* eslint-disable global-require */
-const cors = require('cors');
-const express = require('express');
-const configDB = require('../db');
-const { startUnusedFilesCleaner } = require('./config');
+import cors from 'cors';
+import express from 'express';
+import configDB from '../db/index.js';
+import { startUnusedFilesCleaner } from './config.js';
+import authRoutes from '../routes/auth.js';
+import materialsRoutes from '../routes/materials.js';
+import searchRoutes from '../routes/search.js';
+import usersRoutes from '../routes/users.js';
 
 class Server {
   #app;
@@ -33,10 +36,10 @@ class Server {
   }
 
   #routes() {
-    this.#app.use(this.#paths.auth, require('../routes/auth'));
-    this.#app.use(this.#paths.materials, require('../routes/materials'));
-    this.#app.use(this.#paths.search, require('../routes/search'));
-    this.#app.use(this.#paths.users, require('../routes/users'));
+    this.#app.use(this.#paths.auth, authRoutes);
+    this.#app.use(this.#paths.materials, materialsRoutes);
+    this.#app.use(this.#paths.search, searchRoutes);
+    this.#app.use(this.#paths.users, usersRoutes);
   }
 
   start() {
@@ -44,4 +47,4 @@ class Server {
   }
 }
 
-module.exports = Server;
+export default Server;

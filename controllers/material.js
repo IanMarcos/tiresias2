@@ -1,5 +1,5 @@
-const MaterialService = require('../services/material');
-const { sanitizeAuthors } = require('../middlewares/material-validations');
+import MaterialService from '../services/material.js';
+import { sanitizeAuthors } from '../middlewares/material-validations.js';
 
 const createMaterial = async (req, res) => {
   /**
@@ -52,7 +52,7 @@ const deleteMaterial = async (req, res) => {
   return res.status(statusCode).send();
 };
 
-module.exports = {
+export {
   createMaterial,
   deleteMaterial,
 };

@@ -14,6 +14,6 @@ const replacePropertyPersonasWithAutores = (authorRoleId, materials) => (
   })
 );
 
-module.exports = {
+export {
   replacePropertyPersonasWithAutores,
 };

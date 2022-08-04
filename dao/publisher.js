@@ -1,6 +1,6 @@
-const Dao = require('./dao');
+import Dao from './dao.js';
 
 class PublisherDAO extends Dao {
 }
 
-module.exports = PublisherDAO;
+export default PublisherDAO;

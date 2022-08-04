@@ -1,12 +1,12 @@
-const { transaction } = require('objection');
-const { MaterialDAO } = require('../dao');
-const {
+import { transaction } from 'objection';
+import { MaterialDAO } from '../dao/index.js';
+import {
   City, Publisher, Material, Producer, PersonMaterial, Person,
-} = require('../models');
-const {
+} from '../models/index.js';
+import {
   CityService, FormatService, PublisherService, ProductionStateService,
   ProducerService, PersonMaterialService, LanguageService,
-} = require('.');
+} from './index.js';
 
 class MaterialService {
   static async createMaterial(req) {
@@ -119,4 +119,4 @@ class MaterialService {
   }
 }
 
-module.exports = MaterialService;
+export default MaterialService;

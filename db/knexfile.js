@@ -1,8 +1,12 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 
-module.exports = {
+export default {
   client: 'mysql',
   connection: {
     database: process.env.TIRESIAS_DB_NAME,

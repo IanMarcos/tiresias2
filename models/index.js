@@ -1,16 +1,16 @@
-const AccesibleFormat = require('./accesible-format');
-const City = require('./city');
-const Country = require('./country');
-const Language = require('./language');
-const Material = require('./material');
-const Person = require('./person');
-const PersonMaterial = require('./person-material');
-const PersonRole = require('./person-role');
-const Producer = require('./producer');
-const ProductionState = require('./production-state');
-const Publisher = require('./publisher');
+import AccesibleFormat from './accesible-format.js';
+import City from './city.js';
+import Country from './country.js';
+import Language from './language.js';
+import Material from './material.js';
+import Person from './person.js';
+import PersonMaterial from './person-material.js';
+import PersonRole from './person-role.js';
+import Producer from './producer.js';
+import ProductionState from './production-state.js';
+import Publisher from './publisher.js';
 
-module.exports = {
+export {
   AccesibleFormat,
   City,
   Country,

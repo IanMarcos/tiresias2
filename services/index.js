@@ -1,21 +1,20 @@
-// Archivo para tener importaciónes más limpias
-const CityService = require('./city');
-const CountryService = require('./country');
-const FormatService = require('./format');
-const LanguageService = require('./language');
-const MaterialService = require('./material');
-const PersonMaterialService = require('./person-material');
-const ProducerService = require('./producer');
-const ProductionStateService = require('./production-state');
-const PublisherService = require('./publisher');
-const UnifiedSearchService = require('./unified-search');
+import CityService from './city.js';
+import CountryService from './country.js';
+import FormatService from './format.js';
+import LanguageService from './language.js';
+// import MaterialService from './material.js';
+import PersonMaterialService from './person-material.js';
+import ProducerService from './producer.js';
+import ProductionStateService from './production-state.js';
+import PublisherService from './publisher.js';
+import UnifiedSearchService from './unified-search.js';
 
-module.exports = {
+export {
   CityService,
   CountryService,
   FormatService,
   LanguageService,
-  MaterialService,
+  // MaterialService,
   PersonMaterialService,
   ProducerService,
   ProductionStateService,

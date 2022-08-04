@@ -1,4 +1,4 @@
-const { Model } = require('objection');
+import { Model } from 'objection';
 
 class Publisher extends Model {
   static get tableName() {
@@ -6,4 +6,4 @@ class Publisher extends Model {
   }
 }
 
-module.exports = Publisher;
+export default Publisher;

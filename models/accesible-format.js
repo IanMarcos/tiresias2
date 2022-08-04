@@ -1,4 +1,4 @@
-const { Model } = require('objection');
+import { Model } from 'objection';
 
 class AccesibleFormat extends Model {
   static get tableName() {
@@ -6,4 +6,4 @@ class AccesibleFormat extends Model {
   }
 }
 
-module.exports = AccesibleFormat;
+export default AccesibleFormat;

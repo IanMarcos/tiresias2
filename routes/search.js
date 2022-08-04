@@ -1,7 +1,7 @@
-const { Router } = require('express');
-const { body } = require('express-validator');
-const { searchMaterialsAndAuthors } = require('../controllers/search');
-const { validateResults } = require('../middlewares/fields-validator');
+import { Router } from 'express';
+import { body } from 'express-validator';
+import { searchMaterialsAndAuthors } from '../controllers/search.js';
+import { validateResults } from '../middlewares/fields-validator.js';
 
 const router = Router();
 
@@ -11,4 +11,4 @@ router.get('/', [
   validateResults,
 ], searchMaterialsAndAuthors);
 
-module.exports = router;
+export default router;

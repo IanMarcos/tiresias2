@@ -1,4 +1,4 @@
-const { Model } = require('objection');
+import { Model } from 'objection';
 
 class Language extends Model {
   static get tableName() {
@@ -6,4 +6,4 @@ class Language extends Model {
   }
 }
 
-module.exports = Language;
+export default Language;

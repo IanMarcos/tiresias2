@@ -1,4 +1,4 @@
-const UnifiedSearchService = require('../services/unified-search');
+import UnifiedSearchService from '../services/unified-search.js';
 
 const searchMaterialsAndAuthors = async (req, res) => {
   // Se configura la página y el número de resultados por página
@@ -17,6 +17,6 @@ const searchMaterialsAndAuthors = async (req, res) => {
   return res.status(200).json({ results });
 };
 
-module.exports = {
+export {
   searchMaterialsAndAuthors,
 };

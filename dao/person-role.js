@@ -18,4 +18,4 @@ class PersonRoleDAO {
   }
 }
 
-module.exports = PersonRoleDAO;
+export default PersonRoleDAO;

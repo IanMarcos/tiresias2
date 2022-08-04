@@ -1,5 +1,5 @@
-const Dao = require('./dao');
-const { extractSqlError } = require('../helpers/sql-helpers');
+import Dao from './dao.js';
+import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class PersonDAO extends Dao {
   static async create(PersonModel, { names, lastName }) {
@@ -24,4 +24,4 @@ class PersonDAO extends Dao {
   }
 }
 
-module.exports = PersonDAO;
+export default PersonDAO;

@@ -1,4 +1,4 @@
-const { Router } = require('express');
+import { Router } from 'express';
 // const { body } = require('express-validator');
 // const {  } = require('./../controllers/auth');
 // const { validateResults, validateJWT } = require('./../middlewares');
@@ -12,4 +12,4 @@ const router = Router();
 //     validateResults
 // ], ()=>{});
 
-module.exports = router;
+export default router;

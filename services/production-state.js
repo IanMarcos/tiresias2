@@ -1,5 +1,5 @@
-const { ProductionState } = require('../models');
-const { ProductionStateDAO } = require('../dao');
+import { ProductionState } from '../models/index.js';
+import { ProductionStateDAO } from '../dao/index.js';
 
 class ProductionStateService {
   #modelInstance;
@@ -26,4 +26,4 @@ class ProductionStateService {
   }
 }
 
-module.exports = ProductionStateService;
+export default ProductionStateService;

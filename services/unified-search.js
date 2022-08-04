@@ -1,12 +1,13 @@
-const { Material, PersonMaterial, PersonRole } = require('../models');
-const { MaterialDAO, PersonRoleDAO, PersonMaterialDAO } = require('../dao');
-const { replacePropertyPersonasWithAutores } = require('../helpers/db-results');
+import { Material, PersonMaterial, PersonRole } from '../models/index.js';
+import { MaterialDAO, PersonRoleDAO, PersonMaterialDAO } from '../dao/index.js';
+import { replacePropertyPersonasWithAutores } from '../helpers/db-results.js';
 
 class UnifiedSearchService {
   static async searchMaterialsandAuthors({ searchTerm, limit, page }) {
     try {
       // Buscar materiales que incluyan el término
-      const materials = await MaterialDAO.search(Material, { searchTerm, limit, page });
+      const materials = await MaterialDAO
+        .search(Material, { searchQuery: searchTerm, limit, page });
 
       if (materials.length !== 0) {
         // Objection no trae soporte para convertir la funcion_id de las personas a su respectivo
@@ -23,4 +24,4 @@ class UnifiedSearchService {
   }
 }
 
-module.exports = UnifiedSearchService;
+export default UnifiedSearchService;

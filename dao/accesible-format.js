@@ -1,6 +1,6 @@
-const Dao = require('./dao');
+import Dao from './dao.js';
 
 class AccesibleFormatDAO extends Dao {
 }
 
-module.exports = AccesibleFormatDAO;
+export default AccesibleFormatDAO;

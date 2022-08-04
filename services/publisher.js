@@ -1,5 +1,5 @@
-const { Publisher } = require('../models');
-const { PublisherDAO } = require('../dao');
+import { Publisher } from '../models/index.js';
+import { PublisherDAO } from '../dao/index.js';
 
 class PublisherService {
   #modelInstance;
@@ -29,4 +29,4 @@ class PublisherService {
   }
 }
 
-module.exports = PublisherService;
+export default PublisherService;

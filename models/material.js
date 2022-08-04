@@ -1,5 +1,6 @@
-/* eslint-disable global-require */
-const { Model, snakeCaseMappers } = require('objection');
+import { Model, snakeCaseMappers } from 'objection';
+import Person from './person.js';
+import PersonMaterial from './person-material.js';
 
 class Material extends Model {
   static get tableName() {
@@ -11,9 +12,6 @@ class Material extends Model {
   }
 
   static get relationMappings() {
-    const Person = require('./person');
-    const PersonMaterial = require('./person-material');
-
     return {
       personas: {
         relation: Model.ManyToManyRelation,
@@ -33,4 +31,4 @@ class Material extends Model {
   }
 }
 
-module.exports = Material;
+export default Material;

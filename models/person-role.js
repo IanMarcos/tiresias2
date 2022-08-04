@@ -1,4 +1,4 @@
-const { Model } = require('objection');
+import { Model } from 'objection';
 
 class PersonRole extends Model {
   static get tableName() {
@@ -6,4 +6,4 @@ class PersonRole extends Model {
   }
 }
 
-module.exports = PersonRole;
+export default PersonRole;

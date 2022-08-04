@@ -1,4 +1,4 @@
-const { Model, snakeCaseMappers } = require('objection');
+import { Model, snakeCaseMappers } from 'objection';
 
 class City extends Model {
   static get tableName() {
@@ -10,4 +10,4 @@ class City extends Model {
   }
 }
 
-module.exports = City;
+export default City;

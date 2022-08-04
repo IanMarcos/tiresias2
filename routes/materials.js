@@ -1,16 +1,16 @@
-const { Router } = require('express');
-const { body } = require('express-validator');
-const { createMaterial, deleteMaterial } = require('../controllers/material');
-const { uploadFile } = require('../middlewares/multer');
-const { validateResults } = require('../middlewares/fields-validator');
-const {
+import { Router } from 'express';
+import { body } from 'express-validator';
+import { createMaterial, deleteMaterial } from '../controllers/material.js';
+import { uploadFile } from '../middlewares/multer.js';
+import { validateResults } from '../middlewares/fields-validator.js';
+import {
   fileNotEmpty,
   isValidAuthors,
   isValidYear,
   sanitizeOptFields,
   validateFiles,
   validateOptFields,
-} = require('../middlewares/material-validations');
+} from '../middlewares/material-validations.js';
 
 const router = Router();
 // POST Material
@@ -41,4 +41,4 @@ router.post('/', [
 
 router.delete('/:id', deleteMaterial);
 
-module.exports = router;
+export default router;

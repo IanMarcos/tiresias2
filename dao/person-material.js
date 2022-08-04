@@ -1,4 +1,4 @@
-const { extractSqlError } = require('../helpers/sql-helpers');
+import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class PersonMaterialDAO {
   static async create(PersonMaterial, { personId, materialId, roleId }) {
@@ -35,4 +35,4 @@ class PersonMaterialDAO {
   }
 }
 
-module.exports = PersonMaterialDAO;
+export default PersonMaterialDAO;

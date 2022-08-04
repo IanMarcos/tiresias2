@@ -1,6 +1,6 @@
-const { Model } = require('objection');
-const knex = require('knex');
-const knexConfig = require('./knexfile');
+import { Model } from 'objection';
+import knex from 'knex';
+import knexConfig from './knexfile.js';
 
 const configDB = () => {
   // Conecta Knex a la base de datos
@@ -9,4 +9,4 @@ const configDB = () => {
   Model.knex(db);
 };
 
-module.exports = configDB;
+export default configDB;

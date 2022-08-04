@@ -11,7 +11,7 @@ const splitPersonNames = (person) => {
   return { lastName, names };
 };
 
-module.exports = {
+export {
   convertBytesToMB,
   getFileFormatFromMimetype,
   splitPersonNames,

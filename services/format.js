@@ -1,5 +1,5 @@
-const { AccesibleFormat } = require('../models');
-const { AccesibleFormatDAO } = require('../dao');
+import { AccesibleFormat } from '../models/index.js';
+import { AccesibleFormatDAO } from '../dao/index.js';
 
 class FormatService {
   #modelInstance;
@@ -26,4 +26,4 @@ class FormatService {
   }
 }
 
-module.exports = FormatService;
+export default FormatService;

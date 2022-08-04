@@ -1,4 +1,4 @@
-const { convertBytesToMB, getFileFormatFromMimetype } = require('../helpers/misc');
+import { convertBytesToMB, getFileFormatFromMimetype } from '../helpers/misc.js';
 
 // Middleware Customs
 const fileNotEmpty = (req, res, next) => {
@@ -155,7 +155,7 @@ const validateOptFields = (req, res, next) => {
   return next();
 };
 
-module.exports = {
+export {
   fileNotEmpty,
   isValidAuthors,
   isValidYear,

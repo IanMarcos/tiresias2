@@ -1,5 +1,5 @@
-const Dao = require('./dao');
-const { extractSqlError } = require('../helpers/sql-helpers');
+import Dao from './dao.js';
+import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class CityDAO extends Dao {
   /**
@@ -19,4 +19,4 @@ class CityDAO extends Dao {
   }
 }
 
-module.exports = CityDAO;
+export default CityDAO;

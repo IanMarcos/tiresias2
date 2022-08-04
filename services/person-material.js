@@ -1,6 +1,6 @@
-const { Person, PersonMaterial, PersonRole } = require('../models');
-const { PersonDAO, PersonMaterialDAO, PersonRoleDAO } = require('../dao');
-const { splitPersonNames } = require('../helpers/misc');
+import { Person, PersonMaterial, PersonRole } from '../models/index.js';
+import { PersonDAO, PersonMaterialDAO, PersonRoleDAO } from '../dao/index.js';
+import { splitPersonNames } from '../helpers/misc.js';
 
 class PersonMaterialService {
   #modelInstance;
@@ -75,4 +75,4 @@ class PersonMaterialService {
   }
 }
 
-module.exports = PersonMaterialService;
+export default PersonMaterialService;

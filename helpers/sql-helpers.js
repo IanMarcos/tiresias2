@@ -5,6 +5,6 @@ const extractSqlError = (errorObj) => {
   return null;
 };
 
-module.exports = {
+export {
   extractSqlError,
 };

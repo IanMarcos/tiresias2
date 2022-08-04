@@ -1,5 +1,5 @@
-const { Producer } = require('../models');
-const { ProducerDAO } = require('../dao');
+import { Producer } from '../models/index.js';
+import { ProducerDAO } from '../dao/index.js';
 
 class ProducerService {
   #modelInstance;
@@ -28,4 +28,4 @@ class ProducerService {
   }
 }
 
-module.exports = ProducerService;
+export default ProducerService;

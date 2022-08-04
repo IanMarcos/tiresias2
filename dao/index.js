@@ -1,16 +1,16 @@
-const AccesibleFormatDAO = require('./accesible-format');
-const CityDAO = require('./city');
-const CountryDAO = require('./country');
-const LanguageDAO = require('./language');
-const MaterialDAO = require('./material');
-const PersonDAO = require('./person');
-const PersonMaterialDAO = require('./person-material');
-const PersonRoleDAO = require('./person-role');
-const ProducerDAO = require('./producer');
-const ProductionStateDAO = require('./production-state');
-const PublisherDAO = require('./publisher');
+import AccesibleFormatDAO from './accesible-format.js';
+import CityDAO from './city.js';
+import CountryDAO from './country.js';
+import LanguageDAO from './language.js';
+import MaterialDAO from './material.js';
+import PersonDAO from './person.js';
+import PersonMaterialDAO from './person-material.js';
+import PersonRoleDAO from './person-role.js';
+import ProducerDAO from './producer.js';
+import ProductionStateDAO from './production-state.js';
+import PublisherDAO from './publisher.js';
 
-module.exports = {
+export {
   AccesibleFormatDAO,
   CityDAO,
   CountryDAO,

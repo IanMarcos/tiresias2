@@ -1,5 +1,5 @@
-const { Language } = require('../models');
-const { LanguageDAO } = require('../dao');
+import { Language } from '../models/index.js';
+import { LanguageDAO } from '../dao/index.js';
 
 class LanguageService {
   #modelInstance;
@@ -33,4 +33,4 @@ class LanguageService {
   }
 }
 
-module.exports = LanguageService;
+export default LanguageService;

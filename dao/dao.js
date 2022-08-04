@@ -1,4 +1,4 @@
-const { extractSqlError } = require('../helpers/sql-helpers');
+import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class Dao {
   /**
@@ -36,4 +36,4 @@ class Dao {
   }
 }
 
-module.exports = Dao;
+export default Dao;

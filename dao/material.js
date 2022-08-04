@@ -1,5 +1,5 @@
-const { raw } = require('objection');
-const { extractSqlError } = require('../helpers/sql-helpers');
+import { raw } from 'objection';
+import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class MaterialDAO {
   /**
@@ -56,4 +56,4 @@ class MaterialDAO {
   }
 }
 
-module.exports = MaterialDAO;
+export default MaterialDAO;

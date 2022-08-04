@@ -1,5 +1,5 @@
-const { Country } = require('../models');
-const { CountryDAO } = require('../dao');
+import { Country } from '../models/index.js';
+import { CountryDAO } from '../dao/index.js';
 
 class CountryService {
   #modelInstance;
@@ -33,4 +33,4 @@ class CountryService {
   }
 }
 
-module.exports = CountryService;
+export default CountryService;
