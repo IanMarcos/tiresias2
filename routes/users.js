@@ -1,7 +1,8 @@
 import { Router } from 'express';
-// const { body, param } = require('express-validator');
-// const { userExistById, validateResults, validateJWT } = require('./../middlewares/');
-// const { } = require('../controllers/user');
+import { body } from 'express-validator';
+import { isValidPassword, isValidUserName, sanitizeOptionalFields } from '../middlewares/users-validations.js';
+import { validateResults } from '../middlewares/fields-validator.js';
+import { createUser } from '../controllers/users.js';
 
 const router = Router();
 
@@ -13,12 +14,14 @@ const router = Router();
 //     validateResults
 // ], getUserById);
 
-// router.post('/', [
-//     body('email', 'El email es obligatorio').notEmpty(),
-//     body('email', 'No es un email válido').isEmail(),
-//     body('password', 'La contraseña es obligatoria').notEmpty(),
-//     validateResults
-// ], createUser);
+router.post('/', [
+  body('userName', '40001').notEmpty().trim(),
+  body('userName').custom(isValidUserName),
+  body('password', '40001').notEmpty(),
+  validateResults,
+  isValidPassword,
+  sanitizeOptionalFields,
+], createUser);
 
 // router.put('/:uid', [
 //     validateJWT,

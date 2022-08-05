@@ -16,7 +16,7 @@ const router = Router();
 // POST Material
 router.post('/', [
   uploadFile,
-  body('title', '40002').isLength({ min: 3, max: 80 }).trim(),
+  body('title', '40002').trim().isLength({ min: 3, max: 80 }),
   body('author').custom(isValidAuthors),
   body('isbn', '40003').isNumeric().toInt(),
   body('language', '40002').notEmpty().trim(),
