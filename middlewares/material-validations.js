@@ -1,4 +1,7 @@
-import { convertBytesToMB, getFileFormatFromMimetype } from '../helpers/misc.js';
+import {
+  convertBytesToMB,
+  getFileFormatFromMimetype,
+} from '../helpers/misc.js';
 
 // Middleware Customs
 const fileNotEmpty = (req, res, next) => {
@@ -48,7 +51,9 @@ const sanitizeContributors = (req) => {
     return;
   }
 
-  req.body.contributors = req.body.contributor.map((contributor) => contributor.trim());
+  req.body.contributors = req.body.contributor.map((contributor) =>
+    contributor.trim()
+  );
   delete req.body.contributor;
 };
 
@@ -112,7 +117,7 @@ const validateOptFields = (req, res, next) => {
     productionState,
   } = req.body;
 
-  if (edition && (typeof (edition) !== 'string' || edition.length() > 45)) {
+  if (edition && (typeof edition !== 'string' || edition.length() > 45)) {
     return res.status(400).json({ results: { err: '40004 (edition)' } });
   }
 
@@ -126,7 +131,10 @@ const validateOptFields = (req, res, next) => {
     }
   }
 
-  if (recipients && (typeof (recipients) !== 'string' || recipients.length() > 80)) {
+  if (
+    recipients &&
+    (typeof recipients !== 'string' || recipients.length() > 80)
+  ) {
     return res.status(400).json({ results: { err: '40004 (recipients)' } });
   }
 
@@ -134,7 +142,7 @@ const validateOptFields = (req, res, next) => {
     return res.status(400).json({ results: { err: '40003 (categories)' } });
   }
 
-  if (narrator && typeof (narrator) !== 'string') {
+  if (narrator && typeof narrator !== 'string') {
     return res.status(400).json({ results: { err: '40004 (narrator)' } });
   }
 
@@ -143,13 +151,15 @@ const validateOptFields = (req, res, next) => {
     return res.status(400).json({ results: { err: '40003 (duration)' } });
   }
 
-  if (resume && (typeof (resume) !== 'string' || resume.length() > 1800)) {
+  if (resume && (typeof resume !== 'string' || resume.length() > 1800)) {
     return res.status(400).json({ results: { err: '40004 (resume)' } });
   }
 
   const validStates = ['Disponible', 'En curso'];
   if (productionState && !validStates.includes(productionState)) {
-    return res.status(400).json({ results: { err: '40004 (productionState)' } });
+    return res
+      .status(400)
+      .json({ results: { err: '40004 (productionState)' } });
   }
 
   return next();

@@ -11,9 +11,7 @@ const validateJWT = async (req, res, next) => {
 
   const { uid } = verifyJWT(token);
   if (!uid) {
-    return res
-      .status(401)
-      .json({ results: { err: 'Token invalido' } });
+    return res.status(401).json({ results: { err: 'Token invalido' } });
   }
 
   req.tokenUid = uid;
@@ -21,6 +19,4 @@ const validateJWT = async (req, res, next) => {
   return next();
 };
 
-export {
-  validateJWT,
-};
+export { validateJWT };

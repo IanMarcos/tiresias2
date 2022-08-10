@@ -5,10 +5,14 @@ import { validateResults } from '../middlewares/fields-validator.js';
 
 const router = Router();
 
-router.get('/', [
-  body('searchTerm', '40001').notEmpty(),
-  body('searchTerm', '40002').isLength({ min: 3, max: 100 }),
-  validateResults,
-], searchMaterialsAndAuthors);
+router.get(
+  '/',
+  [
+    body('searchTerm', '40001').notEmpty(),
+    body('searchTerm', '40002').isLength({ min: 3, max: 100 }),
+    validateResults,
+  ],
+  searchMaterialsAndAuthors
+);
 
 export default router;

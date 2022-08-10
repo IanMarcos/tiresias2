@@ -1,12 +1,20 @@
 import { transaction } from 'objection';
 import { MaterialDAO } from '../dao/index.js';
 import {
-  City, Publisher, Material, Producer, PersonMaterial, Person,
+  City,
+  Publisher,
+  Material,
+  Producer,
+  PersonMaterial,
+  Person,
 } from '../models/index.js';
-import {
-  CityService, FormatService, PublisherService, ProductionStateService,
-  ProducerService, PersonMaterialService, LanguageService,
-} from './index.js';
+import CityService from './city.js';
+import FormatService from './format.js';
+import PublisherService from './publisher.js';
+import ProductionStateService from './production-state.js';
+import ProducerService from './producer.js';
+import PersonMaterialService from './person-material.js';
+import LanguageService from './language.js';
 
 class MaterialService {
   static async createMaterial(req) {
@@ -26,7 +34,7 @@ class MaterialService {
       // TODO Save file in storage
       materialData.urlArchivo = 'api.example/files/1234';
 
-      return await transaction(
+      const newId = await transaction(
         City,
         Material,
         Person,
@@ -39,7 +47,7 @@ class MaterialService {
           PersonModel,
           PersonMaterialModel,
           ProducerModel,
-          PublisherModel,
+          PublisherModel
         ) => {
           const cityService = new CityService(CityModel);
           const formatService = new FormatService();
@@ -49,21 +57,40 @@ class MaterialService {
           const publisherService = new PublisherService(PublisherModel);
           const personMaterialService = new PersonMaterialService(
             PersonMaterialModel,
-            PersonModel,
+            PersonModel
           );
 
           const ids = await Promise.all([
-            languageService.getLanguageCode({ language: req.language }),
+            languageService.getLanguageCode({
+              language: req.language,
+            }),
             formatService.getFormatId({ name: req.format }),
-            publisherService.getPublisherId({ name: req.publisher }),
-            cityService.getCityId({ name: req.publishCity, country: req.publishCountry }),
-            cityService.getCityId({ name: req.productionCity, country: req.productionCountry }),
+            publisherService.getPublisherId({
+              name: req.publisher,
+            }),
+            cityService.getCityId({
+              name: req.publishCity,
+              country: req.publishCountry,
+            }),
+            cityService.getCityId({
+              name: req.productionCity,
+              country: req.productionCountry,
+            }),
             producerService.getProducerId({ name: req.producer }),
-            productionStateService.getProductionStateId({ name: req.productionState }),
+            productionStateService.getProductionStateId({
+              name: req.productionState,
+            }),
           ]);
 
-          const [idiomaCodigo, formatoAccesibleId, editorialId, ciudadPublicacionId,
-            ciudadProduccionId, productoraId, estadoProduccionId] = ids;
+          const [
+            idiomaCodigo,
+            formatoAccesibleId,
+            editorialId,
+            ciudadPublicacionId,
+            ciudadProduccionId,
+            productoraId,
+            estadoProduccionId,
+          ] = ids;
 
           materialData = {
             ...materialData,
@@ -76,22 +103,25 @@ class MaterialService {
             estadoProduccionId,
           };
 
-          const newMaterial = await MaterialDAO.create(MaterialModel, materialData);
+          const newMaterial = await MaterialDAO.create(
+            MaterialModel,
+            materialData
+          );
 
-          await personMaterialService.joinPeopleToMaterialByRole({
+          await personMaterialService.savePeopleByRole({
             peopleArray: req.authors,
             materialId: newMaterial.id,
             role: 'Autor',
           });
 
-          await personMaterialService.joinPeopleToMaterialByRole({
+          await personMaterialService.savePeopleByRole({
             peopleArray: req.contributors,
             materialId: newMaterial.id,
             role: 'Contribuidor',
           });
 
           if (req.narrator.length > 0) {
-            await personMaterialService.joinPeopleToMaterialByRole({
+            await personMaterialService.savePeopleByRole({
               peopleArray: [req.narrator],
               materialId: newMaterial.id,
               role: 'Narrador',
@@ -100,8 +130,9 @@ class MaterialService {
           // TODO Verifica/Guarda categorias
           // TODO Log de la transacción
           return newMaterial.id;
-        },
+        }
       );
+      return { id: newId };
     } catch (error) {
       return { err: error.message };
     }

@@ -3,7 +3,12 @@ import UnifiedSearchService from '../services/unified-search.js';
 const searchMaterialsAndAuthors = async (req, res) => {
   // Se configura la página y el número de resultados por página
   let { limit = 10, page = 1 } = req.query;
-  if (Number.isNaN(Number(limit)) || Number.isNaN(Number(page)) || limit <= 0 || page <= 0) {
+  if (
+    Number.isNaN(Number(limit)) ||
+    Number.isNaN(Number(page)) ||
+    limit <= 0 ||
+    page <= 0
+  ) {
     limit = 10;
     page = 1;
   }
@@ -11,12 +16,14 @@ const searchMaterialsAndAuthors = async (req, res) => {
 
   // Se pasa al service encargado de la busqueda unificada
   const { searchTerm } = req.body;
-  const results = await UnifiedSearchService.searchMaterialsandAuthors({ searchTerm, limit, page });
+  const results = await UnifiedSearchService.searchMaterialsandAuthors({
+    searchTerm,
+    limit,
+    page,
+  });
   if (results.err) return res.status(500).json({ results });
 
   return res.status(200).json({ results });
 };
 
-export {
-  searchMaterialsAndAuthors,
-};
+export { searchMaterialsAndAuthors };

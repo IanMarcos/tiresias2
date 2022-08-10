@@ -8,6 +8,4 @@ const validateResults = (req, res, next) => {
   return next();
 };
 
-export {
-  validateResults,
-};
+export { validateResults };

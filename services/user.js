@@ -24,12 +24,7 @@ class UsersService {
         return { err: 'Usuario no existe/404' };
       }
 
-      const {
-        contraseña,
-        rolUsuarioId,
-        eliminado,
-        ...cleanUser
-      } = user;
+      const { contraseña, rolUsuarioId, eliminado, ...cleanUser } = user;
       return cleanUser;
     } catch (error) {
       return { err: error.message };
@@ -51,7 +46,10 @@ class UsersService {
 
   async authenticateUser({ username, password }) {
     try {
-      const foundUser = await UserDAO.getByUsername(this.#modelInstance, username);
+      const foundUser = await UserDAO.getByUsername(
+        this.#modelInstance,
+        username
+      );
       if (!foundUser) {
         return { err: 'Usuario no existe/404' };
       }

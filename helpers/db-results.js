@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-const replacePropertyPersonasWithAutores = (authorRoleId, materials) => (
+const replacePropertyPersonasWithAutores = (authorRoleId, materials) =>
   materials.forEach((material) => {
     const authors = material.personas.filter((persona) => {
       if (persona.rol === authorRoleId) {
@@ -11,9 +11,6 @@ const replacePropertyPersonasWithAutores = (authorRoleId, materials) => (
 
     material.autores = authors;
     delete material.personas;
-  })
-);
+  });
 
-export {
-  replacePropertyPersonasWithAutores,
-};
+export { replacePropertyPersonasWithAutores };

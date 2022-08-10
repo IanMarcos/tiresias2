@@ -4,8 +4,9 @@ const getFileFormatFromMimetype = (mimetype) => mimetype.split('/')[1];
 
 const isPasswordStrong = (password) => {
   // TODO maybe add to a configuration file
-  const passwordRegexp = /(?=.*[0-9])(?=.*[a-z|A-Z])(?=.*[!*?+\-_@#$^%&])(?=.{8,})/;
-  return (passwordRegexp.test(password) && password.length < 17);
+  const passwordRegexp =
+    /(?=.*[0-9])(?=.*[a-z|A-Z])(?=.*[!*?+\-_@#$^%&])(?=.{8,})/;
+  return passwordRegexp.test(password) && password.length < 17;
 };
 
 const splitPersonNames = (person) => {
@@ -21,7 +22,7 @@ const formatHTTPResponse = (initialStatus, data) => {
 
   const { err } = data;
   if (err) {
-    if (typeof (err) === 'string') {
+    if (typeof err === 'string') {
       if (err.includes('404') || err.includes('401')) {
         [results.err, statusCode] = err.split('/');
         statusCode = parseInt(statusCode, 10);

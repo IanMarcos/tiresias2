@@ -9,18 +9,24 @@ class ProducerService {
   }
 
   /**
-  * Checks whether a producer exists, if it does, returns its ID.
-  * If not, it creates it and returns its ID
-  * @param {Object} args - Arguments to perform the queries.
-  * @param {string} args.name - Name of the producer to be searched/created.
-  */
+   * Checks whether a producer exists, if it does, returns its ID.
+   * If not, it creates it and returns its ID
+   * @param {Object} args - Arguments to perform the queries.
+   * @param {string} args.name - Name of the producer to be searched/created.
+   */
   async getProducerId({ name }) {
     try {
-      const producer = await ProducerDAO.getByName(this.#modelInstance, { name, errCode: 'EDA04' });
+      const producer = await ProducerDAO.getByName(this.#modelInstance, {
+        name,
+        errCode: 'EDA04',
+      });
       if (producer) {
         return producer.id;
       }
-      const newProducer = await ProducerDAO.create(this.#modelInstance, { name, errCode: 'EDA04' });
+      const newProducer = await ProducerDAO.create(this.#modelInstance, {
+        name,
+        errCode: 'EDA04',
+      });
       return newProducer.id;
     } catch (error) {
       throw new Error(error.message);

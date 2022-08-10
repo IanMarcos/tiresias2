@@ -4,8 +4,7 @@ class RolesDAO {
   // TODO document
   static async getRoleId(Model, role) {
     try {
-      const [foundRole] = await Model.query()
-        .where('nombre', role);
+      const [foundRole] = await Model.query().where('nombre', role);
 
       if (!foundRole) {
         throw new Error('Rol no encontrado/404');

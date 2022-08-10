@@ -38,7 +38,4 @@ const deleteMaterial = async (req, res) => {
   return res.status(statusCode).send();
 };
 
-export {
-  createMaterial,
-  deleteMaterial,
-};
+export { createMaterial, deleteMaterial };

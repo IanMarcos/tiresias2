@@ -4,7 +4,10 @@ import { extractSqlError } from '../helpers/sql-helpers.js';
 class PersonDAO extends Dao {
   static async create(PersonModel, { names, lastName }) {
     try {
-      return await PersonModel.query().insert({ apellido: lastName, nombres: names });
+      return await PersonModel.query().insert({
+        apellido: lastName,
+        nombres: names,
+      });
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);

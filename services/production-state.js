@@ -9,13 +9,16 @@ class ProductionStateService {
   }
 
   /**
-  * Checks whether a publisher exists, if it does, returns its ID.
-  * @param {Object} args - Arguments to perform the queries.
-  * @param {string} args.name - Name of the state to be searched.
-  */
+   * Checks whether a publisher exists, if it does, returns its ID.
+   * @param {Object} args - Arguments to perform the queries.
+   * @param {string} args.name - Name of the state to be searched.
+   */
   async getProductionStateId({ name }) {
     try {
-      const state = await ProductionStateDAO.getByName(this.#modelInstance, { name, errCode: 'EDA08' });
+      const state = await ProductionStateDAO.getByName(this.#modelInstance, {
+        name,
+        errCode: 'EDA08',
+      });
       if (state) {
         return state.id;
       }

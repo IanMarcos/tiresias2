@@ -63,10 +63,4 @@ const deleteUser = async (req, res) => {
   return res.status(statusCode).send();
 };
 
-export {
-  createUser,
-  getUser,
-  getAllUsers,
-  updateUser,
-  deleteUser,
-};
+export { createUser, getUser, getAllUsers, updateUser, deleteUser };

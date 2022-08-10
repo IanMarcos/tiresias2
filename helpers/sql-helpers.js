@@ -8,6 +8,4 @@ const extractSqlError = (errorObj) => {
   return null;
 };
 
-export {
-  extractSqlError,
-};
+export { extractSqlError };
