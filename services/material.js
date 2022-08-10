@@ -26,7 +26,7 @@ class MaterialService {
       // TODO Save file in storage
       materialData.urlArchivo = 'api.example/files/1234';
 
-      const results = await transaction(
+      return await transaction(
         City,
         Material,
         Person,
@@ -99,10 +99,9 @@ class MaterialService {
           }
           // TODO Verifica/Guarda categorias
           // TODO Log de la transacción
-          return newMaterial;
+          return newMaterial.id;
         },
       );
-      return results;
     } catch (error) {
       return { err: error.message };
     }

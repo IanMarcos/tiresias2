@@ -1,5 +1,5 @@
 import { Material, PersonMaterial, PersonRole } from '../models/index.js';
-import { MaterialDAO, PersonRoleDAO, PersonMaterialDAO } from '../dao/index.js';
+import { MaterialDAO, RolesDAO, PersonMaterialDAO } from '../dao/index.js';
 import { replacePropertyPersonasWithAutores } from '../helpers/db-results.js';
 
 class UnifiedSearchService {
@@ -12,7 +12,7 @@ class UnifiedSearchService {
       if (materials.length !== 0) {
         // Objection no trae soporte para convertir la funcion_id de las personas a su respectivo
         // nombre. Se hace manualmente
-        const authorRoleId = await PersonRoleDAO.getRoleId(PersonRole, 'Autor');
+        const authorRoleId = await RolesDAO.getRoleId(PersonRole, 'Autor');
         replacePropertyPersonasWithAutores(authorRoleId, materials);
       }
 

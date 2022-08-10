@@ -1,15 +1,14 @@
 import { Router } from 'express';
-// const { body } = require('express-validator');
-// const {  } = require('./../controllers/auth');
-// const { validateResults, validateJWT } = require('./../middlewares');
+import { body } from 'express-validator';
+import { validateResults } from '../middlewares/fields-validator.js';
+import { signIn } from '../controllers/auth.js';
 
 const router = Router();
 
-// router.post('/signin', [
-//     body('email', 'El correo es obligatorio').notEmpty(),
-//     body('email', 'No es un correo valido').isEmail(),
-//     body('password', 'La contraseña es obligatoria').notEmpty(),
-//     validateResults
-// ], ()=>{});
+router.post('/signin', [
+  body('username', '40001').notEmpty(),
+  body('password', '40001').notEmpty(),
+  validateResults,
+], signIn);
 
 export default router;

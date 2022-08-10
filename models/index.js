@@ -9,6 +9,8 @@ import PersonRole from './person-role.js';
 import Producer from './producer.js';
 import ProductionState from './production-state.js';
 import Publisher from './publisher.js';
+import User from './user.js';
+import UserRole from './user-role.js';
 
 export {
   AccesibleFormat,
@@ -22,4 +24,6 @@ export {
   Producer,
   ProductionState,
   Publisher,
+  User,
+  UserRole,
 };

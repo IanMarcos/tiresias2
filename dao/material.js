@@ -23,9 +23,10 @@ class MaterialDAO {
   */
   static async delete(Material, id) {
     try {
-      return Material.query().findById(id).patch({ eliminado: 1 });
+      return await Material.query().findById(id).patch({ eliminado: 1 });
     } catch (error) {
-      throw new Error('EDA01');
+      const erroMsg = extractSqlError(error) || 'EDA01';
+      throw new Error(erroMsg);
     }
   }
 

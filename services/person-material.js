@@ -1,5 +1,5 @@
 import { Person, PersonMaterial, PersonRole } from '../models/index.js';
-import { PersonDAO, PersonMaterialDAO, PersonRoleDAO } from '../dao/index.js';
+import { PersonDAO, PersonMaterialDAO, RolesDAO } from '../dao/index.js';
 import { splitPersonNames } from '../helpers/misc.js';
 
 class PersonMaterialService {
@@ -59,7 +59,7 @@ class PersonMaterialService {
 
     if (peopleIds.includes(null)) throw new Error('EDA09');
 
-    const roleId = await PersonRoleDAO.getRoleId(PersonRole, role);
+    const roleId = await RolesDAO.getRoleId(PersonRole, role);
 
     const results = await Promise.all(peopleIds.map(async (personId) => {
       try {

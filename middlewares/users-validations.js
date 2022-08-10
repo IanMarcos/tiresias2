@@ -1,8 +1,11 @@
+import { isPasswordStrong } from '../helpers/misc.js';
+import UsersService from '../services/user.js';
+
 const sanitizeOptionalFields = (req, res, next) => {
   const { name, role } = req.body;
 
   if (!name) {
-    req.body.name = req.body.userName;
+    req.body.name = req.body.username;
   }
 
   if (!role) {
@@ -11,25 +14,54 @@ const sanitizeOptionalFields = (req, res, next) => {
   next();
 };
 
-const isValidUserName = (userName) => {
-  if (userName.includes(' ')) {
+const isValidUsername = (username) => {
+  if (username.includes(' ')) {
     throw new Error('40004');
   }
   return true;
 };
 
-const isValidPassword = (req, res, next) => {
-  // TODO maybe add to a configuration file
-  const passwordRegexp = /(?=.*[0-9])(?=.*[a-z|A-Z])(?=.*[!*?+\-_@#$^%&])(?=.{8,})/;
+const isValidUpdateRequest = (req, res, next) => {
+  const { body } = req;
 
-  if (!passwordRegexp.test(req.body.password) || req.body.password.length > 15) {
-    return res.status(400).json({ results: { err: '40003 Contraseña incorrecta' } });
+  if (Object.keys(body).length === 0 && body.constructor === Object) {
+    return res.status(400).json({ results: { err: '40001 No hay datos para actualizar' } });
   }
+
+  const { name, password } = req.body;
+
+  if (name && typeof name !== 'string') {
+    return res.status(400).json({ results: { err: '40003 Algún campo no tiene formato adecuado' } });
+  }
+
+  if (password && (typeof password !== 'string' || !isPasswordStrong(password))) {
+    return res.status(400).json({ results: { err: '40003 Algún campo no tiene formato adecuado' } });
+  }
+
+  return next();
+};
+
+const isValidPassword = (req, res, next) => {
+  if (!isPasswordStrong(req.body.password)) {
+    return res.status(400).json({ results: { err: '40003 Contraseña invalida' } });
+  }
+  return next();
+};
+
+const requesterIsAdmin = async (req, res, next) => {
+  const userService = new UsersService();
+
+  if (!await userService.userIsAdmin(req.tokenUid)) {
+    return res.status(401).json({ results: { err: 'Usuario no autorizado' } });
+  }
+
   return next();
 };
 
 export {
   isValidPassword,
-  isValidUserName,
+  isValidUpdateRequest,
+  isValidUsername,
+  requesterIsAdmin,
   sanitizeOptionalFields,
 };

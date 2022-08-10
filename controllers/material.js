@@ -1,5 +1,6 @@
 import MaterialService from '../services/material.js';
 import { sanitizeAuthors } from '../middlewares/material-validations.js';
+import { formatHTTPResponse } from '../helpers/misc.js';
 
 const createMaterial = async (req, res) => {
   /**
@@ -16,31 +17,16 @@ const createMaterial = async (req, res) => {
    */
   sanitizeAuthors(req);
 
-  const results = await MaterialService.createMaterial(req.body);
+  const result = await MaterialService.createMaterial(req.body);
 
-  let statusCode = 201;
-  const { err } = results;
-  if (err) {
-    if (typeof (err) === 'string') {
-      if (err.includes('404')) {
-        [results.err] = err.split('/');
-        statusCode = 404;
-      } else if (err.includes('Duplicate')) {
-        statusCode = 409;
-      }
-    } else {
-      statusCode = 500;
-    }
-  }
+  const { results, statusCode } = formatHTTPResponse(201, result);
 
   res.status(statusCode).json({ results });
 };
 
 const deleteMaterial = async (req, res) => {
   const { id } = req.params;
-
   let statusCode = 200;
-  if (!id) statusCode = 404;
 
   const results = await MaterialService.deleteMaterial(id);
 
