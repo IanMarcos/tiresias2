@@ -38,7 +38,7 @@ class UsersService {
     try {
       userData.roleId = await RolesDAO.getRoleId(UserRole, role);
       const newUser = await UserDAO.create(this.#modelInstance, userData);
-      return newUser.id;
+      return { uid: newUser.id };
     } catch (error) {
       return { err: error.message };
     }

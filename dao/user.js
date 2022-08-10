@@ -15,7 +15,7 @@ class UserDAO {
     const { username, password, name, roleId } = userData;
 
     try {
-      return User.query().insert({
+      return await User.query().insert({
         nombreUsuario: username,
         contraseña: raw(
           `AES_ENCRYPT('${password}','${process.env.ENCRYPTION_KEY}')`

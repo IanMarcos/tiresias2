@@ -3,10 +3,9 @@ import { formatHTTPResponse } from '../helpers/misc.js';
 
 const createUser = async (req, res) => {
   const userService = new UsersService();
-  const results = await userService.createUser(req.body);
+  const result = await userService.createUser(req.body);
 
-  let statusCode = 201;
-  if (results.err) statusCode = 500;
+  const { statusCode, results } = formatHTTPResponse(201, result);
 
   res.status(statusCode).json({ results: { users: results } });
 };

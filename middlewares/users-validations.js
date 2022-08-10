@@ -63,7 +63,9 @@ const requesterIsAdmin = async (req, res, next) => {
   const userService = new UsersService();
 
   if (!(await userService.userIsAdmin(req.tokenUid))) {
-    return res.status(401).json({ results: { err: 'Usuario no autorizado' } });
+    return res
+      .status(401)
+      .json({ results: { err: 'No está autorizado para esta operación' } });
   }
 
   return next();
