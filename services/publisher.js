@@ -15,7 +15,6 @@ class PublisherService {
    * @param {string} args.name - Name of the publisher to be searched/created.
    */
   async getPublisherId({ name }) {
-    // TODO reconsider this name
     try {
       const publisher = await PublisherDAO.getByName(this.#modelInstance, {
         name,

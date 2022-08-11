@@ -3,11 +3,11 @@ import { MaterialDAO, RolesDAO, PersonMaterialDAO } from '../dao/index.js';
 import { replacePropertyPersonasWithAutores } from '../helpers/db-results.js';
 
 class UnifiedSearchService {
-  static async searchMaterialsandAuthors({ searchTerm, limit, page }) {
+  static async searchMaterialsandAuthors({ query, limit, page }) {
     try {
       // Buscar materiales que incluyan el término
       const materials = await MaterialDAO.search(Material, {
-        searchQuery: searchTerm,
+        query,
         limit,
         page,
       });
@@ -21,7 +21,7 @@ class UnifiedSearchService {
 
       const authors = await PersonMaterialDAO.searchPeopleByRol(
         PersonMaterial,
-        { searchTerm }
+        { query }
       );
       return { materials, authors };
     } catch (error) {

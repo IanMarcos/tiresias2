@@ -89,7 +89,7 @@ class UserDAO {
     }
   }
 
-  static async update(User, { id, name, password }) {
+  static async update(User, { id, name, password, roleId }) {
     const queryObject = {};
     if (name) queryObject.nombre = name;
     if (password) {
@@ -97,6 +97,8 @@ class UserDAO {
         `AES_ENCRYPT('${password}','${process.env.ENCRYPTION_KEY}')`
       );
     }
+    if (roleId) queryObject.rolUsuarioId = roleId;
+
     try {
       return await User.query().findById(id).patch(queryObject);
     } catch (error) {

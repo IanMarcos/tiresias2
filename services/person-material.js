@@ -15,15 +15,16 @@ class PersonMaterialService {
     this.#personModelInstance = personInstance;
   }
 
-  // TODO update this
   /**
    * Checks whether a Person exists, if it does, returns its ID.
    * If not, it creates it and returns its ID
    * @param {Object} args - Arguments to perform the queries.
-   * @param {string} args.name - Name of the producer to be searched/created.
+   * @param {Array} args.peopleArray - Array of string containing peoples name.
+   * @param {Array} args.materialId
+   * @param {Array} args.role - Role name.
    */
   async savePeopleByRole({ peopleArray, materialId, role }) {
-    // Find people Ids
+    // Find existing people Ids
     const foundPeople = await Promise.all(
       peopleArray.map(async (person) => {
         const { lastName, names } = splitPersonNames(person);
@@ -46,7 +47,7 @@ class PersonMaterialService {
 
     if (foundPeople.includes(null)) throw new Error('EDA09');
 
-    // If not create them
+    // If not create them and get their ids
     const peopleIds = await Promise.all(
       foundPeople.map(async (person) => {
         if (typeof person === 'number') {

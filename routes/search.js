@@ -8,8 +8,8 @@ const router = Router();
 router.get(
   '/',
   [
-    body('searchTerm', '40001').notEmpty(),
-    body('searchTerm', '40002').isLength({ min: 3, max: 100 }),
+    body('query', '40001').notEmpty(),
+    body('query', '40002').isLength({ min: 3, max: 100 }),
     validateResults,
   ],
   searchMaterialsAndAuthors

@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
 import {
   isValidPassword,
   isValidUpdateRequest,
   isValidUsername,
   sanitizeOptionalFields,
   requesterIsAdmin,
+  requesterIsAdminOrSelf,
 } from '../middlewares/users-validations.js';
 import { validateResults } from '../middlewares/fields-validator.js';
 import {
@@ -21,29 +22,53 @@ const router = Router();
 
 router.get('/', [validateJWT, requesterIsAdmin], getAllUsers);
 
-router.get('/:uid', [validateJWT, requesterIsAdmin], getUser);
+router.get(
+  '/:uid',
+  [
+    param('uid', '40003').isNumeric(),
+    validateResults,
+    validateJWT,
+    requesterIsAdminOrSelf,
+  ],
+  getUser
+);
 
 router.post(
   '/',
   [
-    validateJWT,
-    requesterIsAdmin,
     body('username', '40001').notEmpty().trim(),
     body('username').custom(isValidUsername),
     body('password', '40001').notEmpty(),
     validateResults,
     isValidPassword,
     sanitizeOptionalFields,
+    validateJWT,
+    requesterIsAdmin,
   ],
   createUser
 );
 
 router.put(
   '/:uid',
-  [isValidUpdateRequest, validateJWT, requesterIsAdmin],
+  [
+    param('uid', '40003').isNumeric(),
+    validateResults,
+    validateJWT,
+    requesterIsAdminOrSelf,
+    isValidUpdateRequest,
+  ],
   updateUser
 );
 
-router.delete('/:uid', [validateJWT, requesterIsAdmin], deleteUser);
+router.delete(
+  '/:uid',
+  [
+    param('uid', '40003').isNumeric(),
+    validateResults,
+    validateJWT,
+    requesterIsAdmin,
+  ],
+  deleteUser
+);
 
 export default router;

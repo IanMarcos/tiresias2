@@ -1,6 +1,14 @@
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class PersonMaterialDAO {
+  /**
+   * Creates a new record in the PersonaMaterial table and returns it.
+   * @param {Model} PersonMaterial - Instance of an objection.js model.
+   * @param {Object} args - Arguments to perform the queries.
+   * @param {string} args.personId
+   * @param {string} args.materialId
+   * @param {string} args.roleId - Person's role's id.
+   */
   static async create(PersonMaterial, { personId, materialId, roleId }) {
     try {
       return await PersonMaterial.query().insert({
@@ -14,11 +22,16 @@ class PersonMaterialDAO {
     }
   }
 
-  // TODO document this class and rename personRol
-
+  /**
+   * Creates a new record in the PersonaMaterial table and returns it.
+   * @param {Model} PersonMaterial - Instance of an objection.js model.
+   * @param {Object} args - Arguments to perform the queries.
+   * @param {string} args.query - Search query to be used on a person names and last name.
+   * @param {string} [args.personRol] - Role name. Defaults to 'Autor'.
+   */
   static async searchPeopleByRol(
     PersonMaterial,
-    { searchTerm, personRol = 'Autor' }
+    { query, personRol = 'Autor' }
   ) {
     try {
       const people = await PersonMaterial.query()
@@ -27,8 +40,8 @@ class PersonMaterialDAO {
         .join('RolPersona', 'RolPersona.id', 'PersonaMaterial.rol_persona_id')
         .where((builder) => {
           builder
-            .where('Persona.apellido', 'like', `%${searchTerm}%`)
-            .orWhere('Persona.nombres', 'like', `%${searchTerm}%`)
+            .where('Persona.apellido', 'like', `%${query}%`)
+            .orWhere('Persona.nombres', 'like', `%${query}%`)
             .andWhere('RolPersona.nombre', '=', `${personRol}`);
         })
         .groupBy('persona_id');

@@ -2,6 +2,8 @@ const convertBytesToMB = (bytes) => bytes / 1024 ** 2;
 
 const getFileFormatFromMimetype = (mimetype) => mimetype.split('/')[1];
 
+const isDefined = (variable) => typeof variable !== 'undefined';
+
 const isPasswordStrong = (password) => {
   // TODO maybe add to a configuration file
   const passwordRegexp =
@@ -9,7 +11,11 @@ const isPasswordStrong = (password) => {
   return passwordRegexp.test(password) && password.length < 17;
 };
 
+// TODO double check the case if no ',' is included
 const splitPersonNames = (person) => {
+  if (!person.includes(',')) {
+    return { lastName: person, names: '' };
+  }
   let [lastName, names] = person.split(',');
   lastName = lastName.trim().toUpperCase();
   names = names.trim().toUpperCase();
@@ -48,6 +54,7 @@ export {
   convertBytesToMB,
   formatHTTPResponse,
   getFileFormatFromMimetype,
+  isDefined,
   isPasswordStrong,
   splitPersonNames,
 };
