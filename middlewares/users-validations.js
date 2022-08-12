@@ -1,4 +1,8 @@
-import { isDefined, isPasswordStrong } from '../helpers/misc.js';
+import {
+  areStringsEqual,
+  isDefined,
+  isPasswordStrong,
+} from '../helpers/misc.js';
 
 const sanitizeOptionalFields = (req, res, next) => {
   const { name, role } = req.body;
@@ -29,10 +33,18 @@ const isValidPassword = (req, res, next) => {
   return next();
 };
 
+const roleIsNotAdmin = (req, res, next) => {
+  const { role } = req.body;
+  if (isDefined(role) && areStringsEqual(role, 'Administrador')) {
+    return res.status(403).json({ results: { err: 'Operación prohibida' } });
+  }
+  return next();
+};
+
 const requesterIsAdmin = async (req, res, next) => {
   if (req.requester.role !== 'Administrador') {
     return res
-      .status(401)
+      .status(403)
       .json({ results: { err: 'No está autorizado para esta operación' } });
   }
 
@@ -45,7 +57,7 @@ const requesterIsAdminOrSelf = async (req, res, next) => {
     req.requester.role !== 'Administrador'
   ) {
     return res
-      .status(401)
+      .status(403)
       .json({ results: { err: 'No está autorizado para esta operación' } });
   }
 
@@ -81,7 +93,7 @@ const isValidUpdateRequest = async (req, res, next) => {
 
     if (req.requester.role !== 'Administrador') {
       return res
-        .status(401)
+        .status(403)
         .json({ results: { err: 'No está autorizado para esta operación' } });
     }
   }
@@ -95,8 +107,12 @@ const isValidUpdateRequest = async (req, res, next) => {
 
     if (req.requester.role !== 'Administrador') {
       return res
-        .status(401)
+        .status(403)
         .json({ results: { err: 'No está autorizado para esta operación' } });
+    }
+
+    if (areStringsEqual(role, 'Administrador')) {
+      return res.status(403).json({ results: { err: 'Operación prohibida' } });
     }
   }
 
@@ -109,5 +125,6 @@ export {
   isValidUsername,
   requesterIsAdmin,
   requesterIsAdminOrSelf,
+  roleIsNotAdmin,
   sanitizeOptionalFields,
 };

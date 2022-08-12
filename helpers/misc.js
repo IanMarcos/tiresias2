@@ -1,3 +1,6 @@
+const areStringsEqual = (a, b) =>
+  a.localeCompare(b, 'es', { sensitivity: 'base' }) === 0;
+
 const convertBytesToMB = (bytes) => bytes / 1024 ** 2;
 
 const getFileFormatFromMimetype = (mimetype) => mimetype.split('/')[1];
@@ -29,7 +32,7 @@ const formatHTTPResponse = (initialStatus, data) => {
   const { err } = data;
   if (err) {
     if (typeof err === 'string') {
-      if (err.includes('404') || err.includes('401')) {
+      if (err.includes('400') || err.includes('401') || err.includes('404')) {
         [results.err, statusCode] = err.split('/');
         statusCode = parseInt(statusCode, 10);
       } else if (err.includes('Duplicate')) {
@@ -51,6 +54,7 @@ const formatHTTPResponse = (initialStatus, data) => {
 };
 
 export {
+  areStringsEqual,
   convertBytesToMB,
   formatHTTPResponse,
   getFileFormatFromMimetype,

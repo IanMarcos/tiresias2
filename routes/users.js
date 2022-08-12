@@ -7,6 +7,7 @@ import {
   sanitizeOptionalFields,
   requesterIsAdmin,
   requesterIsAdminOrSelf,
+  roleIsNotAdmin,
 } from '../middlewares/users-validations.js';
 import { validateResults } from '../middlewares/fields-validator.js';
 import {
@@ -25,10 +26,10 @@ router.get('/', [validateJWT, requesterIsAdmin], getAllUsers);
 router.get(
   '/:uid',
   [
-    param('uid', '40003').isNumeric(),
-    validateResults,
     validateJWT,
     requesterIsAdminOrSelf,
+    param('uid', '40003').isNumeric(),
+    validateResults,
   ],
   getUser
 );
@@ -36,14 +37,15 @@ router.get(
 router.post(
   '/',
   [
+    validateJWT,
+    requesterIsAdmin,
     body('username', '40001').notEmpty().trim(),
     body('username').custom(isValidUsername),
     body('password', '40001').notEmpty(),
     validateResults,
+    roleIsNotAdmin,
     isValidPassword,
     sanitizeOptionalFields,
-    validateJWT,
-    requesterIsAdmin,
   ],
   createUser
 );
@@ -51,10 +53,10 @@ router.post(
 router.put(
   '/:uid',
   [
-    param('uid', '40003').isNumeric(),
-    validateResults,
     validateJWT,
     requesterIsAdminOrSelf,
+    param('uid', '40003').isNumeric(),
+    validateResults,
     isValidUpdateRequest,
   ],
   updateUser
@@ -63,10 +65,10 @@ router.put(
 router.delete(
   '/:uid',
   [
-    param('uid', '40003').isNumeric(),
-    validateResults,
     validateJWT,
     requesterIsAdmin,
+    param('uid', '40003').isNumeric(),
+    validateResults,
   ],
   deleteUser
 );
