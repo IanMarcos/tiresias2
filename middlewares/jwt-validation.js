@@ -9,8 +9,9 @@ import { verifyJWT } from '../helpers/jwt.js';
  * @param {Function} next
  */
 const validateJWT = async (req, res, next) => {
-  const { token } = req.headers;
+  const { authorization } = req.headers;
 
+  const [, token] = authorization.split(' ');
   if (!token) {
     return res
       .status(401)
