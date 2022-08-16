@@ -1,6 +1,6 @@
 import { Person, PersonMaterial, PersonRole } from '../models/index.js';
 import { PersonDAO, PersonMaterialDAO, RolesDAO } from '../dao/index.js';
-import { splitPersonNames } from '../helpers/misc.js';
+import { splitPersonNames } from '../helpers/formatters.js';
 
 class PersonMaterialService {
   #modelInstance;

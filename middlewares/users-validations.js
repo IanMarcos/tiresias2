@@ -2,7 +2,7 @@ import {
   areStringsEqual,
   isDefined,
   isPasswordStrong,
-} from '../helpers/misc.js';
+} from '../helpers/utils.js';
 
 const sanitizeOptionalFields = (req, res, next) => {
   const { name, role } = req.body;

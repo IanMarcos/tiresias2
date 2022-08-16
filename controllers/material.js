@@ -1,6 +1,14 @@
 import MaterialService from '../services/material.js';
 import { sanitizeAuthors } from '../middlewares/material-validations.js';
-import { formatHTTPResponse } from '../helpers/misc.js';
+import { formatHTTPResponse } from '../helpers/formatters.js';
+
+const getMaterial = async (req, res) => {
+  const { id } = req.params;
+  const result = await MaterialService.getMaterialById(id);
+  const { statusCode, results } = formatHTTPResponse(200, result);
+
+  res.status(statusCode).json({ results });
+};
 
 const createMaterial = async (req, res) => {
   /**
@@ -38,4 +46,4 @@ const deleteMaterial = async (req, res) => {
   return res.status(statusCode).send();
 };
 
-export { createMaterial, deleteMaterial };
+export { getMaterial, createMaterial, deleteMaterial };

@@ -1,7 +1,5 @@
-import {
-  convertBytesToMB,
-  getFileFormatFromMimetype,
-} from '../helpers/misc.js';
+import { convertBytesToMB } from '../helpers/formatters.js';
+import { getFileFormatFromMimetype } from '../helpers/utils.js';
 
 // Middleware Customs
 const fileNotEmpty = (req, res, next) => {

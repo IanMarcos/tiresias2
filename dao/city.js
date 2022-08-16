@@ -20,6 +20,20 @@ class CityDAO extends Dao {
       throw new Error(erroMsg);
     }
   }
+
+  /**
+   * Looks in the given table for a record by name and returns it's id.
+   * @param {Model} Model - Instance of an objection.js model.
+   * @param {string} name - Name of the city to be searched.
+   */
+  static async getByName(Model, name) {
+    try {
+      return await Model.query().where('nombre', name);
+    } catch (error) {
+      const erroMsg = extractSqlError(error) || 'EDA06';
+      throw new Error(erroMsg);
+    }
+  }
 }
 
 export default CityDAO;

@@ -1,7 +1,7 @@
 import { User, UserRole } from '../models/index.js';
 import { UserDAO, RolesDAO } from '../dao/index.js';
 import { generateJWT } from '../helpers/jwt.js';
-import { isDefined } from '../helpers/misc.js';
+import { isDefined } from '../helpers/utils.js';
 
 class UsersService {
   #modelInstance;

@@ -2,6 +2,36 @@ import { raw } from 'objection';
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class MaterialDAO {
+  static async getById(Material, id) {
+    try {
+      return await Material.query()
+        .findById(id)
+        .select(
+          'Material.*',
+          'FormatoAccesible.nombre AS formatoAccesible',
+          'Editorial.nombre AS editorial',
+          'EstadoProduccion.nombre AS estadoProduccion'
+        )
+        .join(
+          'FormatoAccesible',
+          'Material.formato_accesible_id',
+          'FormatoAccesible.id'
+        )
+        .join('Editorial', 'Material.editorial_id', 'Editorial.id')
+        .join(
+          'EstadoProduccion',
+          'Material.estado_produccion_id',
+          'EstadoProduccion.id'
+        )
+        .withGraphFetched('personas')
+        .withGraphFetched('ciudadPublicacion')
+        .withGraphFetched('ciudadProduccion');
+    } catch (error) {
+      const erroMsg = extractSqlError(error) || 'EDA01';
+      throw new Error(erroMsg);
+    }
+  }
+
   /**
    * Creates a new record in the given table and returns it's id.
    * @param {Model} Material - Instance of an objection.js model.
@@ -49,7 +79,7 @@ class MaterialDAO {
           'año_publicacion',
           'Editorial.nombre AS editorial'
         )
-        .innerJoin('Editorial', 'Material.editorial_id', 'Editorial.id')
+        .join('Editorial', 'Material.editorial_id', 'Editorial.id')
         .where('eliminado', 0)
         .where(
           raw(`MATCH(titulo) AGAINST ('${query}' IN NATURAL LANGUAGE MODE)`)

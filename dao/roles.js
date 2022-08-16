@@ -21,6 +21,22 @@ class RolesDAO {
       throw new Error(errorMsg);
     }
   }
+
+  static async getAllRoles(Model) {
+    try {
+      const roles = await Model.query();
+
+      if (roles.length === 0) {
+        throw new Error('Roles faltantes/500');
+      }
+
+      return roles;
+    } catch (error) {
+      let errorMsg = extractSqlError(error) || 'EDA02';
+      if (error.message.includes('400')) errorMsg = error.message;
+      throw new Error(errorMsg);
+    }
+  }
 }
 
 export default RolesDAO;

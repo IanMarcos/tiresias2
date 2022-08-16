@@ -1,5 +1,6 @@
 import { Country } from '../models/index.js';
 import { CountryDAO } from '../dao/index.js';
+import { isDefined } from '../helpers/utils.js';
 
 class CountryService {
   #modelInstance;
@@ -29,7 +30,7 @@ class CountryService {
           name: country,
           errCode: 'EDA05',
         });
-        if (result) return result.codigo;
+        if (isDefined(result)) return result.codigo;
       }
       throw new Error('Pais no encontrado/404');
     } catch (error) {

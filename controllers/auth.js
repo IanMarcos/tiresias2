@@ -1,5 +1,5 @@
 import UsersService from '../services/user.js';
-import { formatHTTPResponse } from '../helpers/misc.js';
+import { formatHTTPResponse } from '../helpers/formatters.js';
 
 const signIn = async (req, res) => {
   const userService = new UsersService();

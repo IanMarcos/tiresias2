@@ -1,5 +1,5 @@
 import { transaction } from 'objection';
-import { MaterialDAO } from '../dao/index.js';
+import { MaterialDAO, RolesDAO } from '../dao/index.js';
 import {
   City,
   Publisher,
@@ -7,6 +7,7 @@ import {
   Producer,
   PersonMaterial,
   Person,
+  PersonRole,
 } from '../models/index.js';
 import CityService from './city.js';
 import FormatService from './format.js';
@@ -15,8 +16,32 @@ import ProductionStateService from './production-state.js';
 import ProducerService from './producer.js';
 import PersonMaterialService from './person-material.js';
 import LanguageService from './language.js';
+import {
+  removeIdFromObj,
+  removeIdsFromMaterial,
+  replacePeopleWithRoles,
+} from '../helpers/formatters.js';
 
 class MaterialService {
+  static async getMaterialById(id) {
+    try {
+      const foundMaterial = await MaterialDAO.getById(Material, id);
+
+      if (!foundMaterial) throw new Error('Material no encontrado/404');
+
+      removeIdsFromMaterial(foundMaterial);
+      removeIdFromObj(foundMaterial.ciudadPublicacion);
+      removeIdFromObj(foundMaterial.ciudadProduccion);
+
+      const roles = await RolesDAO.getAllRoles(PersonRole);
+      replacePeopleWithRoles([foundMaterial], roles);
+
+      return { material: foundMaterial };
+    } catch (error) {
+      return { err: error.message };
+    }
+  }
+
   static async createMaterial(req) {
     let materialData = {
       titulo: req.title,
@@ -140,6 +165,7 @@ class MaterialService {
 
   static async deleteMaterial(id) {
     try {
+      // TODO Check if exist first
       const result = await MaterialDAO.delete(Material, id);
       if (result === 0) return { err: 'Material no encontrado' };
       return {};

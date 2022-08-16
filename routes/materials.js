@@ -1,6 +1,10 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { createMaterial, deleteMaterial } from '../controllers/material.js';
+import {
+  createMaterial,
+  deleteMaterial,
+  getMaterial,
+} from '../controllers/material.js';
 import { uploadFile } from '../middlewares/multer.js';
 import { validateResults } from '../middlewares/fields-validator.js';
 import {
@@ -13,7 +17,9 @@ import {
 } from '../middlewares/material-validations.js';
 
 const router = Router();
-// POST Material
+
+router.get('/:id', getMaterial);
+
 router.post(
   '/',
   [
