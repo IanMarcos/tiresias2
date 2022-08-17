@@ -32,14 +32,12 @@ const sanitizeAuthors = (req) => {
   if (typeof req.body.author === 'string') {
     req.body.authors = [req.body.author.trim()];
     delete req.body.author;
+    return;
     // next();
   }
 
-  if (Array.isArray(req.body.author)) {
-    req.body.authors = req.body.author.map((author) => author.trim());
-    delete req.body.author;
-  }
-  // next();
+  req.body.authors = req.body.author.map((author) => author.trim());
+  delete req.body.author;
 };
 
 const sanitizeContributors = (req) => {
@@ -67,17 +65,17 @@ const sanitizeOptFields = (req, res, next) => {
     productionState,
   } = req.body;
 
-  if (!edition) req.body.edition = '';
+  if (!edition) req.body.edition = null;
   if (contributor) {
     sanitizeContributors(req);
   } else {
     req.body.contributors = [];
   }
-  if (!recipients) req.body.recipients = '';
+  if (!recipients) req.body.recipients = null;
   if (!categories || !Array.isArray(categories)) req.body.categories = [];
   if (!narrator) req.body.narrator = '';
   if (!duration) req.body.duration = null;
-  if (!resume) req.body.resume = '';
+  if (!resume) req.body.resume = null;
   if (!productionState) req.body.productionState = 'Disponible';
 
   req.body.fileSize = convertBytesToMB(req.file.size);

@@ -1,7 +1,9 @@
 import cors from 'cors';
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 import configDB from '../db/index.js';
 import { startUnusedFilesCleaner } from './config.js';
+import swaggerSetup from '../../docs/swagger.js';
 import authRoutes from '../routes/auth.js';
 import materialsRoutes from '../routes/materials.js';
 import searchRoutes from '../routes/search.js';
@@ -27,6 +29,7 @@ class Server {
     this.#middlewares();
     this.#routes();
     configDB();
+    this.#setupSwagger();
     startUnusedFilesCleaner('uploads');
   }
 
@@ -40,6 +43,10 @@ class Server {
     this.#app.use(this.#paths.materials, materialsRoutes);
     this.#app.use(this.#paths.search, searchRoutes);
     this.#app.use(this.#paths.users, usersRoutes);
+  }
+
+  #setupSwagger() {
+    this.#app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSetup));
   }
 
   start() {

@@ -11,16 +11,19 @@ import { verifyJWT } from '../helpers/jwt.js';
 const validateJWT = async (req, res, next) => {
   const { authorization } = req.headers;
 
-  const [, token] = authorization.split(' ');
-  if (!token) {
+  if (!authorization) {
     return res
       .status(401)
-      .json({ results: { err: 'No hay token en la petición' } });
+      .json({ results: { err: 'No se encontraron credenciales' } });
   }
+
+  const [, token] = authorization.split(' ');
 
   const requester = verifyJWT(token);
   if (!requester.uid) {
-    return res.status(401).json({ results: { err: 'Token invalido' } });
+    return res
+      .status(401)
+      .json({ results: { err: 'Token de autorización invalido' } });
   }
 
   req.requester = requester;

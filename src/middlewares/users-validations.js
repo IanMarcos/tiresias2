@@ -64,6 +64,8 @@ const requesterIsAdminOrSelf = async (req, res, next) => {
   return next();
 };
 
+// TODO Do requesterIsActiveUser = async () => {}
+
 const isValidUpdateRequest = async (req, res, next) => {
   const { body } = req;
 

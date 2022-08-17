@@ -7,7 +7,11 @@ const createUser = async (req, res) => {
 
   const { statusCode, results } = formatHTTPResponse(201, result);
 
-  res.status(statusCode).json({ results: { users: results } });
+  if (statusCode !== 201) {
+    return res.status(statusCode).json({ results });
+  }
+
+  return res.status(statusCode).json({ results: { user: results } });
 };
 
 const getUser = async (req, res) => {

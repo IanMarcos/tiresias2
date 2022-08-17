@@ -1,14 +1,12 @@
 {
   "name": "tiresias",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Backend para el repositorio de materiales bibliográfico para personas con discapacidad visual",
   "main": "index.js",
-  "author": "Ian Ortiz, Juana Rodas",
-  "license": "ISC",
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "develop": "nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -20,7 +18,9 @@
     "knex": "^2.1.0",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
-    "objection": "^3.0.1"
+    "objection": "^3.0.1",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
     "eslint": "^8.21.0",
