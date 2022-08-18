@@ -1,4 +1,5 @@
 import swaggerJSDoc from 'swagger-jsdoc';
+import schemas from './schemas.js';
 
 const swaggerDefinition = {
   openapi: '3.0.3',
@@ -24,99 +25,7 @@ const swaggerDefinition = {
         bearerFormat: 'JWT',
       },
     },
-    schemas: {
-      User: {
-        type: 'object',
-        properties: {
-          username: {
-            type: 'string',
-          },
-          password: {
-            type: 'string',
-          },
-          name: {
-            type: 'string',
-          },
-          role: {
-            type: 'string',
-          },
-        },
-        required: ['username', 'password'],
-      },
-      safeUser: {
-        type: 'object',
-        properties: {
-          id: {
-            type: 'string',
-          },
-          nombre: {
-            type: 'string',
-          },
-          nombreUsuario: {
-            type: 'string',
-          },
-          rol: {
-            type: 'string',
-          },
-        },
-      },
-      UsersList: {
-        type: 'object',
-        properties: {
-          results: {
-            type: 'array',
-            items: {
-              $ref: '#/components/schemas/safeUser',
-            },
-          },
-        },
-      },
-      newUser: {
-        type: 'object',
-        properties: {
-          results: {
-            type: 'object',
-            properties: {
-              user: {
-                type: 'object',
-                properties: {
-                  uid: {
-                    type: 'string',
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-      userUpdateForm: {
-        type: 'object',
-        properties: {
-          name: {
-            type: 'string',
-          },
-          password: {
-            type: 'string',
-          },
-          role: {
-            type: 'string',
-          },
-        },
-      },
-      failedRequest: {
-        type: 'object',
-        properties: {
-          results: {
-            type: 'object',
-            properties: {
-              err: {
-                type: 'string',
-              },
-            },
-          },
-        },
-      },
-    },
+    schemas,
   },
 };
 

@@ -20,6 +20,11 @@ class UnifiedSearchService {
         PersonMaterial,
         { query }
       );
+
+      authors.forEach((author) => {
+        author.id = author.personaId;
+        delete author.personaId;
+      });
       return { materials, authors };
     } catch (error) {
       return { err: error.message };

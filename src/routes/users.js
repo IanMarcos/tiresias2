@@ -35,7 +35,12 @@ const router = Router();
  *        content:
  *         application/json:
  *           schema:
- *            $ref: '#/components/schemas/UsersList'
+ *             type: 'object'
+ *             properties:
+ *               results:
+ *                 type: 'array'
+ *                 items:
+ *                   $ref: '#/components/schemas/User'
  *      '401':
  *        description: Authorization information is missing or invalid.
  *        content:
@@ -83,7 +88,7 @@ router.get('/', [validateJWT, requesterIsAdmin], getAllUsers);
  *            type: 'object'
  *            properties:
  *              results:
- *                $ref: '#/components/schemas/safeUser'
+ *                $ref: '#/components/schemas/User'
  *      '401':
  *        description: Authorization information is missing or invalid.
  *        content:
@@ -123,19 +128,28 @@ router.get(
  *    tags:
  *      - users
  *    summary: Create a new user
- *    description: Create a new user with the given username and password. If no role is provided the default "Basico", will be used. It's also not possible to create a user with an admin role through the API. If no name is provided the username will be used as name.
+ *    description: Create a new user with the given username and password.<br />If no role is provided the default "Basico", will be used.<br />It's not possible to create a user with an admin role through the API.<br />If no name is provided the username will be used as name.
  *    requestBody:
  *      content:
  *        application/JSON:
  *          schema:
- *            $ref: '#/components/schemas/User'
+ *            $ref: '#/components/schemas/UserForm'
  *    responses:
  *      '201':
  *        description: A successfully created user.
  *        content:
- *         application/json:
- *           schema:
- *            $ref: '#/components/schemas/newUser'
+ *          application/json:
+ *            schema:
+ *              type: 'object'
+ *              properties:
+ *                results:
+ *                  type: 'object'
+ *                  properties:
+ *                    user:
+ *                      type: 'object'
+ *                      properties:
+ *                        uid:
+ *                          type: 'string'
  *      '400':
  *        description: Bad request. A mandatory field was not provided or the password is not strong enough.
  *        content:
@@ -259,12 +273,12 @@ router.put(
  *  delete:
  *    tags:
  *      - users
- *    summary: Get User
+ *    summary: Delete User
  *    description: Deletes the user with the provided id.
  *    parameters:
  *      - name: uid
  *        in: path
- *        description: Id of user to eliminate.
+ *        description: Id of the user to eliminate.
  *        required: true
  *        schema:
  *          type: integer
