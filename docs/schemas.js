@@ -105,7 +105,8 @@ const MaterialForm = {
     },
     productionState: {
       type: 'string',
-      // pattern: /^Disponible|En curso$/,
+      default: 'Disponible',
+      pattern: /(Disponible|En Curso)/,
     },
     edition: {
       type: 'string',
@@ -236,9 +237,11 @@ const UserForm = {
     },
     name: {
       type: 'string',
+      default: 'username',
     },
     role: {
       type: 'string',
+      default: 'Basico',
     },
   },
   required: ['username', 'password'],

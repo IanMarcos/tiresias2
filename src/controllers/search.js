@@ -1,17 +1,8 @@
+import { formatLimitAndPage } from '../helpers/formatters.js';
 import UnifiedSearchService from '../services/unified-search.js';
 
 const searchMaterialsAndAuthors = async (req, res) => {
-  let { limit = 10, page = 1 } = req.query;
-  if (
-    Number.isNaN(Number(limit)) ||
-    Number.isNaN(Number(page)) ||
-    limit <= 0 ||
-    page <= 0
-  ) {
-    limit = 10;
-    page = 1;
-  }
-  if (page > 0) page -= 1;
+  const { limit, page } = formatLimitAndPage(req.query);
 
   const { query } = req.body;
   const results = await UnifiedSearchService.searchMaterialsandAuthors({

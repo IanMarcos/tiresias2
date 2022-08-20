@@ -10,9 +10,9 @@ class UsersService {
     this.#modelInstance = userInstance;
   }
 
-  async getUsers() {
+  async getUsers(limit, page) {
     try {
-      return await UserDAO.getAll(this.#modelInstance);
+      return await UserDAO.getAll(this.#modelInstance, { limit, page });
     } catch (error) {
       return { err: error.message };
     }

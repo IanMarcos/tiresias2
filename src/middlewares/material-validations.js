@@ -151,7 +151,7 @@ const validateOptFields = (req, res, next) => {
     return res.status(400).json({ results: { err: '40004 (resume)' } });
   }
 
-  const validStates = ['Disponible', 'En curso'];
+  const validStates = ['Disponible', 'En Curso'];
   if (productionState && !validStates.includes(productionState)) {
     return res
       .status(400)

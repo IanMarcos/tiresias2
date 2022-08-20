@@ -1,9 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { extractRolesIds } from './utils.js';
 
-/* eslint-disable no-param-reassign */
 const convertBytesToMB = (bytes) => bytes / 1024 ** 2;
 
-// TODO double check the case if no ',' is included
 const splitPersonNames = (person) => {
   if (!person.includes(',')) {
     return { lastName: person, names: '' };
@@ -40,6 +39,21 @@ const formatHTTPResponse = (initialStatus, data) => {
   }
 
   return { results, statusCode };
+};
+
+const formatLimitAndPage = ({ limit = 10, page = 1 }) => {
+  if (
+    Number.isNaN(Number(limit)) ||
+    Number.isNaN(Number(page)) ||
+    limit <= 0 ||
+    page <= 0
+  ) {
+    limit = 10;
+    page = 1;
+  }
+  if (page > 0) page -= 1;
+
+  return { limit, page };
 };
 
 /**
@@ -97,6 +111,7 @@ const removeIdFromObj = (Obj) => delete Obj.id;
 export {
   convertBytesToMB,
   formatHTTPResponse,
+  formatLimitAndPage,
   splitPersonNames,
   replacePeopleWithRoles,
   removeIdsFromMaterial,

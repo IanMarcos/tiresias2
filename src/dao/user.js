@@ -29,7 +29,14 @@ class UserDAO {
     }
   }
 
-  static async getAll(User) {
+  /**
+   * Creates a new user in the DB.
+   * @param {Model} User - Instance of objection.js model for 'User'.
+   * @param {Object} args
+   * @param {number} args.limit - Number of user to retrieve.
+   * @param {number} args.page
+   */
+  static async getAll(User, { limit, page }) {
     try {
       return await User.query()
         .select(
@@ -39,7 +46,9 @@ class UserDAO {
           'RolUsuario.nombre AS rol'
         )
         .join('RolUsuario', 'Usuario.rol_usuario_id', 'RolUsuario.id')
-        .where('eliminado', 0);
+        .where('eliminado', 0)
+        .limit(limit)
+        .offset(limit * page);
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);

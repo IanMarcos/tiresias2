@@ -29,6 +29,19 @@ const router = Router();
  *      - users
  *    summary: Get all users
  *    description: Gets all users in the Tiresias Database.
+ *    parameters:
+ *      - in: path
+ *        name: limit
+ *        description: Number of items to retrieve per page.
+ *        schema:
+ *          type: integer
+ *        default: 20
+ *      - in: path
+ *        name: page
+ *        description: Numer of the page to be retrieven.
+ *        schema:
+ *          type: integer
+ *        default: 1
  *    responses:
  *      '200':
  *        description: OK. All users retrieved successfully.
@@ -128,7 +141,7 @@ router.get(
  *    tags:
  *      - users
  *    summary: Create a new user
- *    description: Create a new user with the given username and password.<br />If no role is provided the default "Basico", will be used.<br />It's not possible to create a user with an admin role through the API.<br />If no name is provided the username will be used as name.
+ *    description: Create a new user with the given username and password. It's not possible to create a user with an admin role through the API.
  *    requestBody:
  *      content:
  *        application/JSON:

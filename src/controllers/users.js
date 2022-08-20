@@ -1,5 +1,8 @@
 import UsersService from '../services/user.js';
-import { formatHTTPResponse } from '../helpers/formatters.js';
+import {
+  formatHTTPResponse,
+  formatLimitAndPage,
+} from '../helpers/formatters.js';
 
 const createUser = async (req, res) => {
   const userService = new UsersService();
@@ -25,11 +28,12 @@ const getUser = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
+  const { limit, page } = formatLimitAndPage(req.query);
   const userService = new UsersService();
 
   let statusCode = 200;
 
-  const results = await userService.getUsers();
+  const results = await userService.getUsers(limit, page);
   if (results.err) statusCode = 500;
 
   return res.status(statusCode).json({ results });

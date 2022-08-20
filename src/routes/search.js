@@ -13,6 +13,19 @@ const router = Router();
  *      - search
  *    summary: Search of materials and authors
  *    description: Performs a query on the database to find materials with a name similar to the search term, as well as look for authors whose names or last name contains the search term.
+ *    parameters:
+ *      - in: path
+ *        name: limit
+ *        description: Number of items to retrieve per page.
+ *        schema:
+ *          type: integer
+ *        default: 10
+ *      - in: path
+ *        name: page
+ *        description: Numer of the page to be retrieven.
+ *        schema:
+ *          type: integer
+ *        default: 1
  *    requestBody:
  *      content:
  *        application/JSON:
@@ -22,7 +35,7 @@ const router = Router();
  *              query:
  *                type: 'string'
  *            required:
- *              -query
+ *              - query
  *    responses:
  *      '200':
  *        description: OK. A list of materials and a list of authors have successfully been retrieved.
