@@ -109,7 +109,10 @@ class UserDAO {
     if (roleId) queryObject.rolUsuarioId = roleId;
 
     try {
-      return await User.query().findById(id).patch(queryObject);
+      return await User.query()
+        .findById(id)
+        .patch(queryObject)
+        .where('eliminado', 0);
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);
@@ -118,7 +121,10 @@ class UserDAO {
 
   static async delete(User, id) {
     try {
-      return await User.query().findById(id).patch({ eliminado: 1 });
+      return await User.query()
+        .findById(id)
+        .where('eliminado', 0)
+        .patch({ eliminado: 1 });
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);

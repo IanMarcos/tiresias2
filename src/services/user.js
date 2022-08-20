@@ -74,17 +74,13 @@ class UsersService {
   async updateUser(data) {
     const userData = { ...data };
     try {
-      if (!(await this.isActiveUser(data.id))) {
-        return { err: 'Usuario no encontrado/404' };
-      }
-
       if (isDefined(data.role)) {
         userData.roleId = await RolesDAO.getRoleId(UserRole, data.role);
         delete userData.role;
       }
 
       const result = await UserDAO.update(this.#modelInstance, userData);
-      if (result === 0) return { err: 'No se pudo actualizar' };
+      if (result === 0) return { err: 'Usuario no encontrado/404' };
       return {};
     } catch (error) {
       return { err: error.message };
@@ -93,23 +89,10 @@ class UsersService {
 
   async deleteUser(id) {
     try {
-      if (!(await this.isActiveUser(id)))
-        return { err: 'Usuario no encontrado/404' };
-
       const result = await UserDAO.delete(this.#modelInstance, id);
 
       if (result === 0) return { err: 'Usuario no encontrado/404' };
       return {};
-    } catch (error) {
-      return { err: error.message };
-    }
-  }
-
-  async isActiveUser(id) {
-    try {
-      const user = await UserDAO.getById(this.#modelInstance, id);
-      if (!user) return false;
-      return true;
     } catch (error) {
       return { err: error.message };
     }

@@ -86,7 +86,10 @@ class MaterialDAO {
    */
   static async delete(Material, id) {
     try {
-      return await Material.query().findById(id).patch({ eliminado: 1 });
+      return await Material.query()
+        .findById(id)
+        .where('eliminado', 0)
+        .patch({ eliminado: 1 });
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);

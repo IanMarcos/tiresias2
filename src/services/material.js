@@ -183,7 +183,6 @@ class MaterialService {
 
   static async deleteMaterial(id) {
     try {
-      // TODO Check if exist first
       const result = await MaterialDAO.delete(Material, id);
       if (result === 0) return { err: 'Material no encontrado' };
       return {};
