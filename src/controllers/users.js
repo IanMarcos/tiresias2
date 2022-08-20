@@ -36,7 +36,7 @@ const getAllUsers = async (req, res) => {
   const results = await userService.getUsers(limit, page);
   if (results.err) statusCode = 500;
 
-  return res.status(statusCode).json({ results });
+  res.status(statusCode).json({ results });
 };
 
 const updateUser = async (req, res) => {

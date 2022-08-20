@@ -35,16 +35,16 @@ const router = Router();
  *        description: Number of items to retrieve per page.
  *        schema:
  *          type: integer
- *        default: 20
+ *        default: 10
  *      - in: path
  *        name: page
- *        description: Numer of the page to be retrieven.
+ *        description: Number of the page to be retrieven.
  *        schema:
  *          type: integer
  *        default: 1
  *    responses:
  *      '200':
- *        description: OK. All users retrieved successfully.
+ *        description: OK. Users retrieved successfully.
  *        content:
  *         application/json:
  *           schema:

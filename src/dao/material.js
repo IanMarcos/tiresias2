@@ -23,11 +23,44 @@ class MaterialDAO {
           'Material.estado_produccion_id',
           'EstadoProduccion.id'
         )
+        .where('eliminado', 0)
         .withGraphFetched('personas')
         .withGraphFetched('ciudadPublicacion')
         .withGraphFetched('ciudadProduccion');
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA01';
+      throw new Error(erroMsg);
+    }
+  }
+
+  static async getAll(Material, { limit, page }) {
+    try {
+      return await Material.query()
+        .select(
+          'Material.*',
+          'FormatoAccesible.nombre AS formatoAccesible',
+          'Editorial.nombre AS editorial',
+          'EstadoProduccion.nombre AS estadoProduccion'
+        )
+        .join(
+          'FormatoAccesible',
+          'Material.formato_accesible_id',
+          'FormatoAccesible.id'
+        )
+        .join('Editorial', 'Material.editorial_id', 'Editorial.id')
+        .join(
+          'EstadoProduccion',
+          'Material.estado_produccion_id',
+          'EstadoProduccion.id'
+        )
+        .where('eliminado', 0)
+        .withGraphFetched('personas')
+        .withGraphFetched('ciudadPublicacion')
+        .withGraphFetched('ciudadProduccion')
+        .limit(limit)
+        .offset(limit * page);
+    } catch (error) {
+      const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);
     }
   }

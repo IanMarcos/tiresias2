@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { Material, PersonMaterial, PersonRole } from '../models/index.js';
 import { MaterialDAO, RolesDAO, PersonMaterialDAO } from '../dao/index.js';
 import { replacePeopleWithRoles } from '../helpers/formatters.js';
@@ -13,7 +14,9 @@ class UnifiedSearchService {
 
       if (materials.length !== 0) {
         const roles = await RolesDAO.getAllRoles(PersonRole);
-        replacePeopleWithRoles(materials, roles);
+        materials.forEach((material) =>
+          replacePeopleWithRoles(material, roles)
+        );
       }
 
       const authors = await PersonMaterialDAO.searchPeopleByRol(

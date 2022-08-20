@@ -1,11 +1,25 @@
 import MaterialService from '../services/material.js';
 import { sanitizeAuthors } from '../middlewares/material-validations.js';
-import { formatHTTPResponse } from '../helpers/formatters.js';
+import {
+  formatHTTPResponse,
+  formatLimitAndPage,
+} from '../helpers/formatters.js';
 
 const getMaterial = async (req, res) => {
   const { id } = req.params;
   const result = await MaterialService.getMaterialById(id);
   const { statusCode, results } = formatHTTPResponse(200, result);
+
+  res.status(statusCode).json({ results });
+};
+
+const getAllMaterials = async (req, res) => {
+  const { limit, page } = formatLimitAndPage(req.query);
+
+  let statusCode = 200;
+
+  const results = await MaterialService.getMaterials(limit, page);
+  if (results.err) statusCode = 500;
 
   res.status(statusCode).json({ results });
 };
@@ -46,4 +60,4 @@ const deleteMaterial = async (req, res) => {
   return res.status(statusCode).send();
 };
 
-export { getMaterial, createMaterial, deleteMaterial };
+export { getMaterial, getAllMaterials, createMaterial, deleteMaterial };

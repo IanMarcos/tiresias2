@@ -3,6 +3,7 @@ import { body } from 'express-validator';
 import {
   createMaterial,
   deleteMaterial,
+  getAllMaterials,
   getMaterial,
 } from '../controllers/material.js';
 import { uploadFile } from '../middlewares/multer.js';
@@ -15,8 +16,59 @@ import {
   validateFiles,
   validateOptFields,
 } from '../middlewares/material-validations.js';
+import { validateJWT } from '../middlewares/jwt-validation.js';
 
 const router = Router();
+
+/**
+ * @swagger
+ * /materials/:
+ *  get:
+ *    tags:
+ *      - materials
+ *    summary: Get all materials
+ *    description: Gets all materials in the Tiresias Database.
+ *    parameters:
+ *      - in: path
+ *        name: limit
+ *        description: Number of items to retrieve per page.
+ *        schema:
+ *          type: integer
+ *        default: 10
+ *      - in: path
+ *        name: page
+ *        description: Number of the page to be retrieven.
+ *        schema:
+ *          type: integer
+ *        default: 1
+ *    responses:
+ *      '200':
+ *        description: OK. Materials retrieved successfully.
+ *        content:
+ *         application/json:
+ *           schema:
+ *             type: 'object'
+ *             properties:
+ *               results:
+ *                 type: 'array'
+ *                 items:
+ *                   $ref: '#/components/schemas/Material'
+ *      '401':
+ *        description: Authorization information is missing or invalid.
+ *        content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/failedRequest'
+ *      '500':
+ *        'description': Server or Database connection failure.
+ *        content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/failedRequest'
+ *    security:
+ *    - bearerAuth: []
+ */
+router.get('/', [validateJWT], getAllMaterials);
 
 /**
  * @swagger

@@ -61,39 +61,37 @@ const formatLimitAndPage = ({ limit = 10, page = 1 }) => {
  * @param {Array} materials Array of objects. Each material must include the property 'personas'
  * @param {Array} roles Array of objects. Each role must contain id and name.
  */
-const replacePeopleWithRoles = (materials, roles) => {
+const replacePeopleWithRoles = (material, roles) => {
   const { authorRoleId, contributorRoleId, narratorRoleId } =
     extractRolesIds(roles);
 
-  materials.forEach((material) => {
-    const authors = [];
-    const contributors = [];
-    let narrator = null;
+  const authors = [];
+  const contributors = [];
+  let narrator = null;
 
-    material.personas.forEach((persona) => {
-      if (persona.rol === authorRoleId) {
-        delete persona.rol;
-        authors.push(persona);
-        return;
-      }
+  material.personas.forEach((persona) => {
+    if (persona.rol === authorRoleId) {
+      delete persona.rol;
+      authors.push(persona);
+      return;
+    }
 
-      if (persona.rol === contributorRoleId) {
-        delete persona.rol;
-        contributors.push(persona);
-        return;
-      }
+    if (persona.rol === contributorRoleId) {
+      delete persona.rol;
+      contributors.push(persona);
+      return;
+    }
 
-      if (persona.rol === narratorRoleId) {
-        delete persona.rol;
-        narrator = persona;
-      }
-    });
-
-    material.autores = authors;
-    material.contribuidores = contributors;
-    material.narrador = narrator;
-    delete material.personas;
+    if (persona.rol === narratorRoleId) {
+      delete persona.rol;
+      narrator = persona;
+    }
   });
+
+  material.autores = authors;
+  material.contribuidores = contributors;
+  material.narrador = narrator;
+  delete material.personas;
 };
 
 const removeIdsFromMaterial = (materialObj) => {

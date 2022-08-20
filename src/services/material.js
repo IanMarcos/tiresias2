@@ -34,9 +34,27 @@ class MaterialService {
       removeIdFromObj(foundMaterial.ciudadProduccion);
 
       const roles = await RolesDAO.getAllRoles(PersonRole);
-      replacePeopleWithRoles([foundMaterial], roles);
+      replacePeopleWithRoles(foundMaterial, roles);
 
       return { material: foundMaterial };
+    } catch (error) {
+      return { err: error.message };
+    }
+  }
+
+  static async getMaterials(limit, page) {
+    try {
+      const materials = await MaterialDAO.getAll(Material, { limit, page });
+      const roles = await RolesDAO.getAllRoles(PersonRole);
+
+      materials.forEach((material) => {
+        removeIdsFromMaterial(material);
+        removeIdFromObj(material.ciudadPublicacion);
+        removeIdFromObj(material.ciudadProduccion);
+        replacePeopleWithRoles(material, roles);
+      });
+
+      return materials;
     } catch (error) {
       return { err: error.message };
     }
