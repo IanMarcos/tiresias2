@@ -5,8 +5,6 @@ import {
   isValidUpdateRequest,
   isValidUsername,
   sanitizeOptionalFields,
-  requesterIsAdmin,
-  requesterIsAdminOrSelf,
   roleIsNotAdmin,
 } from '../middlewares/users-validations.js';
 import { validateResults } from '../middlewares/fields-validator.js';
@@ -17,7 +15,11 @@ import {
   updateUser,
   deleteUser,
 } from '../controllers/users.js';
-import { validateJWT } from '../middlewares/jwt-validation.js';
+import {
+  validateAuthToken,
+  requesterIsAdmin,
+  requesterIsAdminOrSelf,
+} from '../middlewares/auth-validations.js';
 
 const router = Router();
 
@@ -75,7 +77,7 @@ const router = Router();
  *    security:
  *    - bearerAuth: []
  */
-router.get('/', [validateJWT, requesterIsAdmin], getAllUsers);
+router.get('/', [validateAuthToken, requesterIsAdmin], getAllUsers);
 
 /**
  * @swagger
@@ -126,7 +128,7 @@ router.get('/', [validateJWT, requesterIsAdmin], getAllUsers);
 router.get(
   '/:uid',
   [
-    validateJWT,
+    validateAuthToken,
     requesterIsAdminOrSelf,
     param('uid', '40003').isNumeric(),
     validateResults,
@@ -199,7 +201,7 @@ router.get(
 router.post(
   '/',
   [
-    validateJWT,
+    validateAuthToken,
     requesterIsAdmin,
     body('username', '40001').notEmpty().trim(),
     body('username').custom(isValidUsername),
@@ -271,7 +273,7 @@ router.post(
 router.put(
   '/:uid',
   [
-    validateJWT,
+    validateAuthToken,
     requesterIsAdminOrSelf,
     param('uid', '40003').isNumeric(),
     validateResults,
@@ -328,7 +330,7 @@ router.put(
 router.delete(
   '/:uid',
   [
-    validateJWT,
+    validateAuthToken,
     requesterIsAdmin,
     param('uid', '40003').isNumeric(),
     validateResults,

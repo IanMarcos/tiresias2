@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { body } from 'express-validator';
 import { searchMaterialsAndAuthors } from '../controllers/search.js';
 import { validateResults } from '../middlewares/fields-validator.js';
+import { validateAuthToken } from '../middlewares/auth-validations.js';
 
 const router = Router();
 
@@ -76,11 +77,11 @@ const router = Router();
 router.get(
   '/',
   [
+    validateAuthToken,
     body('query', '40001').notEmpty(),
     body('query', '40002').isLength({ min: 3, max: 100 }),
     validateResults,
   ],
   searchMaterialsAndAuthors
 );
-
 export default router;

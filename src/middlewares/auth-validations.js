@@ -8,7 +8,7 @@ import { verifyJWT } from '../helpers/jwt.js';
  * @param {Object} res
  * @param {Function} next
  */
-const validateJWT = async (req, res, next) => {
+const validateAuthToken = async (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
@@ -31,4 +31,27 @@ const validateJWT = async (req, res, next) => {
   return next();
 };
 
-export { validateJWT };
+const requesterIsAdmin = async (req, res, next) => {
+  if (req.requester.role !== 'Administrador') {
+    return res
+      .status(403)
+      .json({ results: { err: 'No está autorizado para esta operación' } });
+  }
+
+  return next();
+};
+
+const requesterIsAdminOrSelf = async (req, res, next) => {
+  if (
+    Number(req.params.uid) !== req.requester.uid &&
+    req.requester.role !== 'Administrador'
+  ) {
+    return res
+      .status(403)
+      .json({ results: { err: 'No está autorizado para esta operación' } });
+  }
+
+  return next();
+};
+
+export { validateAuthToken, requesterIsAdmin, requesterIsAdminOrSelf };

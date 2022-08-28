@@ -41,31 +41,6 @@ const roleIsNotAdmin = (req, res, next) => {
   return next();
 };
 
-const requesterIsAdmin = async (req, res, next) => {
-  if (req.requester.role !== 'Administrador') {
-    return res
-      .status(403)
-      .json({ results: { err: 'No está autorizado para esta operación' } });
-  }
-
-  return next();
-};
-
-const requesterIsAdminOrSelf = async (req, res, next) => {
-  if (
-    Number(req.params.uid) !== req.requester.uid &&
-    req.requester.role !== 'Administrador'
-  ) {
-    return res
-      .status(403)
-      .json({ results: { err: 'No está autorizado para esta operación' } });
-  }
-
-  return next();
-};
-
-// TODO Do requesterIsActiveUser = async () => {}
-
 const isValidUpdateRequest = async (req, res, next) => {
   const { body } = req;
 
@@ -125,8 +100,6 @@ export {
   isValidPassword,
   isValidUpdateRequest,
   isValidUsername,
-  requesterIsAdmin,
-  requesterIsAdminOrSelf,
   roleIsNotAdmin,
   sanitizeOptionalFields,
 };

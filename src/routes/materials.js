@@ -16,7 +16,10 @@ import {
   validateFiles,
   validateOptFields,
 } from '../middlewares/material-validations.js';
-import { validateJWT } from '../middlewares/jwt-validation.js';
+import {
+  validateAuthToken,
+  requesterIsAdmin,
+} from '../middlewares/auth-validations.js';
 
 const router = Router();
 
@@ -68,7 +71,7 @@ const router = Router();
  *    security:
  *    - bearerAuth: []
  */
-router.get('/', [validateJWT], getAllMaterials);
+router.get('/', [validateAuthToken], getAllMaterials);
 
 /**
  * @swagger
@@ -122,7 +125,7 @@ router.get('/', [validateJWT], getAllMaterials);
  *    security:
  *    - bearerAuth: []
  */
-router.get('/:id', getMaterial);
+router.get('/:id', [validateAuthToken], getMaterial);
 
 /**
  * @swagger
@@ -206,6 +209,8 @@ router.post(
     validateFiles,
     validateResults,
     validateOptFields,
+    validateAuthToken,
+    requesterIsAdmin,
     // sanitizeAuthors,
     sanitizeOptFields,
   ],
@@ -257,6 +262,6 @@ router.post(
  *    security:
  *    - bearerAuth: []
  */
-router.delete('/:id', deleteMaterial);
+router.delete('/:id', [validateAuthToken, requesterIsAdmin], deleteMaterial);
 
 export default router;
