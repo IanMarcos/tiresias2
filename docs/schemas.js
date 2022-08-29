@@ -198,6 +198,9 @@ const Material = {
     editorial: {
       type: 'string',
     },
+    productora: {
+      type: 'string',
+    },
     estadoProduccion: {
       type: 'string',
     },

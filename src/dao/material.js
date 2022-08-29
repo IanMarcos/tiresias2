@@ -10,6 +10,7 @@ class MaterialDAO {
           'Material.*',
           'FormatoAccesible.nombre AS formatoAccesible',
           'Editorial.nombre AS editorial',
+          'Productora.nombre AS productora',
           'EstadoProduccion.nombre AS estadoProduccion'
         )
         .join(
@@ -18,6 +19,7 @@ class MaterialDAO {
           'FormatoAccesible.id'
         )
         .join('Editorial', 'Material.editorial_id', 'Editorial.id')
+        .join('Productora', 'Material.productora_id', 'Productora.id')
         .join(
           'EstadoProduccion',
           'Material.estado_produccion_id',
@@ -40,6 +42,7 @@ class MaterialDAO {
           'Material.*',
           'FormatoAccesible.nombre AS formatoAccesible',
           'Editorial.nombre AS editorial',
+          'Productora.nombre AS productora',
           'EstadoProduccion.nombre AS estadoProduccion'
         )
         .join(
@@ -48,6 +51,7 @@ class MaterialDAO {
           'FormatoAccesible.id'
         )
         .join('Editorial', 'Material.editorial_id', 'Editorial.id')
+        .join('Productora', 'Material.productora_id', 'Productora.id')
         .join(
           'EstadoProduccion',
           'Material.estado_produccion_id',
