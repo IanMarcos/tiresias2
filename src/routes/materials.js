@@ -6,7 +6,7 @@ import {
   getAllMaterials,
   getMaterial,
 } from '../controllers/material.js';
-import { uploadFile } from '../middlewares/multer.js';
+import { parseRequestWithMaterialFile } from '../middlewares/multer.js';
 import { validateResults } from '../middlewares/fields-validator.js';
 import {
   fileNotEmpty,
@@ -189,7 +189,7 @@ router.get('/:id', [validateAuthToken], getMaterial);
 router.post(
   '/',
   [
-    uploadFile,
+    parseRequestWithMaterialFile,
     body('title', '40002').trim().isLength({ min: 3, max: 80 }),
     body('author').custom(isValidAuthors),
     body('isbn', '40003').isNumeric().toInt(),

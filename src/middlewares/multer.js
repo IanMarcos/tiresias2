@@ -11,7 +11,7 @@ const getStorageConfig = () =>
     },
   });
 
-const uploadFile = (req, res, next) => {
+const parseRequestWithMaterialFile = (req, res, next) => {
   const multerMiddleware = multer({ storage: getStorageConfig() });
   const upload = multerMiddleware.single('materialFile');
 
@@ -25,7 +25,7 @@ const uploadFile = (req, res, next) => {
     }
     if (err) {
       return res.status(500).json({
-        results: { err: 'Error inesperado subiendo el arrchivo' },
+        results: { err: 'Error inesperado subiendo el archivo' },
       });
     }
 
@@ -33,4 +33,4 @@ const uploadFile = (req, res, next) => {
   });
 };
 
-export { uploadFile };
+export { parseRequestWithMaterialFile };
