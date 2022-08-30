@@ -26,12 +26,12 @@ class PersonMaterialDAO {
    * Creates a new record in the PersonaMaterial table and returns it.
    * @param {Model} PersonMaterial - Instance of an objection.js model.
    * @param {Object} args - Arguments to perform the queries.
-   * @param {string} args.query - Search query to be used on a person names and last name.
+   * @param {string} args.searchTerm - Search query to be used on a person names and last name.
    * @param {string} [args.personRol] - Role name. Defaults to 'Autor'.
    */
   static async searchPeopleByRol(
     PersonMaterial,
-    { query, personRol = 'Autor' }
+    { searchTerm, personRol = 'Autor' }
   ) {
     try {
       const people = await PersonMaterial.query()
@@ -40,8 +40,8 @@ class PersonMaterialDAO {
         .join('RolPersona', 'RolPersona.id', 'PersonaMaterial.rol_persona_id')
         .where((builder) => {
           builder
-            .where('Persona.apellido', 'like', `%${query}%`)
-            .orWhere('Persona.nombres', 'like', `%${query}%`)
+            .where('Persona.apellido', 'like', `%${searchTerm}%`)
+            .orWhere('Persona.nombres', 'like', `%${searchTerm}%`)
             .andWhere('RolPersona.nombre', '=', `${personRol}`);
         })
         .groupBy('persona_id');

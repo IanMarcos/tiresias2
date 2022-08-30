@@ -4,9 +4,9 @@ import UnifiedSearchService from '../services/unified-search.js';
 const searchMaterialsAndAuthors = async (req, res) => {
   const { limit, page } = formatLimitAndPage(req.query);
 
-  const { query } = req.body;
+  const { searchTerm } = req.body;
   const results = await UnifiedSearchService.searchMaterialsandAuthors({
-    query,
+    searchTerm,
     limit,
     page,
   });

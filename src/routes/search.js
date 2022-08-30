@@ -9,7 +9,7 @@ const router = Router();
 /**
  * @swagger
  * /search/:
- *  get:
+ *  post:
  *    tags:
  *      - search
  *    summary: Search of materials and authors
@@ -33,10 +33,10 @@ const router = Router();
  *          schema:
  *            type: 'object'
  *            properties:
- *              query:
+ *              searchTerm:
  *                type: 'string'
  *            required:
- *              - query
+ *              - searchTerm
  *    responses:
  *      '200':
  *        description: OK. A list of materials and a list of authors have successfully been retrieved.
@@ -74,12 +74,12 @@ const router = Router();
  *    security:
  *    - bearerAuth: []
  */
-router.get(
+router.post(
   '/',
   [
     validateAuthToken,
-    body('query', '40001').notEmpty(),
-    body('query', '40002').isLength({ min: 3, max: 100 }),
+    body('searchTerm', '40001').notEmpty(),
+    body('searchTerm', '40002').isLength({ min: 3, max: 100 }),
     validateResults,
   ],
   searchMaterialsAndAuthors

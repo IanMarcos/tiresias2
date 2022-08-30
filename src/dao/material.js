@@ -104,11 +104,11 @@ class MaterialDAO {
    * Creates a new record in the given table and returns it's id.
    * @param {Model} Material - Instance of an objection.js model.
    * @param {Object} args - Arguments to perform the querie.
-   * @param {string} args.query - String to search in the materials.
+   * @param {string} args.searchTerm - String to search in the materials.
    * @param {string} [args.limit] - Number of results per page.
    * @param {string} [args.page] - Page number.
    */
-  static async search(Material, { query, limit = 10, page = 0 }) {
+  static async search(Material, { searchTerm, limit = 10, page = 0 }) {
     try {
       const materials = await Material.query()
         .withGraphFetched('personas')
@@ -122,7 +122,9 @@ class MaterialDAO {
         .join('Editorial', 'Material.editorial_id', 'Editorial.id')
         .where('eliminado', 0)
         .where(
-          raw(`MATCH(titulo) AGAINST ('${query}' IN NATURAL LANGUAGE MODE)`)
+          raw(
+            `MATCH(titulo) AGAINST ('${searchTerm}' IN NATURAL LANGUAGE MODE)`
+          )
         )
         .limit(limit)
         .offset(limit * page);
