@@ -57,16 +57,24 @@ class UserDAO {
 
   static async getById(User, id) {
     try {
-      return await User.query()
+      const user = await User.query()
+        .findById(id)
         .select(
           'Usuario.id',
           'Usuario.nombre_usuario',
           'Usuario.nombre',
-          'RolUsuario.nombre AS rol'
+          'RolUsuario.nombre AS rol',
+          raw(
+            `AES_DECRYPT(contraseña, '${process.env.ENCRYPTION_KEY}') AS contraseña`
+          )
         )
         .join('RolUsuario', 'Usuario.rol_usuario_id', 'RolUsuario.id')
-        .findById(id)
         .where('eliminado', 0);
+
+      if (user) {
+        user.contraseña = user.contraseña.toString();
+      }
+      return user;
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);
