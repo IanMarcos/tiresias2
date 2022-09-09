@@ -1,5 +1,5 @@
 import { convertBytesToMB } from '../helpers/formatters.js';
-import { getFileFormatFromMimetype } from '../helpers/utils.js';
+import { getFileFormatFromMimetype, isDefined } from '../helpers/utils.js';
 
 // Middleware Customs
 const fileNotEmpty = (req, res, next) => {
@@ -31,26 +31,34 @@ const isValidYear = (year) => {
 const sanitizeAuthors = (req) => {
   if (typeof req.body.author === 'string') {
     req.body.authors = [req.body.author.trim()];
-    delete req.body.author;
-    return;
-    // next();
+  } else {
+    req.body.authors = req.body.author.map((author) => author.trim());
   }
 
-  req.body.authors = req.body.author.map((author) => author.trim());
   delete req.body.author;
+  // next();
 };
 
 const sanitizeContributors = (req) => {
   if (typeof req.body.contributor === 'string') {
     req.body.contributors = [req.body.contributor.trim()];
-    delete req.body.contributor;
-    return;
+  } else {
+    req.body.contributors = req.body.contributor.map((contributor) =>
+      contributor.trim()
+    );
   }
 
-  req.body.contributors = req.body.contributor.map((contributor) =>
-    contributor.trim()
-  );
   delete req.body.contributor;
+};
+
+const sanitizeCategories = (req) => {
+  if (typeof req.body.category === 'string') {
+    req.body.categories = [req.body.category.trim()];
+  } else {
+    req.body.categories = req.body.category.map((category) => category.trim());
+  }
+
+  delete req.body.category;
 };
 
 const sanitizeOptFields = (req, res, next) => {
@@ -58,7 +66,7 @@ const sanitizeOptFields = (req, res, next) => {
     edition,
     contributor,
     recipients,
-    categories,
+    category,
     narrator,
     duration,
     resume,
@@ -66,13 +74,17 @@ const sanitizeOptFields = (req, res, next) => {
   } = req.body;
 
   if (!edition) req.body.edition = null;
-  if (contributor) {
+  if (isDefined(contributor)) {
     sanitizeContributors(req);
   } else {
     req.body.contributors = [];
   }
   if (!recipients) req.body.recipients = null;
-  if (!categories || !Array.isArray(categories)) req.body.categories = [];
+  if (isDefined(category)) {
+    sanitizeCategories(req);
+  } else {
+    req.body.categories = [];
+  }
   if (!narrator) req.body.narrator = '';
   if (!duration) req.body.duration = null;
   if (!resume) req.body.resume = null;

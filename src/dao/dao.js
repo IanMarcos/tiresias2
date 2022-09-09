@@ -33,6 +33,15 @@ class Dao {
       throw new Error(erroMsg);
     }
   }
+
+  static async getAll(Model, errCode = 'EDA00') {
+    try {
+      return await Model.query();
+    } catch (error) {
+      const erroMsg = extractSqlError(error) || errCode;
+      throw new Error(erroMsg);
+    }
+  }
 }
 
 export default Dao;

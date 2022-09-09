@@ -1,8 +1,10 @@
 import AccesibleFormat from './accesible-format.js';
+import Category from './category.js';
 import City from './city.js';
 import Country from './country.js';
 import Language from './language.js';
 import Material from './material.js';
+import MaterialCategory from './material-category.js';
 import Person from './person.js';
 import PersonMaterial from './person-material.js';
 import PersonRole from './person-role.js';
@@ -14,10 +16,12 @@ import UserRole from './user-role.js';
 
 export {
   AccesibleFormat,
+  Category,
   City,
   Country,
   Language,
   Material,
+  MaterialCategory,
   Person,
   PersonMaterial,
   PersonRole,

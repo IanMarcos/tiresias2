@@ -1,14 +1,17 @@
 import { transaction } from 'objection';
 import { MaterialDAO, RolesDAO } from '../dao/index.js';
 import {
+  Category,
   City,
   Publisher,
   Material,
+  MaterialCategory,
   Producer,
   PersonMaterial,
   Person,
   PersonRole,
 } from '../models/index.js';
+import CategoriesService from './categories.js';
 import CityService from './city.js';
 import FormatService from './format.js';
 import PublisherService from './publisher.js';
@@ -78,15 +81,19 @@ class MaterialService {
       materialData.urlArchivo = 'api.example/files/1234';
 
       const newId = await transaction(
+        Category,
         City,
         Material,
+        MaterialCategory,
         Person,
         PersonMaterial,
         Producer,
         Publisher,
         async (
+          CategoryModel,
           CityModel,
           MaterialModel,
+          MaterialCategoryModel,
           PersonModel,
           PersonMaterialModel,
           ProducerModel,
@@ -101,6 +108,10 @@ class MaterialService {
           const personMaterialService = new PersonMaterialService(
             PersonMaterialModel,
             PersonModel
+          );
+          const categoriesService = new CategoriesService(
+            MaterialCategoryModel,
+            CategoryModel
           );
 
           const ids = await Promise.all([
@@ -170,7 +181,14 @@ class MaterialService {
               role: 'Narrador',
             });
           }
-          // TODO Verifica/Guarda categorias
+
+          if (req.categories.length > 0) {
+            await categoriesService.addCategoriesToMaterial({
+              categories: req.categories,
+              materialId: newMaterial.id,
+            });
+          }
+
           // TODO Log de la transacción
           return newMaterial.id;
         }
