@@ -1,6 +1,8 @@
 import { Model, snakeCaseMappers } from 'objection';
-import Person from './person.js';
+import Category from './category.js';
 import City from './city.js';
+import MaterialCategory from './material-category.js';
+import Person from './person.js';
 import PersonMaterial from './person-material.js';
 
 class Material extends Model {
@@ -26,6 +28,19 @@ class Material extends Model {
             extra: { rol: 'rol_persona_id' },
           },
           to: 'Persona.id',
+        },
+      },
+      categorias: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Category,
+        join: {
+          from: 'Material.id',
+          through: {
+            modelClass: MaterialCategory,
+            from: 'CategoriasMaterial.material_id',
+            to: 'CategoriasMaterial.categoria_id',
+          },
+          to: 'Categoria.id',
         },
       },
       ciudadPublicacion: {

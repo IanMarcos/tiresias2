@@ -28,7 +28,8 @@ class MaterialDAO {
         .where('eliminado', 0)
         .withGraphFetched('personas')
         .withGraphFetched('ciudadPublicacion')
-        .withGraphFetched('ciudadProduccion');
+        .withGraphFetched('ciudadProduccion')
+        .withGraphFetched('categorias');
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);
@@ -61,6 +62,7 @@ class MaterialDAO {
         .withGraphFetched('personas')
         .withGraphFetched('ciudadPublicacion')
         .withGraphFetched('ciudadProduccion')
+        .withGraphFetched('categorias')
         .limit(limit)
         .offset(limit * page);
     } catch (error) {
