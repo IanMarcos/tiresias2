@@ -1,3 +1,15 @@
+const baseObject = {
+  type: 'object',
+  properties: {
+    id: {
+      type: 'string',
+    },
+    nombre: {
+      type: 'string',
+    },
+  },
+};
+
 const searchedMaterial = {
   type: 'object',
   properties: {
@@ -210,6 +222,12 @@ const Material = {
     ciudadProduccion: {
       $ref: '#/components/schemas/City',
     },
+    categorias: {
+      type: 'array',
+      items: {
+        $ref: '#/components/schemas/baseObject',
+      },
+    },
     autores: {
       type: 'array',
       items: {
@@ -311,6 +329,7 @@ const failedRequest = {
 };
 
 export default {
+  baseObject,
   searchedMaterial,
   Person,
   City,
