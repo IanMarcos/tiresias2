@@ -2,7 +2,6 @@ import cors from 'cors';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import configDB from '../db/index.js';
-import { startUnusedFilesCleaner } from './config.js';
 import swaggerSetup from '../../docs/swagger.js';
 import authRoutes from '../routes/auth.js';
 import materialsRoutes from '../routes/materials.js';
@@ -30,7 +29,6 @@ class Server {
     this.#routes();
     configDB();
     this.#setupSwagger();
-    startUnusedFilesCleaner('uploads');
   }
 
   #middlewares() {
