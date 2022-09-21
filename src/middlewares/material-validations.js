@@ -96,20 +96,14 @@ const sanitizeOptFields = (req, res, next) => {
 };
 
 const validateFiles = (req, res, next) => {
-  if (!req.file) {
-    next();
-  }
-
-  if (req.file.path.includes('\\')) {
-    req.file.path = req.file.path.replace('\\', '/');
-  }
-
-  // TODO no quemar aquí
   const validFormats = ['docx', 'pdf'];
 
   if (!validFormats.includes(getFileFormatFromMimetype(req.file.mimetype))) {
     return res.status(400).json({ results: { err: '40003 (materialFile)' } });
   }
+
+  req.body.filePath = req.file.path;
+
   return next();
 };
 

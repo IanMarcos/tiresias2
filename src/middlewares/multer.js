@@ -4,7 +4,7 @@ import multer from 'multer';
 const getStorageConfig = () =>
   multer.diskStorage({
     destination(req, file, cb) {
-      cb(null, 'uploads/');
+      cb(null, process.env.PATH_TO_FILES);
     },
     filename(req, file, cb) {
       cb(null, Date.now() + path.extname(file.originalname));

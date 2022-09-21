@@ -24,6 +24,7 @@ import {
   removeIdsFromMaterial,
   replacePeopleWithRoles,
 } from '../helpers/formatters.js';
+import { deleteFile } from '../helpers/file-cleaner.js';
 
 class MaterialService {
   static async getMaterialById(id) {
@@ -70,6 +71,7 @@ class MaterialService {
       isbn: req.isbn,
       añoPublicacion: req.publishYear,
       añoProduccion: req.productionYear,
+      urlArchivo: req.filePath,
       destinatarios: req.recipients,
       duracion: req.duration,
       tamañoFichero: req.fileSize,
@@ -77,9 +79,6 @@ class MaterialService {
     };
 
     try {
-      // TODO Save file in storage
-      materialData.urlArchivo = 'api.example/files/1234';
-
       const newId = await transaction(
         Category,
         City,
@@ -195,6 +194,7 @@ class MaterialService {
       );
       return { id: newId };
     } catch (error) {
+      deleteFile(req.filePath);
       return { err: error.message };
     }
   }
