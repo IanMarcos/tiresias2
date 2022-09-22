@@ -106,7 +106,21 @@ const removeIdsFromMaterial = (materialObj) => {
 
 const removeIdFromObj = (Obj) => delete Obj.id;
 
+const addErrorToRequest = (req, msg, param, location) => {
+  if (typeof req === 'object') {
+    if (!req.err) {
+      req.err = [];
+    }
+    req.err.push({
+      msg,
+      param,
+      location,
+    });
+  }
+};
+
 export {
+  addErrorToRequest,
   convertBytesToMB,
   formatHTTPResponse,
   formatLimitAndPage,

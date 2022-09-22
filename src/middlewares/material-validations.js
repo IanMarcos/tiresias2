@@ -1,10 +1,10 @@
-import { convertBytesToMB } from '../helpers/formatters.js';
+import { addErrorToRequest, convertBytesToMB } from '../helpers/formatters.js';
 import { getFileFormatFromMimetype, isDefined } from '../helpers/utils.js';
 
 // Middleware Customs
 const fileNotEmpty = (req, res, next) => {
   if (!req.file) {
-    return res.status(400).json({ results: { err: '40001 (materialFile)' } });
+    addErrorToRequest(req, '40001', 'materialFile', 'body');
   }
   return next();
 };
@@ -99,10 +99,10 @@ const validateFiles = (req, res, next) => {
   const validFormats = ['docx', 'pdf'];
 
   if (!validFormats.includes(getFileFormatFromMimetype(req.file.mimetype))) {
-    return res.status(400).json({ results: { err: '40003 (materialFile)' } });
+    addErrorToRequest(req, '40003', 'materialFile', 'body');
+  } else {
+    req.body.filePath = req.file.path;
   }
-
-  req.body.filePath = req.file.path;
 
   return next();
 };
@@ -120,16 +120,16 @@ const validateOptFields = (req, res, next) => {
   } = req.body;
 
   if (edition && (typeof edition !== 'string' || edition.length() > 45)) {
-    return res.status(400).json({ results: { err: '40004 (edition)' } });
+    addErrorToRequest(req, '40004', 'edition', 'body');
   }
 
   if (contributors) {
     if (typeof contributors !== 'string' && !Array.isArray(contributors)) {
-      return res.status(400).json({ results: { err: '40003 (contributors)' } });
+      addErrorToRequest(req, '40003', 'contributors', 'body');
     }
 
     if (Array.isArray(contributors) && contributors.length === 0) {
-      return res.status(400).json({ results: { err: '40003 (contributors)' } });
+      addErrorToRequest(req, '40003', 'contributors', 'body');
     }
   }
 
@@ -137,31 +137,29 @@ const validateOptFields = (req, res, next) => {
     recipients &&
     (typeof recipients !== 'string' || recipients.length() > 80)
   ) {
-    return res.status(400).json({ results: { err: '40004 (recipients)' } });
+    addErrorToRequest(req, '40004', 'recipients', 'body');
   }
 
   if (categories && !Array.isArray(categories)) {
-    return res.status(400).json({ results: { err: '40003 (categories)' } });
+    addErrorToRequest(req, '40003', 'categories', 'body');
   }
 
   if (narrator && typeof narrator !== 'string') {
-    return res.status(400).json({ results: { err: '40004 (narrator)' } });
+    addErrorToRequest(req, '40004', 'narrator', 'body');
   }
 
   const timeFormat = /[0-9]?[0-9][0-9]:[0-5][0-9]:[0-5][0-9]$/;
   if (duration && !timeFormat.test(duration)) {
-    return res.status(400).json({ results: { err: '40003 (duration)' } });
+    addErrorToRequest(req, '40003', 'duration', 'body');
   }
 
   if (resume && (typeof resume !== 'string' || resume.length() > 1800)) {
-    return res.status(400).json({ results: { err: '40004 (resume)' } });
+    addErrorToRequest(req, '40004', 'resume', 'body');
   }
 
   const validStates = ['Disponible', 'En Curso'];
   if (productionState && !validStates.includes(productionState)) {
-    return res
-      .status(400)
-      .json({ results: { err: '40004 (productionState)' } });
+    addErrorToRequest(req, '40004', 'productionState', 'body');
   }
 
   return next();

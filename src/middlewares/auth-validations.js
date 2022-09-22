@@ -12,18 +12,16 @@ const validateAuthToken = async (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return res
-      .status(401)
-      .json({ results: { err: 'No se encontraron credenciales' } });
+    req.noValidToken = true;
+    return next();
   }
 
   const [, token] = authorization.split(' ');
 
   const requester = verifyJWT(token);
   if (!requester.uid) {
-    return res
-      .status(401)
-      .json({ results: { err: 'Token de autorización invalido' } });
+    req.noValidToken = true;
+    return next();
   }
 
   req.requester = requester;
@@ -32,10 +30,8 @@ const validateAuthToken = async (req, res, next) => {
 };
 
 const requesterIsAdmin = async (req, res, next) => {
-  if (req.requester.role !== 'Administrador') {
-    return res
-      .status(403)
-      .json({ results: { err: 'No está autorizado para esta operación' } });
+  if (req.requester?.role !== 'Administrador') {
+    req.unauthorized = true;
   }
 
   return next();
@@ -44,11 +40,9 @@ const requesterIsAdmin = async (req, res, next) => {
 const requesterIsAdminOrSelf = async (req, res, next) => {
   if (
     Number(req.params.uid) !== req.requester.uid &&
-    req.requester.role !== 'Administrador'
+    req.requester?.role !== 'Administrador'
   ) {
-    return res
-      .status(403)
-      .json({ results: { err: 'No está autorizado para esta operación' } });
+    req.unauthorized = true;
   }
 
   return next();

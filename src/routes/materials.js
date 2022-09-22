@@ -190,6 +190,8 @@ router.post(
   '/',
   [
     parseRequestWithMaterialFile,
+    validateAuthToken,
+    requesterIsAdmin,
     body('title', '40002').trim().isLength({ min: 3, max: 80 }),
     body('author').custom(isValidAuthors),
     body('isbn', '40003').isNumeric().toInt(),
@@ -207,12 +209,10 @@ router.post(
     body('productionYear').custom(isValidYear),
     fileNotEmpty,
     validateFiles,
-    validateResults,
     validateOptFields,
-    validateAuthToken,
-    requesterIsAdmin,
     // sanitizeAuthors,
     sanitizeOptFields,
+    validateResults,
   ],
   createMaterial
 );

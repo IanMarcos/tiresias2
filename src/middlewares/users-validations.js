@@ -1,3 +1,4 @@
+import { addErrorToRequest } from '../helpers/formatters.js';
 import {
   areStringsEqual,
   isDefined,
@@ -26,19 +27,17 @@ const isValidUsername = (username) => {
 
 const isValidPassword = (req, res, next) => {
   if (!isPasswordStrong(req.body.password)) {
-    return res
-      .status(400)
-      .json({ results: { err: '40003 Contraseña invalida' } });
+    addErrorToRequest(req, 'Contraseña invalida', 'password', 'body');
   }
-  return next();
+  next();
 };
 
 const roleIsNotAdmin = (req, res, next) => {
   const { role } = req.body;
   if (isDefined(role) && areStringsEqual(role, 'Administrador')) {
-    return res.status(403).json({ results: { err: 'Operación prohibida' } });
+    req.unauthorized = true;
   }
-  return next();
+  next();
 };
 
 const isValidUpdateRequest = async (req, res, next) => {

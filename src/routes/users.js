@@ -77,7 +77,11 @@ const router = Router();
  *    security:
  *    - bearerAuth: []
  */
-router.get('/', [validateAuthToken, requesterIsAdmin], getAllUsers);
+router.get(
+  '/',
+  [validateAuthToken, requesterIsAdmin, validateResults],
+  getAllUsers
+);
 
 /**
  * @swagger
@@ -209,6 +213,7 @@ router.post(
     validateResults,
     roleIsNotAdmin,
     isValidPassword,
+    validateResults,
     sanitizeOptionalFields,
   ],
   createUser
