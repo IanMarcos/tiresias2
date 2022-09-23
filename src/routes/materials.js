@@ -61,13 +61,13 @@ const router = Router();
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '500':
  *        'description': Server or Database connection failure.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *    security:
  *    - bearerAuth: []
  */
@@ -103,25 +103,25 @@ router.get('/', [validateAuthToken], getAllMaterials);
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '403':
  *        description: The user doing the request is not authorized for this kind of operations.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '404':
  *        description: The material doesn't exist.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '500':
  *        'description': Server or Database connection failure.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *    security:
  *    - bearerAuth: []
  */
@@ -158,31 +158,31 @@ router.get('/:id', [validateAuthToken], getMaterial);
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/errorArray'
  *      '401':
  *        description: Authorization information is missing or invalid.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '403':
  *        description: The user doing the request is not authorized for this kind of operations.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '409':
  *        description: A unique field like isbn is already registered.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '500':
  *        description: Server or Database connection failure.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *    security:
  *    - bearerAuth: []
  */
@@ -240,25 +240,25 @@ router.post(
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '403':
  *        description: The user doing the request is not authorized for this kind of operations.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '404':
  *        description: The material doesn't exist.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '500':
  *        'description': Server or Database connection failure.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *    security:
  *    - bearerAuth: []
  */

@@ -61,19 +61,19 @@ const router = Router();
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '403':
  *        description: The user doing the request is not authorized for this kind of operations.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '500':
  *        'description': Server or Database connection failure.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *    security:
  *    - bearerAuth: []
  */
@@ -113,19 +113,19 @@ router.get(
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '403':
  *        description: The user doing the request is not authorized for this kind of operations.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '500':
  *        'description': Server or Database connection failure.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *    security:
  *    - bearerAuth: []
  */
@@ -174,31 +174,31 @@ router.get(
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/errorArray'
  *      '401':
  *        description: Authorization information is missing or invalid.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '403':
  *        description: The user doing the request is not authorized for this kind of operations.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '409':
  *        description: The username must be unique.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '500':
  *        description: Server or Database connection failure.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *    security:
  *    - bearerAuth: []
  */
@@ -247,31 +247,31 @@ router.post(
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/errorArray'
  *      '401':
  *        description: Authorization information is missing or invalid.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '403':
  *        description: The user doing the request is not authorized for this kind of operations.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '404':
  *        description: The user doesn't exist.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '500':
  *        'description': Server or Database connection failure.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *    security:
  *    - bearerAuth: []
  */
@@ -310,25 +310,25 @@ router.put(
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '403':
  *        description: The user doing the request is not authorized for this kind of operations.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '404':
  *        description: The user doesn't exist.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '500':
  *        'description': Server or Database connection failure.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *    security:
  *    - bearerAuth: []
  */

@@ -1,5 +1,5 @@
 import swaggerJSDoc from 'swagger-jsdoc';
-import schemas from './schemas.js';
+import schemas from './schemas/index.js';
 
 const swaggerDefinition = {
   openapi: '3.0.3',

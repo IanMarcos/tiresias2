@@ -36,25 +36,25 @@ const router = Router();
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '401':
  *        description: The authentication failed.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '404':
  *        description: The user doesn't exist.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '500':
  *        'description': Server or Database connection failure.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  */
 router.post(
   '/signin',

@@ -58,19 +58,19 @@ const router = Router();
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/errorArray'
  *      '401':
  *        description: Authorization information is missing or invalid.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *      '500':
  *        description: Server or Database connection failure.
  *        content:
  *           application/json:
  *             schema:
- *              $ref: '#/components/schemas/failedRequest'
+ *              $ref: '#/components/schemas/singleError'
  *    security:
  *    - bearerAuth: []
  */
