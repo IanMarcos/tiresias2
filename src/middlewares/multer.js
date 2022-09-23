@@ -1,4 +1,3 @@
-import path from 'path';
 import multer from 'multer';
 
 const getStorageConfig = () =>
@@ -7,7 +6,7 @@ const getStorageConfig = () =>
       cb(null, process.env.PATH_TO_FILES);
     },
     filename(req, file, cb) {
-      cb(null, Date.now() + path.extname(file.originalname));
+      cb(null, Date.now().toString());
     },
   });
 
