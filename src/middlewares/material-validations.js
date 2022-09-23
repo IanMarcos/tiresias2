@@ -101,7 +101,7 @@ const validateFiles = (req, res, next) => {
   if (!validFormats.includes(getFileFormatFromMimetype(req.file.mimetype))) {
     addErrorToRequest(req, '40003', 'materialFile', 'body');
   } else {
-    req.body.filePath = req.file.path;
+    req.body.filePath = req.file.filename;
   }
 
   return next();

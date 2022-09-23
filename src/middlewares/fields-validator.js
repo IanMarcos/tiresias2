@@ -15,13 +15,11 @@ const validateResults = (req, res, next) => {
     if (req.file) {
       deleteFile(req.file.path);
     }
-    return res
-      .status(403)
-      .json({
-        results: {
-          err: 'No está autorizado para esta operación o la operación está prohibida',
-        },
-      });
+    return res.status(403).json({
+      results: {
+        err: 'No está autorizado para esta operación o la operación está prohibida',
+      },
+    });
   }
 
   const errors = validationResult(req);
