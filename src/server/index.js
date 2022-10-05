@@ -4,6 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import configDB from '../db/index.js';
 import swaggerSetup from '../../docs/swagger.js';
 import authRoutes from '../routes/auth.js';
+import filesRoutes from '../routes/files.js';
 import materialsRoutes from '../routes/materials.js';
 import searchRoutes from '../routes/search.js';
 import usersRoutes from '../routes/users.js';
@@ -19,6 +20,7 @@ class Server {
     this.#port = port || 8080;
     this.#paths = {
       auth: '/auth',
+      files: '/files',
       materials: '/materials',
       search: '/search',
       users: '/users',
@@ -38,6 +40,7 @@ class Server {
 
   #routes() {
     this.#app.use(this.#paths.auth, authRoutes);
+    this.#app.use(this.#paths.files, filesRoutes);
     this.#app.use(this.#paths.materials, materialsRoutes);
     this.#app.use(this.#paths.search, searchRoutes);
     this.#app.use(this.#paths.users, usersRoutes);

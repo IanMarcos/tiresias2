@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator';
-import { deleteFile } from '../helpers/file-cleaner.js';
+import { deleteFile } from '../helpers/file-manager.js';
 
 const validateResults = (req, res, next) => {
   if (req.noValidToken) {

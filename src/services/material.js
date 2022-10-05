@@ -24,7 +24,7 @@ import {
   removeIdsFromMaterial,
   replacePeopleWithRoles,
 } from '../helpers/formatters.js';
-import { deleteFile } from '../helpers/file-cleaner.js';
+import { deleteFile, getFilePath } from '../helpers/file-manager.js';
 
 class MaterialService {
   static async getMaterialById(id) {
@@ -41,6 +41,20 @@ class MaterialService {
       replacePeopleWithRoles(foundMaterial, roles);
 
       return { material: foundMaterial };
+    } catch (error) {
+      return { err: error.message };
+    }
+  }
+
+  static async getMaterialFile(id) {
+    try {
+      const foundMaterial = await MaterialDAO.getById(Material, id);
+
+      if (!foundMaterial) throw new Error('Material no encontrado/404');
+
+      const { urlArchivo } = foundMaterial;
+
+      return { uri: getFilePath(process.env.PATH_TO_FILES, urlArchivo) };
     } catch (error) {
       return { err: error.message };
     }
@@ -194,7 +208,7 @@ class MaterialService {
       );
       return { id: newId };
     } catch (error) {
-      deleteFile(req.filePath);
+      deleteFile(process.env.PATH_TO_FILES, req.filePath);
       return { err: error.message };
     }
   }
