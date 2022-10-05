@@ -96,7 +96,7 @@ const sanitizeOptFields = (req, res, next) => {
 };
 
 const validateFiles = (req, res, next) => {
-  const validFormats = ['docx', 'pdf'];
+  const validFormats = process.env.VALID_FILE_FORMATS;
 
   if (!validFormats.includes(getFileFormatFromMimetype(req.file.mimetype))) {
     addErrorToRequest(req, '40003', 'materialFile', 'body');
