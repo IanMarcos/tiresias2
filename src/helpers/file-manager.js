@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-const getFilePath = (filePath, fileName = '') => {
-  if (!filePath) {
+const getFilePath = (filePath, fileName) => {
+  if (!filePath || !fileName) {
     throw new Error('No params provided');
   }
 
@@ -11,12 +11,14 @@ const getFilePath = (filePath, fileName = '') => {
 
 const fileExists = (filePath) => fs.existsSync(filePath);
 
-const deleteFile = (filePath, fileName = '') => {
+const deleteFile = (filePath, fileName) => {
   if (!filePath) {
     throw new Error('No params provided');
   }
 
-  const fullPath = path.format({ dir: filePath, base: fileName });
+  const fullPath = fileName
+    ? path.format({ dir: filePath, base: fileName })
+    : filePath;
 
   fs.unlink(fullPath, (err) => {
     if (err) {
