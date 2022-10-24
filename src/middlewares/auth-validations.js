@@ -39,7 +39,7 @@ const requesterIsAdmin = async (req, res, next) => {
 
 const requesterIsAdminOrSelf = async (req, res, next) => {
   if (
-    Number(req.params.uid) !== req.requester.uid &&
+    Number(req.params.uid) !== req.requester?.uid &&
     req.requester?.role !== 'Administrador'
   ) {
     req.unauthorized = true;
