@@ -9,12 +9,12 @@ import {
 import { parseRequestWithMaterialFile } from '../middlewares/multer.js';
 import { validateResults } from '../middlewares/fields-validator.js';
 import {
-  fileNotEmpty,
   isValidAuthors,
+  isValidDuration,
+  isValidProductionState,
   isValidYear,
   sanitizeOptFields,
   validateFiles,
-  validateOptFields,
 } from '../middlewares/material-validations.js';
 import {
   validateAuthToken,
@@ -207,9 +207,12 @@ router.post(
     body('productionCountry', '40001').notEmpty().trim(),
     body('productionYear', '40003').isNumeric().toInt(),
     body('productionYear').custom(isValidYear),
-    fileNotEmpty,
+    body('edition', '40004').isLength({ max: 45 }).optional(),
+    body('recipients', '40004').isLength({ max: 80 }).optional(),
+    body('duration', '40003').custom(isValidDuration).optional(),
+    body('resume', '40004').isLength({ max: 1800 }).optional(),
+    body('productionState', '40004').custom(isValidProductionState).optional(),
     validateFiles,
-    validateOptFields,
     // sanitizeAuthors,
     sanitizeOptFields,
     validateResults,
