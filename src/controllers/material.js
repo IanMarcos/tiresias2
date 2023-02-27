@@ -39,6 +39,7 @@ const createMaterial = async (req, res) => {
    */
   sanitizeAuthors(req);
 
+  req.body.userId = req.requester.uid;
   const result = await MaterialService.createMaterial(req.body);
 
   const { results, statusCode } = formatHTTPResponse(201, result);
@@ -48,6 +49,8 @@ const createMaterial = async (req, res) => {
 
 const updateMaterial = async (req, res) => {
   const { id } = req.params;
+  req.body.userId = req.requester.uid;
+
   const result = await MaterialService.updateMaterial(id, req.body);
 
   if (result.err) {
@@ -62,7 +65,7 @@ const deleteMaterial = async (req, res) => {
   const { id } = req.params;
   let statusCode = 200;
 
-  const results = await MaterialService.deleteMaterial(id);
+  const results = await MaterialService.deleteMaterial({ id, userId: req.requester.uid });
 
   if (results.err) {
     statusCode = 404;

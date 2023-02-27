@@ -11,6 +11,7 @@ import ProducerDAO from './producer.js';
 import ProductionStateDAO from './production-state.js';
 import PublisherDAO from './publisher.js';
 import RolesDAO from './roles.js';
+import TransactionDAO from './transaction.js';
 import UserDAO from './user.js';
 
 export {
@@ -27,5 +28,6 @@ export {
   ProductionStateDAO,
   PublisherDAO,
   RolesDAO,
+  TransactionDAO,
   UserDAO,
 };

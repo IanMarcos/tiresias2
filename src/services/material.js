@@ -10,6 +10,7 @@ import {
   PersonMaterial,
   Person,
   PersonRole,
+  Transaction,
 } from '../models/index.js';
 import CategoriesService from './categories.js';
 import CityService from './city.js';
@@ -26,6 +27,7 @@ import {
   translateMaterialKeysToSpanish,
 } from '../helpers/formatters.js';
 import { deleteFile, getFilePath } from '../helpers/file-manager.js';
+import TransactionService from './transactions.js';
 
 class MaterialService {
   static async getMaterialById(id) {
@@ -92,6 +94,7 @@ class MaterialService {
         PersonMaterial,
         Producer,
         Publisher,
+        Transaction,
         async (
           CategoryModel,
           CityModel,
@@ -100,7 +103,8 @@ class MaterialService {
           PersonModel,
           PersonMaterialModel,
           ProducerModel,
-          PublisherModel
+          PublisherModel,
+          TransactionModel
         ) => {
           const cityService = new CityService(CityModel);
           const formatService = new FormatService();
@@ -192,7 +196,13 @@ class MaterialService {
             });
           }
 
-          // TODO Log de la transacción
+          const transactionService = new TransactionService(TransactionModel);
+          await transactionService.logTransaction({
+            userId: req.userId,
+            materialId: newMaterial.id,
+            transactionName: 'CREACIÓN',
+          });
+
           return newMaterial.id;
         }
       );
@@ -212,11 +222,13 @@ class MaterialService {
         Material,
         Producer,
         Publisher,
+        Transaction,
         async (
           CityModel,
           MaterialModel,
           ProducerModel,
-          PublisherModel
+          PublisherModel,
+          TransactionModel
         ) => {
           const cityService = new CityService(CityModel);
           const formatService = new FormatService();
@@ -289,7 +301,12 @@ class MaterialService {
             materialData
           );
 
-          // TODO Log de la transacción
+          const transactionService = new TransactionService(TransactionModel);
+          await transactionService.logTransaction({
+            userId: req.userId,
+            materialId,
+            transactionName: 'MODIFICACIÓN',
+          });
           // TODO Update de autores y colaboradores.
         }
       );
@@ -303,10 +320,17 @@ class MaterialService {
     }
   }
 
-  static async deleteMaterial(id) {
+  static async deleteMaterial({ id, userId }) {
     try {
       const result = await MaterialDAO.delete(Material, id);
       if (result === 0) return { err: 'Material no encontrado' };
+
+      const transactionService = new TransactionService(Transaction);
+      await transactionService.logTransaction({
+        userId,
+        materialId: id,
+        transactionName: 'ELIMINACIÓN',
+      });
       return {};
     } catch (error) {
       return { err: error.message };
