@@ -119,6 +119,49 @@ const addErrorToRequest = (req, msg, param, location) => {
   }
 };
 
+const translateMaterialKeysToSpanish = (engMaterial) => {
+  const materialData = {};
+
+  if (engMaterial.title) {
+    materialData.titulo = engMaterial.title;
+  }
+
+  if (engMaterial.edition) {
+    materialData.edicion = engMaterial.edition;
+  }
+
+  if (engMaterial.isbn) {
+    materialData.isbn = engMaterial.isbn;
+  }
+
+  if (engMaterial.publishYear) {
+    materialData.añoPublicacion = engMaterial.publishYear;
+  }
+
+  if (engMaterial.productionYear) {
+    materialData.añoProduccion = engMaterial.productionYear;
+  }
+
+  if (engMaterial.filePath) {
+    materialData.urlArchivo = engMaterial.filePath;
+    materialData.tamañoFichero = engMaterial.fileSize;
+  }
+
+  if (engMaterial.recipients) {
+    materialData.destinatarios = engMaterial.recipients;
+  }
+
+  if (engMaterial.duration) {
+    materialData.duracion = engMaterial.duration;
+  }
+
+  if (engMaterial.resume) {
+    materialData.resumen = engMaterial.resume;
+  }
+
+  return materialData;
+}
+
 export {
   addErrorToRequest,
   convertBytesToMB,
@@ -128,4 +171,5 @@ export {
   replacePeopleWithRoles,
   removeIdsFromMaterial,
   removeIdFromObj,
+  translateMaterialKeysToSpanish,
 };

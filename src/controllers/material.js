@@ -46,6 +46,18 @@ const createMaterial = async (req, res) => {
   res.status(statusCode).json({ results });
 };
 
+const updateMaterial = async (req, res) => {
+  const { id } = req.params;
+  const result = await MaterialService.updateMaterial(id, req.body);
+
+  if (result.err) {
+    const { results, statusCode } = formatHTTPResponse(400, result);
+    return res.status(statusCode).json({ results });
+  }
+
+  return res.status(200).send();
+};
+
 const deleteMaterial = async (req, res) => {
   const { id } = req.params;
   let statusCode = 200;
@@ -60,4 +72,4 @@ const deleteMaterial = async (req, res) => {
   return res.status(statusCode).send();
 };
 
-export { getMaterial, getAllMaterials, createMaterial, deleteMaterial };
+export { getMaterial, getAllMaterials, createMaterial, updateMaterial, deleteMaterial };

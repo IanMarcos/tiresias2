@@ -23,6 +23,7 @@ import {
   removeIdFromObj,
   removeIdsFromMaterial,
   replacePeopleWithRoles,
+  translateMaterialKeysToSpanish,
 } from '../helpers/formatters.js';
 import { deleteFile, getFilePath } from '../helpers/file-manager.js';
 
@@ -79,18 +80,7 @@ class MaterialService {
   }
 
   static async createMaterial(req) {
-    let materialData = {
-      titulo: req.title,
-      edicion: req.edition,
-      isbn: req.isbn,
-      añoPublicacion: req.publishYear,
-      añoProduccion: req.productionYear,
-      urlArchivo: req.filePath,
-      destinatarios: req.recipients,
-      duracion: req.duration,
-      tamañoFichero: req.fileSize,
-      resumen: req.resume,
-    };
+    let materialData = translateMaterialKeysToSpanish(req);
 
     try {
       const newId = await transaction(
@@ -207,6 +197,106 @@ class MaterialService {
         }
       );
       return { id: newId };
+    } catch (error) {
+      deleteFile(process.env.PATH_TO_FILES, req.filePath);
+      return { err: error.message };
+    }
+  }
+
+  static async updateMaterial(materialId, req) {
+    const materialData = translateMaterialKeysToSpanish(req);
+    let oldMaterialFile;
+    try {
+      await transaction(
+        City,
+        Material,
+        Producer,
+        Publisher,
+        async (
+          CityModel,
+          MaterialModel,
+          ProducerModel,
+          PublisherModel
+        ) => {
+          const cityService = new CityService(CityModel);
+          const formatService = new FormatService();
+          const languageService = new LanguageService();
+          const producerService = new ProducerService(ProducerModel);
+          const productionStateService = new ProductionStateService();
+          const publisherService = new PublisherService(PublisherModel);
+
+          const idsPromises = [];
+
+          if (req.language) {
+            idsPromises.push(languageService.getLanguageCode({ language: req.language })
+              .then((id) => { materialData.idiomaCodigo = id })
+            );
+          }
+
+          if (req.format) {
+            idsPromises.push(formatService.getFormatId({ name: req.format })
+              .then((id) => { materialData.formatoAccesibleId = id })
+            );
+          }
+
+          if (req.publisher) {
+            idsPromises.push(publisherService.getPublisherId({ name: req.publisher })
+              .then((id) => { materialData.editorialId = id })
+            );
+          }
+
+          if (req.publishCity && req.publishCountry) {
+            idsPromises.push(
+              cityService.getCityId({
+                name: req.publishCity,
+                country: req.publishCountry,
+              }).then((id) => { materialData.ciudadPublicacionId = id })
+            );
+          }
+
+          if (req.productionCity && req.productionCountry) {
+            idsPromises.push(
+              cityService.getCityId({
+                name: req.productionCity,
+                country: req.productionCountry,
+              }).then((id) => { materialData.ciudadProduccionId = id })
+            );
+          }
+
+          if (req.producer) {
+            idsPromises.push(producerService.getProducerId({ name: req.producer })
+              .then((id) => { materialData.productoraId = id })
+            );
+          }
+
+          if (req.productionState) {
+            idsPromises.push(productionStateService.getProductionStateId({
+              name: req.productionState,
+            }).then((id) => { materialData.estadoProduccionId = id })
+            );
+          }
+
+          if (materialData.urlArchivo) {
+            MaterialDAO.getByIdNoJoins(MaterialModel, materialId)
+              .then(result => { oldMaterialFile = result.urlArchivo });
+          }
+
+          await Promise.all(idsPromises);
+
+          await MaterialDAO.update(
+            MaterialModel,
+            materialId,
+            materialData
+          );
+
+          // TODO Log de la transacción
+          // TODO Update de autores y colaboradores.
+        }
+      );
+      if (materialData.urlArchivo) {
+        deleteFile(process.env.PATH_TO_FILES, oldMaterialFile);
+      }
+      return {};
     } catch (error) {
       deleteFile(process.env.PATH_TO_FILES, req.filePath);
       return { err: error.message };

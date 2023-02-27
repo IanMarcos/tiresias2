@@ -98,17 +98,18 @@ const sanitizeOptFields = (req, res, next) => {
   if (!resume) req.body.resume = null;
   if (!productionState) req.body.productionState = 'Disponible';
 
-  // TODO: chek this
-  if (req.file) {
-    req.body.fileSize = convertBytesToMB(req.file.size);
-  }
-
   next();
 };
 
-const validateFiles = (req, res, next) => {
+const isFileInRequest = (req, res, next) => {
   if (!req.file) {
     addErrorToRequest(req, '40001', 'materialFile', 'body');
+  }
+  next();
+}
+
+const validateFiles = (req, res, next) => {
+  if (!req.file) {
     return next();
   }
 
@@ -118,12 +119,28 @@ const validateFiles = (req, res, next) => {
     addErrorToRequest(req, '40003', 'materialFile', 'body');
   } else {
     req.body.filePath = req.file.filename;
+    req.body.fileSize = convertBytesToMB(req.file.size);
   }
 
   return next();
 };
 
+const validateUpdateRequest = (req, res, next) => {
+  if ((req.body.publishCity && !req.body.publishCountry)
+    || (!req.body.publishCity && req.body.publishCountry)) {
+    addErrorToRequest(req, '40004 - No se puede mandar país sin ciudad o ciudad sin país', 'publishCity, publishCountry', 'body');
+  }
+
+  if ((req.body.productionCity && !req.body.productionCountry)
+    || (!req.body.productionCity && req.body.productionCountry)) {
+    addErrorToRequest(req, '40004 - No se puede mandar país sin ciudad o ciudad sin país', 'productionCity, productionCountry', 'body');
+  }
+
+  next();
+}
+
 export {
+  isFileInRequest,
   isValidAuthors,
   isValidYear,
   isValidDuration,
@@ -131,4 +148,5 @@ export {
   sanitizeAuthors,
   sanitizeOptFields,
   validateFiles,
+  validateUpdateRequest,
 };

@@ -2,6 +2,11 @@ import { raw } from 'objection';
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class MaterialDAO {
+  /**
+   * Gets a material. Performs join operations with other tables, including many to many relations.
+   * @param {Model} Material - Instance of an objection.js model.
+   * @param {Number} id - Material's id
+   */
   static async getById(Material, id) {
     try {
       return await Material.query()
@@ -36,6 +41,25 @@ class MaterialDAO {
     }
   }
 
+  /**
+   * Gets a material without performing join operations with other tables
+   * @param {Model} Material - Instance of an objection.js model.
+   * @param {Number} id
+   */
+  static async getByIdNoJoins(Material, id) {
+    try {
+      return await Material.query().findById(id);
+    } catch (error) {
+      const erroMsg = extractSqlError(error) || 'EDA01';
+      throw new Error(erroMsg);
+    }
+  }
+
+  /**
+   * Gets all materials, performing join operations with other tables, including many to many relations.
+   * @param {Model} Material - Instance of an objection.js model.
+   * @param {Number} id - Material's id
+   */
   static async getAll(Material, { limit, page }) {
     try {
       return await Material.query()
@@ -79,6 +103,22 @@ class MaterialDAO {
   static async create(Material, materialData) {
     try {
       return await Material.query().insert(materialData);
+    } catch (error) {
+      const erroMsg = extractSqlError(error) || 'EDA01';
+      throw new Error(erroMsg);
+    }
+  }
+
+  /**
+ * Updates a material with the given data.
+ * @param {Model} Material - Instance of an objection.js model.
+ * @param {Number} id - Id of the material to be updated
+ * @param {Object} materialData - Object containing all Material attributes.
+ */
+  static async update(Material, id, materialData) {
+    try {
+      return await Material.query().patch(materialData)
+        .findById(id);
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);

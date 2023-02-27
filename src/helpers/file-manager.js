@@ -20,6 +20,10 @@ const deleteFile = (filePath, fileName) => {
     ? path.format({ dir: filePath, base: fileName })
     : filePath;
 
+  if (!fs.existsSync(fullPath)) {
+    return;
+  }
+
   fs.unlink(fullPath, (err) => {
     if (err) {
       throw new Error('No se pudo eliminar el archivo');

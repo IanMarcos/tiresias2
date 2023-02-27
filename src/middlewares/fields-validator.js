@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator';
 import { deleteFile } from '../helpers/file-manager.js';
+import { addErrorToRequest } from '../helpers/formatters.js';
 
 const validateResults = (req, res, next) => {
   if (req.noValidToken) {
@@ -39,4 +40,11 @@ const validateResults = (req, res, next) => {
   return next();
 };
 
-export { validateResults };
+const isBodyEmpty = (req, res, next) => {
+  if (req.body && Object.keys(req.body).length === 0) {
+    addErrorToRequest(req, 'No fields provided', '', 'body');
+  }
+  next();
+};
+
+export { validateResults, isBodyEmpty };

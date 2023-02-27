@@ -5,16 +5,19 @@ import {
   deleteMaterial,
   getAllMaterials,
   getMaterial,
+  updateMaterial,
 } from '../controllers/material.js';
 import { parseRequestWithMaterialFile } from '../middlewares/multer.js';
-import { validateResults } from '../middlewares/fields-validator.js';
+import { isBodyEmpty, validateResults } from '../middlewares/fields-validator.js';
 import {
+  isFileInRequest,
   isValidAuthors,
   isValidDuration,
   isValidProductionState,
   isValidYear,
   sanitizeOptFields,
   validateFiles,
+  validateUpdateRequest,
 } from '../middlewares/material-validations.js';
 import {
   validateAuthToken,
@@ -212,12 +215,106 @@ router.post(
     body('duration', '40003').custom(isValidDuration).optional(),
     body('resume', '40004').isLength({ max: 1800 }).optional(),
     body('productionState', '40004').custom(isValidProductionState).optional(),
+    isFileInRequest,
     validateFiles,
     // sanitizeAuthors,
     sanitizeOptFields,
     validateResults,
   ],
   createMaterial
+);
+
+/**
+ * @swagger
+ * /materials/{id}:
+ *  put:
+ *    tags:
+ *      - materials
+ *    summary: Update a Material
+ *    description: If multiple authors, contributors, or categories need to be sent, the same field must be sent multiple times, one for each person or category.<br />Peoples name should be formated like "lastname, names", for example "Doe, John", and "Doe, John M." are both correct forms.<br />Both language and countries can be sent as either their full name in spanish or their ISO code; ISO 639-1 for the language, ISO 3166 alpha-2 for the countries.<br />If a duration is provided it must have a HHH:MM:SS or HH:MM:SS format.
+ *    requestBody:
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            $ref: '#/components/schemas/MaterialUpdateForm'
+ *    responses:
+ *      '200':
+ *        description: The material update was succesful.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: 'object'
+ *              properties:
+ *                results:
+ *                  type: 'object'
+ *                  properties:
+ *                    id:
+ *                      type: 'string'
+ *      '400':
+ *        description: Bad request. A mandatory field was not provided or did not have a valid format.
+ *        content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/errorArray'
+ *      '401':
+ *        description: Authorization information is missing or invalid.
+ *        content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/singleError'
+ *      '403':
+ *        description: The user doing the request is not authorized for this kind of operations.
+ *        content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/singleError'
+ *      '409':
+ *        description: A unique field like isbn is already registered.
+ *        content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/singleError'
+ *      '500':
+ *        description: Server or Database connection failure.
+ *        content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/singleError'
+ *    security:
+ *    - bearerAuth: []
+ */
+router.put(
+  '/:id',
+  [
+    parseRequestWithMaterialFile,
+    validateAuthToken,
+    requesterIsAdmin,
+    body('title', '40002').trim().isLength({ min: 3, max: 80 }).optional(),
+    body('author').custom(isValidAuthors).optional(),
+    body('isbn', '40003').isNumeric().toInt().optional(),
+    body('language', '40002').notEmpty().trim().optional(),
+    body('format', '40001').notEmpty().trim().optional(),
+    body('publisher', '40001').notEmpty().trim().optional(),
+    body('publishCity', '40001').notEmpty().trim().optional(),
+    body('publishCountry', '40001').notEmpty().trim().optional(),
+    body('publishYear', '40003').isNumeric().toInt().optional(),
+    body('publishYear').custom(isValidYear).optional(),
+    body('producer', '40001').notEmpty().trim().optional(),
+    body('productionCity', '40001').notEmpty().trim().optional(),
+    body('productionCountry', '40001').notEmpty().trim().optional(),
+    body('productionYear', '40003').isNumeric().toInt().optional(),
+    body('productionYear').custom(isValidYear).optional(),
+    body('edition', '40004').isLength({ min: 1, max: 45 }).optional(),
+    body('recipients', '40004').isLength({ max: 80 }).optional(),
+    body('duration', '40003').custom(isValidDuration).optional(),
+    body('resume', '40004').isLength({ max: 1800 }).optional(),
+    body('productionState', '40004').custom(isValidProductionState).optional(),
+    validateFiles,
+    isBodyEmpty,
+    validateUpdateRequest,
+    validateResults,
+  ],
+  updateMaterial
 );
 
 /**

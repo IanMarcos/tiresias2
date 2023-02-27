@@ -172,6 +172,68 @@ const MaterialForm = {
   ],
 };
 
+const MaterialUpdateForm = {
+  type: 'object',
+  properties: {
+    title: {
+      type: 'string',
+    },
+    isbn: {
+      type: 'string',
+    },
+    language: {
+      type: 'string',
+    },
+    format: {
+      type: 'string',
+    },
+    publisher: {
+      type: 'string',
+    },
+    publishCity: {
+      type: 'string',
+    },
+    publishContry: {
+      type: 'string',
+    },
+    publishYear: {
+      type: 'string',
+    },
+    producer: {
+      type: 'string',
+    },
+    productionCity: {
+      type: 'string',
+    },
+    productionCountry: {
+      type: 'string',
+    },
+    materialFile: {
+      type: 'file',
+    },
+    productionState: {
+      type: 'string',
+      default: 'Disponible',
+      pattern: /(Disponible|En Curso)/,
+    },
+    edition: {
+      type: 'string',
+    },
+    recipients: {
+      type: 'string',
+    },
+    category: {
+      type: 'string',
+    },
+    duration: {
+      type: 'string',
+    },
+    resume: {
+      type: 'string',
+    }
+  }
+};
+
 const searchedMaterial = {
   type: 'object',
   properties: {
@@ -208,4 +270,4 @@ const searchedMaterial = {
   },
 };
 
-export default { Material, MaterialForm, searchedMaterial };
+export default { Material, MaterialForm, MaterialUpdateForm, searchedMaterial };
