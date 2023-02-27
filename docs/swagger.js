@@ -13,7 +13,7 @@ const swaggerDefinition = {
       description: 'Development',
     },
     {
-      url: 'https://tiresias2.herokuapp.com/',
+      url: 'https://tiresias.onrender.com/',
       description: 'Testing',
     },
   ],
