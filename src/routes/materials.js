@@ -227,7 +227,7 @@ router.post(
 /**
  * @swagger
  * /materials/{id}:
- *  put:
+ *  patch:
  *    tags:
  *      - materials
  *    summary: Update a Material
@@ -283,7 +283,7 @@ router.post(
  *    security:
  *    - bearerAuth: []
  */
-router.put(
+router.patch(
   '/:id',
   [
     parseRequestWithMaterialFile,
