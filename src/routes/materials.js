@@ -197,23 +197,17 @@ router.post(
     requesterIsAdmin,
     body('title', '40002').trim().isLength({ min: 3, max: 80 }),
     body('author').custom(isValidAuthors),
-    body('isbn', '40003').isNumeric().toInt(),
-    body('language', '40002').notEmpty().trim(),
-    body('format', '40001').notEmpty().trim(),
-    body('publisher', '40001').notEmpty().trim(),
-    body('publishCity', '40001').notEmpty().trim(),
-    body('publishCountry', '40001').notEmpty().trim(),
-    body('publishYear', '40003').isNumeric().toInt(),
+    body(['isbn', 'publishYear', 'productionYear'], '40003').isNumeric().toInt(),
+    body([
+      'language', 'format', 'publisher', 'publishCity', 'publishCountry',
+      'producer', 'productionCity', 'productionCountry',
+    ], '40001').notEmpty().trim(),
     body('publishYear').custom(isValidYear),
-    body('producer', '40001').notEmpty().trim(),
-    body('productionCity', '40001').notEmpty().trim(),
-    body('productionCountry', '40001').notEmpty().trim(),
-    body('productionYear', '40003').isNumeric().toInt(),
     body('productionYear').custom(isValidYear),
-    body('edition', '40004').isLength({ max: 45 }).optional(),
-    body('recipients', '40004').isLength({ max: 80 }).optional(),
+    body('edition', '40002').isLength({ max: 45 }).optional(),
+    body('recipients', '40002').isLength({ max: 80 }).optional(),
     body('duration', '40003').custom(isValidDuration).optional(),
-    body('resume', '40004').isLength({ max: 1800 }).optional(),
+    body('resume', '40002').isLength({ max: 1800 }).optional(),
     body('productionState', '40004').custom(isValidProductionState).optional(),
     isFileInRequest,
     validateFiles,
@@ -291,18 +285,12 @@ router.patch(
     requesterIsAdmin,
     body('title', '40002').trim().isLength({ min: 3, max: 80 }).optional(),
     body('author').custom(isValidAuthors).optional(),
-    body('isbn', '40003').isNumeric().toInt().optional(),
-    body('language', '40002').notEmpty().trim().optional(),
-    body('format', '40001').notEmpty().trim().optional(),
-    body('publisher', '40001').notEmpty().trim().optional(),
-    body('publishCity', '40001').notEmpty().trim().optional(),
-    body('publishCountry', '40001').notEmpty().trim().optional(),
-    body('publishYear', '40003').isNumeric().toInt().optional(),
+    body(['isbn', 'publishYear', 'productionYear'], '40003').isNumeric().toInt().optional(),
+    body([
+      'language', 'format', 'publisher', 'publishCity', 'publishCountry',
+      'producer', 'productionCity', 'productionCountry',
+    ], '40001').notEmpty().trim().optional(),
     body('publishYear').custom(isValidYear).optional(),
-    body('producer', '40001').notEmpty().trim().optional(),
-    body('productionCity', '40001').notEmpty().trim().optional(),
-    body('productionCountry', '40001').notEmpty().trim().optional(),
-    body('productionYear', '40003').isNumeric().toInt().optional(),
     body('productionYear').custom(isValidYear).optional(),
     body('edition', '40004').isLength({ min: 1, max: 45 }).optional(),
     body('recipients', '40004').isLength({ max: 80 }).optional(),
@@ -316,6 +304,11 @@ router.patch(
   ],
   updateMaterial
 );
+
+router.post('/people', [
+  validateAuthToken,
+  requesterIsAdmin
+]);
 
 /**
  * @swagger
