@@ -17,7 +17,7 @@ class UserDAO {
     try {
       return await User.query().insert({
         nombreUsuario: username,
-        contraseña: raw(
+        contrasenia: raw(
           `AES_ENCRYPT('${password}','${process.env.ENCRYPTION_KEY}')`
         ),
         nombre: name,
@@ -65,14 +65,14 @@ class UserDAO {
           'Usuario.nombre',
           'RolUsuario.nombre AS rol',
           raw(
-            `AES_DECRYPT(contraseña, '${process.env.ENCRYPTION_KEY}') AS contraseña`
+            `AES_DECRYPT(contrasenia, '${process.env.ENCRYPTION_KEY}') AS contrasenia`
           )
         )
         .join('RolUsuario', 'Usuario.rol_usuario_id', 'RolUsuario.id')
         .where('eliminado', 0);
 
       if (user) {
-        user.contraseña = user.contraseña.toString();
+        user.contrasenia = user.contrasenia.toString();
       }
       return user;
     } catch (error) {
@@ -89,7 +89,7 @@ class UserDAO {
           'Usuario.nombre',
           'RolUsuario.nombre AS rol',
           raw(
-            `AES_DECRYPT(contraseña, '${process.env.ENCRYPTION_KEY}') AS contraseña`
+            `AES_DECRYPT(contrasenia, '${process.env.ENCRYPTION_KEY}') AS contrasenia`
           )
         )
         .join('RolUsuario', 'Usuario.rol_usuario_id', 'RolUsuario.id')
@@ -97,7 +97,7 @@ class UserDAO {
         .where('eliminado', 0);
 
       if (user) {
-        user.contraseña = user.contraseña.toString();
+        user.contrasenia = user.contrasenia.toString();
       }
       return user;
     } catch (error) {
@@ -110,7 +110,7 @@ class UserDAO {
     const queryObject = {};
     if (name) queryObject.nombre = name;
     if (password) {
-      queryObject.contraseña = raw(
+      queryObject.contrasenia = raw(
         `AES_ENCRYPT('${password}','${process.env.ENCRYPTION_KEY}')`
       );
     }

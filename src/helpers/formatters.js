@@ -135,16 +135,16 @@ const translateMaterialKeysToSpanish = (engMaterial) => {
   }
 
   if (engMaterial.publishYear) {
-    materialData.añoPublicacion = engMaterial.publishYear;
+    materialData.anioPublicacion = engMaterial.publishYear;
   }
 
   if (engMaterial.productionYear) {
-    materialData.añoProduccion = engMaterial.productionYear;
+    materialData.anioProduccion = engMaterial.productionYear;
   }
 
   if (engMaterial.filePath) {
     materialData.urlArchivo = engMaterial.filePath;
-    materialData.tamañoFichero = engMaterial.fileSize;
+    materialData.tamanioFichero = engMaterial.fileSize;
   }
 
   if (engMaterial.recipients) {

@@ -17,10 +17,10 @@ const Material = {
     idiomaCodigo: {
       type: 'string',
     },
-    añoPublicacion: {
+    anioPublicacion: {
       type: 'integer',
     },
-    añoProduccion: {
+    anioProduccion: {
       type: 'integer',
     },
     destinatarios: {
@@ -31,7 +31,7 @@ const Material = {
       type: 'string',
       nullabe: true,
     },
-    tamañoFichero: {
+    tamanioFichero: {
       type: 'integer',
     },
     resumen: {
@@ -246,7 +246,7 @@ const searchedMaterial = {
     edicion: {
       type: 'string',
     },
-    añoPublicacion: {
+    anioPublicacion: {
       type: 'string',
     },
     editorial: {

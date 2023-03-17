@@ -158,7 +158,7 @@ class MaterialDAO {
           'Material.id',
           'titulo',
           'edicion',
-          'año_publicacion',
+          'anio_publicacion',
           'Editorial.nombre AS editorial'
         )
         .join('Editorial', 'Material.editorial_id', 'Editorial.id')

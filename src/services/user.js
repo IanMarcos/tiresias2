@@ -25,7 +25,7 @@ class UsersService {
         return { err: 'Usuario no existe/404' };
       }
 
-      const { contraseña, rolUsuarioId, eliminado, ...cleanUser } = user;
+      const { contrasenia, rolUsuarioId, eliminado, ...cleanUser } = user;
       return cleanUser;
     } catch (error) {
       return { err: error.message };
@@ -55,8 +55,8 @@ class UsersService {
         return { err: 'Usuario no existe/404' };
       }
 
-      if (foundUser.contraseña !== password) {
-        return { err: 'Usuario o contraseña invalido/401' };
+      if (foundUser.contrasenia !== password) {
+        return { err: 'Usuario o contrasenia invalido/401' };
       }
 
       const token = generateJWT({
