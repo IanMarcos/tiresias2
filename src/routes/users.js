@@ -222,7 +222,7 @@ router.post(
 /**
  * @swagger
  * /users/{uid}:
- *  put:
+ *  patch:
  *    tags:
  *      - users
  *    summary: Update User
@@ -275,7 +275,7 @@ router.post(
  *    security:
  *    - bearerAuth: []
  */
-router.put(
+router.patch(
   '/:uid',
   [
     validateAuthToken,
