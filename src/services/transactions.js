@@ -9,11 +9,11 @@ class TransactionService {
   }
 
   /**
-   * Checks whether a publisher exists, if it does, returns its ID.
-   * If not, it creates it and returns its ID
+   * Creates a record for each Manipulation made on Materials data.
    * @param {Object} args - Arguments to perform the queries.
    * @param {string} args.userId
    * @param {string} args.materialId
+   * @param {Object} args.materialData
    * @param {string} args.transactionName
    */
   async logTransaction({ userId, materialId, materialData, transactionName }) {
