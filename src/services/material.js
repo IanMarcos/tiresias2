@@ -335,6 +335,7 @@ class MaterialService {
           await transactionService.logTransaction({
             userId: req.userId,
             materialId,
+            materialData,
             transactionName: 'MODIFICACIÓN',
           });
           // TODO Update de autores y colaboradores.

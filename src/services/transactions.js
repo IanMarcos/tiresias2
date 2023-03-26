@@ -9,18 +9,18 @@ class TransactionService {
   }
 
   /**
-   * Checks whether a publisher exists, if it does, returns its ID.
-   * If not, it creates it and returns its ID
+   * Creates a record for each Manipulation made on Materials data.
    * @param {Object} args - Arguments to perform the queries.
    * @param {string} args.userId
    * @param {string} args.materialId
+   * @param {Object} args.materialData
    * @param {string} args.transactionName
    */
-  async logTransaction({ userId, materialId, transactionName }) {
+  async logTransaction({ userId, materialId, materialData, transactionName }) {
     try {
       const transactionTypeId = await TransactionDAO.getTransactionTypeId(TransactionType, transactionName);
-
-      await TransactionDAO.create(this.#modelInstance, { userId, materialId, transactionTypeId });
+      const modifiedItems = (materialData) ? Object.keys(materialData).join(', ') : 'N/A';
+      await TransactionDAO.create(this.#modelInstance, { userId, materialId, modifiedItems, transactionTypeId });
     } catch (error) {
       throw new Error(error.message);
     }
