@@ -16,11 +16,11 @@ class TransactionService {
    * @param {string} args.materialId
    * @param {string} args.transactionName
    */
-  async logTransaction({ userId, materialId, transactionName }) {
+  async logTransaction({ userId, materialId, materialData, transactionName }) {
     try {
       const transactionTypeId = await TransactionDAO.getTransactionTypeId(TransactionType, transactionName);
-
-      await TransactionDAO.create(this.#modelInstance, { userId, materialId, transactionTypeId });
+      const modifiedItems = (materialData) ? Object.keys(materialData).join(', ') : 'N/A';
+      await TransactionDAO.create(this.#modelInstance, { userId, materialId, modifiedItems, transactionTypeId });
     } catch (error) {
       throw new Error(error.message);
     }
