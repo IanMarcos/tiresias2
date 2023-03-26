@@ -240,66 +240,96 @@ class MaterialService {
           const idsPromises = [];
 
           if (req.language) {
-            idsPromises.push(languageService.getLanguageCode({ language: req.language })
-              .then((id) => { materialData.idiomaCodigo = id })
+            idsPromises.push(
+              languageService
+                .getLanguageCode({ language: req.language })
+                .then((id) => {
+                  materialData.idiomaCodigo = id;
+                })
             );
           }
 
           if (req.format) {
-            idsPromises.push(formatService.getFormatId({ name: req.format })
-              .then((id) => { materialData.formatoAccesibleId = id })
+            idsPromises.push(
+              formatService.getFormatId({ name: req.format }).then((id) => {
+                materialData.formatoAccesibleId = id;
+              })
             );
           }
 
           if (req.publisher) {
-            idsPromises.push(publisherService.getPublisherId({ name: req.publisher })
-              .then((id) => { materialData.editorialId = id })
+            idsPromises.push(
+              publisherService
+                .getPublisherId({ name: req.publisher })
+                .then((id) => {
+                  materialData.editorialId = id;
+                })
             );
           }
 
           if (req.publishCity && req.publishCountry) {
             idsPromises.push(
-              cityService.getCityId({
-                name: req.publishCity,
-                country: req.publishCountry,
-              }).then((id) => { materialData.ciudadPublicacionId = id })
+              cityService
+                .getCityId({
+                  name: req.publishCity,
+                  country: req.publishCountry,
+                })
+                .then((id) => {
+                  materialData.ciudadPublicacionId = id;
+                })
             );
           }
 
           if (req.productionCity && req.productionCountry) {
             idsPromises.push(
-              cityService.getCityId({
-                name: req.productionCity,
-                country: req.productionCountry,
-              }).then((id) => { materialData.ciudadProduccionId = id })
+              cityService
+                .getCityId({
+                  name: req.productionCity,
+                  country: req.productionCountry,
+                })
+                .then((id) => {
+                  materialData.ciudadProduccionId = id;
+                })
             );
           }
 
           if (req.producer) {
-            idsPromises.push(producerService.getProducerId({ name: req.producer })
-              .then((id) => { materialData.productoraId = id })
+            idsPromises.push(
+              producerService
+                .getProducerId({ name: req.producer })
+                .then((id) => {
+                  materialData.productoraId = id;
+                })
             );
           }
 
           if (req.productionState) {
-            idsPromises.push(productionStateService.getProductionStateId({
-              name: req.productionState,
-            }).then((id) => { materialData.estadoProduccionId = id })
+            idsPromises.push(
+              productionStateService
+                .getProductionStateId({
+                  name: req.productionState,
+                })
+                .then((id) => {
+                  materialData.estadoProduccionId = id;
+                })
             );
           }
 
+          if (req.eliminado === '0') {
+            materialData.eliminado = 0;
+          }
+
           if (materialData.urlArchivo) {
-            MaterialDAO.getByIdNoJoins(MaterialModel, materialId)
-              .then(result => { oldMaterialFile = result.urlArchivo });
+            MaterialDAO.getByIdNoJoins(MaterialModel, materialId).then(
+              (result) => {
+                oldMaterialFile = result.urlArchivo;
+              }
+            );
           }
 
           await Promise.all(idsPromises);
 
-          await MaterialDAO.update(
-            MaterialModel,
-            materialId,
-            materialData
-          );
+          await MaterialDAO.update(MaterialModel, materialId, materialData);
 
           const transactionService = new TransactionService(TransactionModel);
           await transactionService.logTransaction({

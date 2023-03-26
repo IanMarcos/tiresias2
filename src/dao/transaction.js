@@ -17,6 +17,10 @@ class TransactionDAO {
         tipoTransaccionId: transactionTypeId,
       });
     } catch (error) {
+      console.log(
+        '🚀 ~ file: transaction.js:20 ~ TransactionDAO ~ create ~ error:',
+        error
+      );
       const erroMsg = extractSqlError(error) || 'EDA14';
       throw new Error(erroMsg);
     }
@@ -29,7 +33,9 @@ class TransactionDAO {
    */
   static async getTransactionTypeId(TransactionType, transactionName) {
     try {
-      const [transactionType] = await TransactionType.query().select('id').where('nombre', transactionName);
+      const [transactionType] = await TransactionType.query()
+        .select('id')
+        .where('nombre', transactionName);
       return transactionType.id;
     } catch (error) {
       const erroMsg = extractSqlError(error) || 'EDA14';

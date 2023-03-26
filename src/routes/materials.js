@@ -8,7 +8,10 @@ import {
   updateMaterial,
 } from '../controllers/material.js';
 import { parseRequestWithMaterialFile } from '../middlewares/multer.js';
-import { isBodyEmpty, validateResults } from '../middlewares/fields-validator.js';
+import {
+  isBodyEmpty,
+  validateResults,
+} from '../middlewares/fields-validator.js';
 import {
   isFileInRequest,
   isValidAuthors,
@@ -197,11 +200,24 @@ router.post(
     requesterIsAdmin,
     body('title', '40002').trim().isLength({ min: 3, max: 80 }),
     body('author').custom(isValidAuthors),
-    body(['isbn', 'publishYear', 'productionYear'], '40003').isNumeric().toInt(),
-    body([
-      'language', 'format', 'publisher', 'publishCity', 'publishCountry',
-      'producer', 'productionCity', 'productionCountry',
-    ], '40001').notEmpty().trim(),
+    body(['isbn', 'publishYear', 'productionYear'], '40003')
+      .isNumeric()
+      .toInt(),
+    body(
+      [
+        'language',
+        'format',
+        'publisher',
+        'publishCity',
+        'publishCountry',
+        'producer',
+        'productionCity',
+        'productionCountry',
+      ],
+      '40001'
+    )
+      .notEmpty()
+      .trim(),
     body('publishYear').custom(isValidYear),
     body('productionYear').custom(isValidYear),
     body('edition', '40002').isLength({ max: 45 }).optional(),
@@ -285,11 +301,26 @@ router.patch(
     requesterIsAdmin,
     body('title', '40002').trim().isLength({ min: 3, max: 80 }).optional(),
     body('author').custom(isValidAuthors).optional(),
-    body(['isbn', 'publishYear', 'productionYear'], '40003').isNumeric().toInt().optional(),
-    body([
-      'language', 'format', 'publisher', 'publishCity', 'publishCountry',
-      'producer', 'productionCity', 'productionCountry',
-    ], '40001').notEmpty().trim().optional(),
+    body(['isbn', 'publishYear', 'productionYear'], '40003')
+      .isNumeric()
+      .toInt()
+      .optional(),
+    body(
+      [
+        'language',
+        'format',
+        'publisher',
+        'publishCity',
+        'publishCountry',
+        'producer',
+        'productionCity',
+        'productionCountry',
+      ],
+      '40001'
+    )
+      .notEmpty()
+      .trim()
+      .optional(),
     body('publishYear').custom(isValidYear).optional(),
     body('productionYear').custom(isValidYear).optional(),
     body('edition', '40004').isLength({ min: 1, max: 45 }).optional(),
@@ -305,10 +336,7 @@ router.patch(
   updateMaterial
 );
 
-router.post('/people', [
-  validateAuthToken,
-  requesterIsAdmin
-]);
+router.post('/people', [validateAuthToken, requesterIsAdmin]);
 
 /**
  * @swagger
