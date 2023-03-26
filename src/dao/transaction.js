@@ -9,11 +9,12 @@ class TransactionDAO {
    * @param {string|number} args.materialId
    * @param {string|number} args.transactionTypeId
    */
-  static async create(Transaction, { userId, materialId, transactionTypeId }) {
+  static async create(Transaction, { userId, materialId, modifiedItems, transactionTypeId }) {
     try {
       return await Transaction.query().insert({
         usuarioId: userId,
         materialId,
+        camposModificados: modifiedItems,
         tipoTransaccionId: transactionTypeId,
       });
     } catch (error) {
