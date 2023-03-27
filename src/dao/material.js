@@ -1,4 +1,5 @@
 import { raw } from 'objection';
+import logger from '../helpers/loggers.js';
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class MaterialDAO {
@@ -36,6 +37,7 @@ class MaterialDAO {
         .withGraphFetched('ciudadProduccion')
         .withGraphFetched('categorias');
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);
     }
@@ -50,6 +52,7 @@ class MaterialDAO {
     try {
       return await Material.query().findById(id);
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);
     }
@@ -90,6 +93,7 @@ class MaterialDAO {
         .limit(limit)
         .offset(limit * page);
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);
     }
@@ -104,6 +108,7 @@ class MaterialDAO {
     try {
       return await Material.query().insert(materialData);
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);
     }
@@ -120,6 +125,7 @@ class MaterialDAO {
       return await Material.query().patch(materialData)
         .findById(id);
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);
     }
@@ -137,6 +143,7 @@ class MaterialDAO {
         .where('eliminado', 0)
         .patch({ eliminado: 1 });
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);
     }
@@ -173,6 +180,7 @@ class MaterialDAO {
 
       return materials;
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);
     }
