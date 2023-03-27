@@ -30,7 +30,7 @@ const logger = winston.createLogger({
   levels: winston.config.syslog.levels,
   level: 'debug',
   format: combine(
-    timestamp(),
+    timestamp({ format: 'DD-MM-YYYY/HH:mm:ss' }),
     align(),
     stampFormat,
   ),
