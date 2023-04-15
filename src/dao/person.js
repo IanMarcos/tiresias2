@@ -1,4 +1,5 @@
 import Dao from './dao.js';
+import logger from '../helpers/loggers.js';
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class PersonDAO extends Dao {
@@ -9,6 +10,7 @@ class PersonDAO extends Dao {
         nombres: names,
       });
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA01';
       throw new Error(erroMsg);
     }
@@ -21,6 +23,7 @@ class PersonDAO extends Dao {
         .where('apellido', lastName);
       return person;
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA09';
       throw new Error(erroMsg);
     }

@@ -1,3 +1,4 @@
+import logger from '../helpers/loggers.js';
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class MaterialCategoryDAO {
@@ -15,6 +16,7 @@ class MaterialCategoryDAO {
         materialId,
       });
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA13';
       throw new Error(erroMsg);
     }

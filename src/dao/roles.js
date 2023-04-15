@@ -1,3 +1,4 @@
+import logger from '../helpers/loggers.js';
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class RolesDAO {
@@ -16,6 +17,7 @@ class RolesDAO {
 
       return foundRole.id;
     } catch (error) {
+      logger.error(error);
       let errorMsg = extractSqlError(error) || 'EDA02';
       if (error.message.includes('400')) errorMsg = error.message;
       throw new Error(errorMsg);
@@ -32,6 +34,7 @@ class RolesDAO {
 
       return roles;
     } catch (error) {
+      logger.error(error);
       let errorMsg = extractSqlError(error) || 'EDA02';
       if (error.message.includes('400')) errorMsg = error.message;
       throw new Error(errorMsg);

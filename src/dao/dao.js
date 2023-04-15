@@ -1,3 +1,4 @@
+import logger from '../helpers/loggers.js';
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class Dao {
@@ -12,6 +13,7 @@ class Dao {
     try {
       return await Model.query().insert({ nombre: name });
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || errCode;
       throw new Error(erroMsg);
     }
@@ -29,6 +31,7 @@ class Dao {
       const [record] = await Model.query().where('nombre', name);
       return record;
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || errCode;
       throw new Error(erroMsg);
     }
@@ -38,6 +41,7 @@ class Dao {
     try {
       return await Model.query();
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || errCode;
       throw new Error(erroMsg);
     }

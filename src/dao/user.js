@@ -1,4 +1,5 @@
 import { raw } from 'objection';
+import logger from '../helpers/loggers.js';
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class UserDAO {
@@ -24,6 +25,7 @@ class UserDAO {
         rolUsuarioId: roleId,
       });
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);
     }
@@ -50,6 +52,7 @@ class UserDAO {
         .limit(limit)
         .offset(limit * page);
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);
     }
@@ -76,6 +79,7 @@ class UserDAO {
       }
       return user;
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);
     }
@@ -101,6 +105,7 @@ class UserDAO {
       }
       return user;
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);
     }
@@ -122,6 +127,7 @@ class UserDAO {
         .patch(queryObject)
         .where('eliminado', 0);
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);
     }
@@ -134,6 +140,7 @@ class UserDAO {
         .where('eliminado', 0)
         .patch({ eliminado: 1 });
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA11';
       throw new Error(erroMsg);
     }
