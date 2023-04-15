@@ -2,6 +2,7 @@ import { User, UserRole } from '../models/index.js';
 import { UserDAO, RolesDAO } from '../dao/index.js';
 import { generateJWT } from '../helpers/jwt.js';
 import { isDefined } from '../helpers/utils.js';
+import logger from '../helpers/loggers.js';
 
 class UsersService {
   #modelInstance;
@@ -39,6 +40,7 @@ class UsersService {
     try {
       userData.roleId = await RolesDAO.getRoleId(UserRole, role);
       const newUser = await UserDAO.create(this.#modelInstance, userData);
+      logger.info(`Nuevo usuario creado con id: ${newUser.id}, y data: ${userData}`);
       return { uid: newUser.id };
     } catch (error) {
       return { err: error.message };
@@ -81,6 +83,7 @@ class UsersService {
 
       const result = await UserDAO.update(this.#modelInstance, userData);
       if (result === 0) return { err: 'Usuario no encontrado/404' };
+      logger.info(`Actualizado usuario con data: ${userData}`);
       return {};
     } catch (error) {
       return { err: error.message };
@@ -92,6 +95,7 @@ class UsersService {
       const result = await UserDAO.delete(this.#modelInstance, id);
 
       if (result === 0) return { err: 'Usuario no encontrado/404' };
+      logger.info(`Eliminado usuario con id: ${id}`);
       return {};
     } catch (error) {
       return { err: error.message };
