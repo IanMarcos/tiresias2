@@ -1,4 +1,5 @@
 import Dao from './dao.js';
+import logger from '../helpers/loggers.js';
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class LanguageDAO extends Dao {
@@ -14,6 +15,7 @@ class LanguageDAO extends Dao {
       if (!country) return false;
       return true;
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA10';
       throw new Error(erroMsg);
     }

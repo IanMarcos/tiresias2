@@ -1,4 +1,5 @@
 import Dao from './dao.js';
+import logger from '../helpers/loggers.js';
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class CityDAO extends Dao {
@@ -16,6 +17,7 @@ class CityDAO extends Dao {
         paisCodigo: countryCode,
       });
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA06';
       throw new Error(erroMsg);
     }
@@ -30,6 +32,7 @@ class CityDAO extends Dao {
     try {
       return await Model.query().where('nombre', name);
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA06';
       throw new Error(erroMsg);
     }

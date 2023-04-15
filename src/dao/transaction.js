@@ -1,3 +1,4 @@
+import logger from '../helpers/loggers.js';
 import { extractSqlError } from '../helpers/sql-helpers.js';
 
 class TransactionDAO {
@@ -18,10 +19,7 @@ class TransactionDAO {
         tipoTransaccionId: transactionTypeId,
       });
     } catch (error) {
-      console.log(
-        '🚀 ~ file: transaction.js:20 ~ TransactionDAO ~ create ~ error:',
-        error
-      );
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA14';
       throw new Error(erroMsg);
     }
@@ -39,6 +37,7 @@ class TransactionDAO {
         .where('nombre', transactionName);
       return transactionType.id;
     } catch (error) {
+      logger.error(error);
       const erroMsg = extractSqlError(error) || 'EDA14';
       throw new Error(erroMsg);
     }

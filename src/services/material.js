@@ -27,6 +27,7 @@ import {
   translateMaterialKeysToSpanish,
 } from '../helpers/formatters.js';
 import { deleteFile, getFilePath } from '../helpers/file-manager.js';
+import logger from '../helpers/loggers.js';
 import TransactionService from './transactions.js';
 
 class MaterialService {
@@ -206,6 +207,7 @@ class MaterialService {
           return newMaterial.id;
         }
       );
+      logger.info(`Nuevo material creado con id: ${newId}, y data: ${materialData}`);
       return { id: newId };
     } catch (error) {
       deleteFile(process.env.PATH_TO_FILES, req.filePath);
@@ -344,6 +346,7 @@ class MaterialService {
       if (materialData.urlArchivo) {
         deleteFile(process.env.PATH_TO_FILES, oldMaterialFile);
       }
+      logger.info(`Actualizado material de id: ${materialId}, con data: ${materialData}`);
       return {};
     } catch (error) {
       deleteFile(process.env.PATH_TO_FILES, req.filePath);
@@ -362,6 +365,7 @@ class MaterialService {
         materialId: id,
         transactionName: 'ELIMINACIÓN',
       });
+      logger.info(`Eliminado el material con id: ${id}, por el usuario ${userId}`);
       return {};
     } catch (error) {
       return { err: error.message };
