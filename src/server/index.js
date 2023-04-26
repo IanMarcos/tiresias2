@@ -6,6 +6,7 @@ import swaggerSetup from '../../docs/swagger.js';
 import authRoutes from '../routes/auth.js';
 import filesRoutes from '../routes/files.js';
 import materialsRoutes from '../routes/materials.js';
+import resourcesRoutes from '../routes/resources.js';
 import searchRoutes from '../routes/search.js';
 import usersRoutes from '../routes/users.js';
 
@@ -22,6 +23,7 @@ class Server {
       auth: '/auth',
       files: '/files',
       materials: '/materials',
+      resources: '/resources',
       search: '/search',
       users: '/users',
     };
@@ -42,6 +44,7 @@ class Server {
     this.#app.use(this.#paths.auth, authRoutes);
     this.#app.use(this.#paths.files, filesRoutes);
     this.#app.use(this.#paths.materials, materialsRoutes);
+    this.#app.use(this.#paths.resources, resourcesRoutes);
     this.#app.use(this.#paths.search, searchRoutes);
     this.#app.use(this.#paths.users, usersRoutes);
   }

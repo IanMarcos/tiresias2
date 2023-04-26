@@ -7,7 +7,7 @@ const baseObject = {
   type: 'object',
   properties: {
     id: {
-      type: 'string',
+      type: 'integer',
     },
     nombre: {
       type: 'string',
@@ -42,6 +42,18 @@ const City = {
   },
 };
 
+const Language = {
+  type: 'object',
+  properties: {
+    codigo: {
+      type: 'string',
+    },
+    nombre: {
+      type: 'string',
+    },
+  },
+};
+
 export default {
   ...materialSchemas,
   ...userSchemas,
@@ -50,4 +62,5 @@ export default {
   baseObject,
   Person,
   City,
+  Language,
 };
