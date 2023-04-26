@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import { validateResults } from '../middlewares/fields-validator.js';
-import { validateAuthToken } from '../middlewares/auth-validations.js';
 import { getAccessibleFormats, getLanguages } from '../controllers/resources.js';
 
 const router = Router();
@@ -32,11 +30,7 @@ const router = Router();
  *             schema:
  *              $ref: '#/components/schemas/singleError'
  */
-router.get(
-  '/formats',
-  [validateResults, validateAuthToken],
-  getAccessibleFormats
-);
+router.get('/formats', getAccessibleFormats);
 
 /**
  * @swagger
@@ -65,10 +59,6 @@ router.get(
  *             schema:
  *              $ref: '#/components/schemas/singleError'
  */
-router.get(
-  '/languages',
-  [validateResults, validateAuthToken],
-  getLanguages
-);
+router.get('/languages', getLanguages);
 
 export default router;
