@@ -36,6 +36,14 @@ class LanguageService {
       throw new Error(error.message);
     }
   }
+
+  async getAllLanguages() {
+    try {
+      return await LanguageDAO.getAll(this.#modelInstance, 'EDA10');
+    } catch (error) {
+      return { err: error.message };
+    }
+  }
 }
 
 export default LanguageService;
