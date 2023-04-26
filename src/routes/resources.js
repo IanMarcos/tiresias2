@@ -11,13 +11,8 @@ const router = Router();
  *  get:
  *    tags:
  *      - resources
- *    summary: Accessible formats
- *    description: List of accessible formats accepted by the server.
- *    requestBody:
- *      content:
- *        application/JSON:
- *          schema:
- *            $ref: '#/components/schemas/signInForm'
+ *    summary: Get all accessible formats
+ *    description: Returns a list of accessible formats accepted by the server.
  *    responses:
  *      '200':
  *        description: Successfully retrieved the accessible formats list.
@@ -27,16 +22,9 @@ const router = Router();
  *            type: 'object'
  *            properties:
  *              results:
- *                type: 'object'
- *                properties:
- *                  token:
- *                    type: 'string'
- *      '401':
- *        description: The authentication failed.
- *        content:
- *           application/json:
- *             schema:
- *              $ref: '#/components/schemas/singleError'
+ *                type: 'array'
+ *                items:
+ *                  $ref: '#/components/schemas/baseObject'
  *      '500':
  *        'description': Server or Database connection failure.
  *        content:
@@ -56,13 +44,8 @@ router.get(
  *  get:
  *    tags:
  *      - resources
- *    summary: Languages
- *    description: List of languages by the server.
- *    requestBody:
- *      content:
- *        application/JSON:
- *          schema:
- *            $ref: '#/components/schemas/signInForm'
+ *    summary: Get all languages
+ *    description: Gets a list of all the languages in the Tiresias Database.
  *    responses:
  *      '200':
  *        description: Successfully retrieved the language list.
@@ -72,16 +55,9 @@ router.get(
  *            type: 'object'
  *            properties:
  *              results:
- *                type: 'object'
- *                properties:
- *                  token:
- *                    type: 'string'
- *      '401':
- *        description: The authentication failed.
- *        content:
- *           application/json:
- *             schema:
- *              $ref: '#/components/schemas/singleError'
+ *                type: 'array'
+ *                items:
+ *                  $ref: '#/components/schemas/Language'
  *      '500':
  *        'description': Server or Database connection failure.
  *        content:
