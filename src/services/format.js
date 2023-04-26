@@ -26,6 +26,14 @@ class FormatService {
       throw new Error(error.message);
     }
   }
+
+  async getAllAccessibleFormats() {
+    try {
+      return await AccesibleFormatDAO.getAll(this.#modelInstance, 'EDA07');
+    } catch (error) {
+      return { err: error.message };
+    }
+  }
 }
 
 export default FormatService;

@@ -35,7 +35,12 @@ const formatHTTPResponse = (initialStatus, data) => {
       statusCode = 500;
     }
   } else {
-    results = { ...data };
+    if (Array.isArray(data)) {
+      results = data;
+    }
+    else {
+      results = { ...data }
+    };
   }
 
   return { results, statusCode };
