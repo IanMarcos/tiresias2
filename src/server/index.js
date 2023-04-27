@@ -9,6 +9,7 @@ import materialsRoutes from '../routes/materials.js';
 import resourcesRoutes from '../routes/resources.js';
 import searchRoutes from '../routes/search.js';
 import usersRoutes from '../routes/users.js';
+import requestsRoutes from '../routes/requests.js';
 
 class Server {
   #app;
@@ -26,6 +27,7 @@ class Server {
       resources: '/resources',
       search: '/search',
       users: '/users',
+      requests: '/requests'
     };
 
     this.#app = express();
@@ -47,6 +49,7 @@ class Server {
     this.#app.use(this.#paths.resources, resourcesRoutes);
     this.#app.use(this.#paths.search, searchRoutes);
     this.#app.use(this.#paths.users, usersRoutes);
+    this.#app.use(this.#paths.requests, requestsRoutes)
   }
 
   #setupSwagger() {
