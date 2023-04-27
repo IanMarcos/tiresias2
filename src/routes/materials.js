@@ -77,7 +77,7 @@ const router = Router();
  *    security:
  *    - bearerAuth: []
  */
-router.get('/', [validateAuthToken], getAllMaterials);
+router.get('/', [validateAuthToken, validateResults], getAllMaterials);
 
 /**
  * @swagger
@@ -131,7 +131,7 @@ router.get('/', [validateAuthToken], getAllMaterials);
  *    security:
  *    - bearerAuth: []
  */
-router.get('/:id', [validateAuthToken], getMaterial);
+router.get('/:id', [validateAuthToken, validateResults], getMaterial);
 
 /**
  * @swagger
@@ -336,7 +336,7 @@ router.patch(
   updateMaterial
 );
 
-router.post('/people', [validateAuthToken, requesterIsAdmin]);
+// TODO: router.post('/people', [validateAuthToken, requesterIsAdmin, validateResults]);
 
 /**
  * @swagger
@@ -383,6 +383,6 @@ router.post('/people', [validateAuthToken, requesterIsAdmin]);
  *    security:
  *    - bearerAuth: []
  */
-router.delete('/:id', [validateAuthToken, requesterIsAdmin], deleteMaterial);
+router.delete('/:id', [validateAuthToken, requesterIsAdmin, validateResults], deleteMaterial);
 
 export default router;
