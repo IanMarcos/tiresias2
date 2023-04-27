@@ -33,7 +33,6 @@ class RequestDAO {
     }
   }
 
-  // TODO: this shit;
   static async getAll(Request, limit, page, errCode = 'EDA15') {
     try {
       return await Request.query()
@@ -46,7 +45,6 @@ class RequestDAO {
     }
   }
 
-  // TODO: this other shit;
   static async getById(Material, id) {
     try {
       return await Material.query()
