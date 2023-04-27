@@ -15,13 +15,17 @@ class RequestService {
   }
 
   static async updateRequest(requestId, req) {
-    const requestData = translateKeysToSpanish(req);
-    const updatedRequest = await RequestDAO.update(
-      RequestModel,
-      requestId,
-      requestData
-    );
-    return updatedRequest;
+    try {
+      const requestData = translateKeysToSpanish(req);
+      const updatedRequest = await RequestDAO.update(
+        RequestModel,
+        requestId,
+        requestData
+      );
+      return updatedRequest;
+    } catch (error) {
+      return { err: error.message };
+    }
   }
 }
 

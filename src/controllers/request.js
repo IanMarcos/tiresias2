@@ -31,7 +31,6 @@ const updateRequest = async (req, res) => {
 
   const result = await RequestService.updateRequest(id, req.body);
 
-  // TODO: Check this errors
   if (result.err) {
     const { results, statusCode } = formatHTTPResponse(400, result);
     return res.status(statusCode).json({ results });

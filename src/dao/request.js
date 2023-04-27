@@ -28,8 +28,8 @@ class RequestDAO {
       return await Request.query().patch(requestData).findById(id);
     } catch (error) {
       logger.error(error);
-      const erroMsg = extractSqlError(error) || 'EDA15';
-      throw new Error(erroMsg);
+      const errorMsg = extractSqlError(error) || 'EDA15';
+      throw new Error(errorMsg);
     }
   }
 
@@ -40,8 +40,8 @@ class RequestDAO {
         .offset(limit * page);
     } catch (error) {
       logger.error(error);
-      const erroMsg = extractSqlError(error) || errCode;
-      throw new Error(erroMsg);
+      const errorMsg = extractSqlError(error) || errCode;
+      throw new Error(errorMsg);
     }
   }
 
@@ -75,8 +75,8 @@ class RequestDAO {
         .withGraphFetched('categorias');
     } catch (error) {
       logger.error(error);
-      const erroMsg = extractSqlError(error) || 'EDA01';
-      throw new Error(erroMsg);
+      const errorMsg = extractSqlError(error) || 'EDA01';
+      throw new Error(errorMsg);
     }
   }
 }
