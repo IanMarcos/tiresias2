@@ -138,7 +138,7 @@ const KEYS_TRANSLATIONS = {
   textPart: 'parteTexto',
   accessibleFormatId: 'formatoAccesibleId',
   publisher: 'editorial',
-  languageCode: 'codigoIdioma',
+  languageCode: 'idiomaCodigo',
   observations: 'observaciones',
   userId: 'usuarioId',
   date: 'fecha',
