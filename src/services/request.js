@@ -13,6 +13,15 @@ class RequestService {
     const requests = await RequestDAO.getAll(RequestModel, limit, page);
     return requests;
   }
+
+  static async updateRequest(requestId, req) {
+    const updatedRequest = await RequestDAO.getAll(
+      RequestModel,
+      requestId,
+      req
+    );
+    return updatedRequest;
+  }
 }
 
 export default RequestService;
