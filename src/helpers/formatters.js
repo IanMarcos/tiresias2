@@ -34,13 +34,10 @@ const formatHTTPResponse = (initialStatus, data) => {
       results.err = err;
       statusCode = 500;
     }
+  } else if (Array.isArray(data)) {
+    results = data;
   } else {
-    if (Array.isArray(data)) {
-      results = data;
-    }
-    else {
-      results = { ...data }
-    };
+    results = { ...data };
   }
 
   return { results, statusCode };
@@ -124,6 +121,32 @@ const addErrorToRequest = (req, msg, param, location) => {
   }
 };
 
+// TODO: Move to a consts file
+const KEYS_TRANSLATIONS = {
+  title: 'titulo',
+  edition: 'edicion',
+  volume: 'volumen',
+  isbn: 'isbn',
+  publishYear: 'anioPublicacion',
+  productionYear: 'anioProduccion',
+  filePath: 'urlArchivo',
+  fileSize: 'tamanioFichero',
+  recipients: 'destinatarios',
+  duration: 'duracion',
+  resume: 'resumen',
+  author: 'autor',
+  textPart: 'parteTexto',
+  accessibleFormatId: 'formatoAccesibleId',
+  publisher: 'editorial',
+  languageCode: 'codigoIdioma',
+  observations: 'observaciones',
+  userId: 'usuarioId',
+  date: 'fecha',
+  requestStateId: 'estadoSolicitudId',
+  stateDate: 'fechaEstado',
+  stateNote: 'notaEstado',
+};
+
 const translateMaterialKeysToSpanish = (engMaterial) => {
   const materialData = {};
 
@@ -165,7 +188,21 @@ const translateMaterialKeysToSpanish = (engMaterial) => {
   }
 
   return materialData;
-}
+};
+
+const translateKeysToSpanish = (dataObject) => {
+  const translatedData = {};
+
+  Object.keys(dataObject).forEach((key) => {
+    if (KEYS_TRANSLATIONS[key]) {
+      translatedData[KEYS_TRANSLATIONS[key]] = dataObject[key];
+    } else {
+      translatedData[key] = dataObject[key];
+    }
+  });
+
+  return translatedData;
+};
 
 export {
   addErrorToRequest,
@@ -177,4 +214,5 @@ export {
   removeIdsFromMaterial,
   removeIdFromObj,
   translateMaterialKeysToSpanish,
+  translateKeysToSpanish,
 };
