@@ -8,6 +8,11 @@ class RequestService {
     const newRequest = await RequestDAO.create(RequestModel, requestData);
     return newRequest.id;
   }
+
+  static async getAllRequests(limit, page) {
+    const requests = await RequestDAO.getAll(RequestModel, limit, page);
+    return requests;
+  }
 }
 
 export default RequestService;

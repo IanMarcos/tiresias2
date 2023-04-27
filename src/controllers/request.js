@@ -1,5 +1,5 @@
 import RequestService from '../services/request.js';
-import { formatHTTPResponse } from '../helpers/formatters.js';
+import { formatHTTPResponse, formatLimitAndPage } from '../helpers/formatters.js';
 
 const createRequest = async (req, res) => {
   const { requester } = req;
@@ -13,4 +13,14 @@ const createRequest = async (req, res) => {
   res.status(statusCode).json({ results });
 };
 
-export { createRequest };
+const getAllRequests = async (req, res) => {
+  const { limit, page } = formatLimitAndPage(req.query);
+
+  const result = await RequestService.getAllRequests(limit, page);
+
+  const { results, statusCode } = formatHTTPResponse(200, result);
+
+  res.status(statusCode).json({ results });
+};
+
+export { createRequest, getAllRequests };

@@ -34,9 +34,11 @@ class RequestDAO {
   }
 
   // TODO: this shit;
-  static async getAll(Model, errCode = 'EDA15') {
+  static async getAll(Request, limit, page, errCode = 'EDA15') {
     try {
-      return await Model.query();
+      return await Request.query()
+        .limit(limit)
+        .offset(limit * page);
     } catch (error) {
       logger.error(error);
       const erroMsg = extractSqlError(error) || errCode;
@@ -79,7 +81,6 @@ class RequestDAO {
       throw new Error(erroMsg);
     }
   }
-
 }
 
 export default RequestDAO;
