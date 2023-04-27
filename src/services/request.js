@@ -15,10 +15,11 @@ class RequestService {
   }
 
   static async updateRequest(requestId, req) {
+    const requestData = translateKeysToSpanish(req);
     const updatedRequest = await RequestDAO.getAll(
       RequestModel,
       requestId,
-      req
+      requestData
     );
     return updatedRequest;
   }

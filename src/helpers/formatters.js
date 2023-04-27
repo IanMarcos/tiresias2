@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { extractRolesIds } from './utils.js';
-import { KEYS_TRANSLATIONS } from '../utils/constants/Keys_Translations.js';
+import { KEYS_TRANSLATIONS } from '../constants.js';
 
 const convertBytesToMB = (bytes) => bytes / 1024 ** 2;
 
