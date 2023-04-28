@@ -5,11 +5,12 @@ import {
   getAllRequests,
   updateRequest,
 } from '../controllers/request.js';
+import { validateResults } from '../middlewares/fields-validator.js';
 
 const router = Router();
 
-router.get('/', [validateAuthToken], getAllRequests);
-router.post('/', [validateAuthToken], createRequest);
-router.patch('/:id', [validateAuthToken], updateRequest);
+router.get('/', [validateAuthToken, validateResults], getAllRequests);
+router.post('/', [validateAuthToken, validateResults], createRequest);
+router.patch('/:id', [validateAuthToken, validateResults], updateRequest);
 
 export default router;
