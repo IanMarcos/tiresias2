@@ -13,6 +13,20 @@ class RequestService {
     const requests = await RequestDAO.getAll(RequestModel, limit, page);
     return requests;
   }
+
+  static async updateRequest(requestId, req) {
+    try {
+      const requestData = translateKeysToSpanish(req);
+      const updatedRequest = await RequestDAO.update(
+        RequestModel,
+        requestId,
+        requestData
+      );
+      return updatedRequest;
+    } catch (error) {
+      return { err: error.message };
+    }
+  }
 }
 
 export default RequestService;
