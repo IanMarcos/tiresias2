@@ -5,14 +5,24 @@ import logger from '../helpers/loggers.js';
 
 class RequestService {
   static async createRequest(req) {
-    const requestData = translateKeysToSpanish(req);
-    const newRequest = await RequestDAO.create(RequestModel, requestData);
-    return newRequest.id;
+    try {
+      const requestData = translateKeysToSpanish(req);
+      const newRequest = await RequestDAO.create(RequestModel, requestData);
+      return newRequest.id;
+    } catch (error) {
+      logger.error(error);
+      return { err: error.message };
+    }
   }
 
   static async getAllRequests(limit, page) {
-    const requests = await RequestDAO.getAll(RequestModel, limit, page);
-    return requests;
+    try {
+      const requests = await RequestDAO.getAll(RequestModel, limit, page);
+      return requests;
+    } catch (error) {
+      logger.error(error);
+      return { err: error.message };
+    }
   }
 
   static async updateRequest(requestId, req) {
