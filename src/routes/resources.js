@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAccessibleFormats, getLanguages } from '../controllers/resources.js';
+import { getAccessibleFormats, getLanguages, getRequestStates } from '../controllers/resources.js';
 
 const router = Router();
 
@@ -60,5 +60,34 @@ router.get('/formats', getAccessibleFormats);
  *              $ref: '#/components/schemas/singleError'
  */
 router.get('/languages', getLanguages);
+
+/**
+ * @swagger
+ * /resources/requestStates:
+ *  get:
+ *    tags:
+ *      - resources
+ *    summary: Get all request's states
+ *    description: Gets a list of all the states a request for a new material can be.
+ *    responses:
+ *      '200':
+ *        description: Successfully retrieved.
+ *        content:
+ *         application/json:
+ *           schema:
+ *            type: 'object'
+ *            properties:
+ *              results:
+ *                type: 'array'
+ *                items:
+ *                  $ref: '#/components/schemas/baseObject'
+ *      '500':
+ *        'description': Server or Database connection failure.
+ *        content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/singleError'
+ */
+router.get('/requestStates', getRequestStates);
 
 export default router;

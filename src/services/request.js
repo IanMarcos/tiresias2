@@ -1,6 +1,7 @@
-import RequestDAO from '../dao/request.js';
-import RequestModel from '../models/request.js';
+import { RequestDAO, RequestStateDAO } from '../dao/index.js';
+import { Request as RequestModel, RequestState } from '../models/index.js';
 import { translateKeysToSpanish } from '../helpers/formatters.js';
+import logger from '../helpers/loggers.js';
 
 class RequestService {
   static async createRequest(req) {
@@ -24,6 +25,16 @@ class RequestService {
       );
       return updatedRequest;
     } catch (error) {
+      logger.error(error);
+      return { err: error.message };
+    }
+  }
+
+  static async getAllRequestsStates() {
+    try {
+      return await RequestStateDAO.getAll(RequestState, 'EDA16');
+    } catch (error) {
+      logger.error(error);
       return { err: error.message };
     }
   }

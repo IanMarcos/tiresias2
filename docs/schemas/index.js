@@ -2,6 +2,7 @@ import materialSchemas from './material-schemas.js';
 import userSchemas from './user-schemas.js';
 import errorSchemas from './error-schemas.js';
 import authSchemas from './auth-schemas.js';
+import requestSchemas from './request-schemas.js';
 
 const baseObject = {
   type: 'object',
@@ -59,6 +60,7 @@ export default {
   ...userSchemas,
   ...errorSchemas,
   ...authSchemas,
+  ...requestSchemas,
   baseObject,
   Person,
   City,

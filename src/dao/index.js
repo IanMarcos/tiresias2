@@ -10,6 +10,8 @@ import PersonMaterialDAO from './person-material.js';
 import ProducerDAO from './producer.js';
 import ProductionStateDAO from './production-state.js';
 import PublisherDAO from './publisher.js';
+import RequestDAO from './request.js';
+import RequestStateDAO from './request-state.js';
 import RolesDAO from './roles.js';
 import TransactionDAO from './transaction.js';
 import UserDAO from './user.js';
@@ -27,6 +29,8 @@ export {
   ProducerDAO,
   ProductionStateDAO,
   PublisherDAO,
+  RequestDAO,
+  RequestStateDAO,
   RolesDAO,
   TransactionDAO,
   UserDAO,
