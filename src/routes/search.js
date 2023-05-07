@@ -79,7 +79,9 @@ router.post(
   [
     validateAuthToken,
     body('searchTerm', '40001').notEmpty(),
+    body('searchTerm', '40002').isString().trim(),
     body('searchTerm', '40002').isLength({ min: 3, max: 100 }),
+    body('formatId', '40002').isNumeric().optional(),
     validateResults,
   ],
   searchMaterialsAndAuthors

@@ -4,10 +4,11 @@ import { MaterialDAO, RolesDAO, PersonMaterialDAO } from '../dao/index.js';
 import { replacePeopleWithRoles } from '../helpers/formatters.js';
 
 class UnifiedSearchService {
-  static async searchMaterialsandAuthors({ searchTerm, limit, page }) {
+  static async searchMaterialsandAuthors({ searchTerm, formatId, limit, page }) {
     try {
       const materials = await MaterialDAO.search(Material, {
         searchTerm,
+        formatId,
         limit,
         page,
       });
