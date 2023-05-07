@@ -159,7 +159,7 @@ class MaterialDAO {
    * @param {string} [args.limit] - Number of results per page.
    * @param {string} [args.page] - Page number.
    */
-  static async search(Material, { searchTerm, formatId = null, limit = 10, page = 0 }) {
+  static async search(Material, { searchTerm, formatId = null, category = null, limit = 10, page = 0 }) {
     try {
       const materials = await Material.query()
         .withGraphFetched('personas')
@@ -187,6 +187,11 @@ class MaterialDAO {
         .modify((queryBuilder) => {
           if (formatId && typeof formatId === 'number') {
             queryBuilder.where('formato_accesible_id', formatId)
+          }
+
+          if (category) {
+            queryBuilder.joinRelated('categorias')
+              .where('categorias.nombre', category);
           }
         })
         .limit(limit)
