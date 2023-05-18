@@ -1,5 +1,8 @@
 import RequestService from '../services/request.js';
-import { formatHTTPResponse, formatLimitAndPage } from '../helpers/formatters.js';
+import {
+  formatHTTPResponse,
+  formatLimitAndPage,
+} from '../helpers/formatters.js';
 
 const createRequest = async (req, res) => {
   const { requester } = req;
@@ -8,9 +11,14 @@ const createRequest = async (req, res) => {
 
   const result = await RequestService.createRequest(body);
 
+  if (result.err) {
+    const { results, statusCode } = formatHTTPResponse(400, result);
+    return res.status(statusCode).json({ results });
+  }
+
   const { results, statusCode } = formatHTTPResponse(201, result);
 
-  res.status(statusCode).json({ results });
+  return res.status(statusCode).json({ results });
 };
 
 const getAllRequests = async (req, res) => {
@@ -18,9 +26,27 @@ const getAllRequests = async (req, res) => {
 
   const result = await RequestService.getAllRequests(limit, page);
 
+  if (result.err) {
+    const { results, statusCode } = formatHTTPResponse(400, result);
+    return res.status(statusCode).json({ results });
+  }
+
   const { results, statusCode } = formatHTTPResponse(200, result);
 
-  res.status(statusCode).json({ results });
+  return res.status(statusCode).json({ results });
 };
 
-export { createRequest, getAllRequests };
+const updateRequest = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await RequestService.updateRequest(id, req.body);
+
+  if (result.err) {
+    const { results, statusCode } = formatHTTPResponse(400, result);
+    return res.status(statusCode).json({ results });
+  }
+
+  return res.status(200).send();
+};
+
+export { createRequest, getAllRequests, updateRequest };

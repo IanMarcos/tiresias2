@@ -12,6 +12,7 @@ import Producer from './producer.js';
 import ProductionState from './production-state.js';
 import Publisher from './publisher.js';
 import Request from './request.js';
+import RequestState from './request-state.js';
 import Transaction from './transaction.js';
 import TransactionType from './transaction-type.js';
 import User from './user.js';
@@ -32,6 +33,7 @@ export {
   ProductionState,
   Publisher,
   Request,
+  RequestState,
   Transaction,
   TransactionType,
   User,

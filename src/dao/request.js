@@ -28,12 +28,11 @@ class RequestDAO {
       return await Request.query().patch(requestData).findById(id);
     } catch (error) {
       logger.error(error);
-      const erroMsg = extractSqlError(error) || 'EDA15';
-      throw new Error(erroMsg);
+      const errorMsg = extractSqlError(error) || 'EDA15';
+      throw new Error(errorMsg);
     }
   }
 
-  // TODO: this shit;
   static async getAll(Request, limit, page, errCode = 'EDA15') {
     try {
       return await Request.query()
@@ -41,12 +40,11 @@ class RequestDAO {
         .offset(limit * page);
     } catch (error) {
       logger.error(error);
-      const erroMsg = extractSqlError(error) || errCode;
-      throw new Error(erroMsg);
+      const errorMsg = extractSqlError(error) || errCode;
+      throw new Error(errorMsg);
     }
   }
 
-  // TODO: this other shit;
   static async getById(Material, id) {
     try {
       return await Material.query()
@@ -77,8 +75,8 @@ class RequestDAO {
         .withGraphFetched('categorias');
     } catch (error) {
       logger.error(error);
-      const erroMsg = extractSqlError(error) || 'EDA01';
-      throw new Error(erroMsg);
+      const errorMsg = extractSqlError(error) || 'EDA01';
+      throw new Error(errorMsg);
     }
   }
 }

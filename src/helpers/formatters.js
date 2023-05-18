@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { extractRolesIds } from './utils.js';
+import { KEYS_TRANSLATIONS } from '../constants.js';
 
 const convertBytesToMB = (bytes) => bytes / 1024 ** 2;
 
@@ -119,32 +120,6 @@ const addErrorToRequest = (req, msg, param, location) => {
       location,
     });
   }
-};
-
-// TODO: Move to a consts file
-const KEYS_TRANSLATIONS = {
-  title: 'titulo',
-  edition: 'edicion',
-  volume: 'volumen',
-  isbn: 'isbn',
-  publishYear: 'anioPublicacion',
-  productionYear: 'anioProduccion',
-  filePath: 'urlArchivo',
-  fileSize: 'tamanioFichero',
-  recipients: 'destinatarios',
-  duration: 'duracion',
-  resume: 'resumen',
-  author: 'autor',
-  textPart: 'parteTexto',
-  accessibleFormatId: 'formatoAccesibleId',
-  publisher: 'editorial',
-  languageCode: 'idiomaCodigo',
-  observations: 'observaciones',
-  userId: 'usuarioId',
-  date: 'fecha',
-  requestStateId: 'estadoSolicitudId',
-  stateDate: 'fechaEstado',
-  stateNote: 'notaEstado',
 };
 
 const translateMaterialKeysToSpanish = (engMaterial) => {
