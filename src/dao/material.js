@@ -190,8 +190,13 @@ class MaterialDAO {
           }
 
           if (category) {
-            queryBuilder.joinRelated('categorias')
-              .where('categorias.nombre', category);
+            if (typeof category === 'string') {
+              queryBuilder.joinRelated('categorias')
+                .where('categorias.nombre', category);
+            } else {
+              queryBuilder.joinRelated('categorias')
+                .where('categorias.id', category);
+            }
           }
         })
         .limit(limit)
