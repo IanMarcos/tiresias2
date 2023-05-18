@@ -80,6 +80,14 @@ class CategoriesService {
     );
     if (results.includes(null)) throw new Error('EDA12');
   }
+
+  async getAllCategories() {
+    try {
+      return await CategoryDAO.getAll(this.#categoryInstance, 'EDA12');
+    } catch (error) {
+      return { err: error.message };
+    }
+  }
 }
 
 export default CategoriesService;

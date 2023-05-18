@@ -1,4 +1,5 @@
 import { formatHTTPResponse } from '../helpers/formatters.js';
+import CategoriesService from '../services/categories.js';
 import FormatService from '../services/format.js';
 import LanguageService from '../services/language.js';
 
@@ -18,4 +19,12 @@ const getLanguages = async (req, res) => {
   return res.status(statusCode).json({ results });
 };
 
-export { getAccessibleFormats, getLanguages };
+const getCategories = async (req, res) => {
+  const categoriesService = new CategoriesService();
+  const result = await categoriesService.getAllCategories();
+  const { statusCode, results } = formatHTTPResponse(200, result);
+
+  return res.status(statusCode).json({ results });
+};
+
+export { getAccessibleFormats, getLanguages, getCategories };
