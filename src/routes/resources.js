@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAccessibleFormats, getLanguages, getRequestStates } from '../controllers/resources.js';
+import { getAccessibleFormats, getCategories, getLanguages, getRequestStates } from '../controllers/resources.js';
 
 const router = Router();
 
@@ -63,6 +63,35 @@ router.get('/languages', getLanguages);
 
 /**
  * @swagger
+ * /resources/categories:
+ *  get:
+ *    tags:
+ *      - resources
+ *    summary: Get all categories
+ *    description: Gets a list of all the categories in the Tiresias Database.
+ *    responses:
+ *      '200':
+ *        description: Successfully retrieved the categories list.
+ *        content:
+ *         application/json:
+ *           schema:
+ *            type: 'object'
+ *            properties:
+ *              results:
+ *                type: 'array'
+ *                items:
+ *                  $ref: '#/components/schemas/baseObject'
+ *      '500':
+ *        'description': Server or Database connection failure.
+ *        content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/singleError'
+ */
+router.get('/categories', getCategories);
+
+/**
+ * @swagger
  * /resources/requestStates:
  *  get:
  *    tags:
@@ -89,5 +118,6 @@ router.get('/languages', getLanguages);
  *              $ref: '#/components/schemas/singleError'
  */
 router.get('/requestStates', getRequestStates);
+
 
 export default router;
