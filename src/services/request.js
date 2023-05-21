@@ -6,6 +6,13 @@ import logger from '../helpers/loggers.js';
 class RequestService {
   static async createRequest(req) {
     try {
+
+      const { id: requestStateId } = await RequestStateDAO.getByName(
+        RequestState,
+        { name: 'En tramite' }
+      );
+      req.requestStateId = requestStateId;
+
       const requestData = translateKeysToSpanish(req);
       const newRequest = await RequestDAO.create(RequestModel, requestData);
       return newRequest.id;

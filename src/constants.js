@@ -21,4 +21,5 @@ export const KEYS_TRANSLATIONS = Object.freeze({
   requestStateId: 'estadoSolicitudId',
   stateDate: 'fechaEstado',
   stateNote: 'notaEstado',
+  partDescription: 'parteDescripcion',
 });
