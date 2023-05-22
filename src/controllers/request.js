@@ -10,12 +10,6 @@ const createRequest = async (req, res) => {
   Object.assign(body, { userId: requester.uid });
 
   const result = await RequestService.createRequest(body);
-
-  if (result.err) {
-    const { results, statusCode } = formatHTTPResponse(400, result);
-    return res.status(statusCode).json({ results });
-  }
-
   const { results, statusCode } = formatHTTPResponse(201, result);
 
   return res.status(statusCode).json({ results });
@@ -25,12 +19,6 @@ const getAllRequests = async (req, res) => {
   const { limit, page } = formatLimitAndPage(req.query);
 
   const result = await RequestService.getAllRequests(limit, page);
-
-  if (result.err) {
-    const { results, statusCode } = formatHTTPResponse(400, result);
-    return res.status(statusCode).json({ results });
-  }
-
   const { results, statusCode } = formatHTTPResponse(200, result);
 
   return res.status(statusCode).json({ results });
@@ -53,7 +41,7 @@ const getRequestsByUserId = async (req, res) => {
   const { uid } = req.params;
 
   const result = await RequestService.getAllRequestFromUser(uid);
-  const { results, statusCode } = formatHTTPResponse(400, result);
+  const { results, statusCode } = formatHTTPResponse(200, result);
 
   res.status(statusCode).json({ results });
 
