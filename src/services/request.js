@@ -55,6 +55,15 @@ class RequestService {
       return { err: error.message };
     }
   }
+
+  static async getAllRequestFromUser(uid) {
+    try {
+      return await RequestDAO.getRequestsByUserId(RequestModel, uid);
+    } catch (error) {
+      logger.error(error);
+      return { err: error.message };
+    }
+  }
 }
 
 export default RequestService;

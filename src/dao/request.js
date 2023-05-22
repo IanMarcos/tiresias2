@@ -45,9 +45,10 @@ class RequestDAO {
     }
   }
 
-  static async getById(Material, id) {
+  static async getById(Request, id) {
     try {
-      return await Material.query()
+      // TODO: Is this query right?
+      return await Request.query()
         .findById(id)
         .select(
           'Material.*',
@@ -75,7 +76,27 @@ class RequestDAO {
         .withGraphFetched('categorias');
     } catch (error) {
       logger.error(error);
-      const errorMsg = extractSqlError(error) || 'EDA01';
+      const errorMsg = extractSqlError(error) || 'EDA15';
+      throw new Error(errorMsg);
+    }
+  }
+
+  static async getRequestsByUserId(Request, uid) {
+    try {
+      return await Request.query()
+        .select(
+          'Solicitud.*',
+          'FormatoAccesible.nombre AS formatoAccesible'
+        )
+        .join(
+          'FormatoAccesible',
+          'Solicitud.formato_accesible_id',
+          'FormatoAccesible.id'
+        )
+        .where('usuario_id', uid);
+    } catch (error) {
+      logger.error(error);
+      const errorMsg = extractSqlError(error) || 'EDA15';
       throw new Error(errorMsg);
     }
   }
