@@ -1,11 +1,13 @@
 import { Router } from 'express';
-import { requesterIsAdmin, validateAuthToken } from '../middlewares/auth-validations.js';
+import { requesterIsAdmin, requesterIsAdminOrSelf, validateAuthToken } from '../middlewares/auth-validations.js';
 import {
   createRequest,
   getAllRequests,
+  getRequestsByUserId,
   updateRequest,
 } from '../controllers/request.js';
 import { validateResults } from '../middlewares/fields-validator.js';
+import { param } from 'express-validator';
 
 const router = Router();
 
@@ -155,5 +157,58 @@ router.post('/', [validateAuthToken, validateResults], createRequest);
  *    - bearerAuth: []
  */
 router.patch('/:id', [validateAuthToken, requesterIsAdmin, validateResults], updateRequest);
+
+/**
+ * @swagger
+ * /requests/user/{uid}:
+ *  get:
+ *    tags:
+ *      - requests
+ *    summary: Get all requests by user
+ *    description: Gets all requests created by a single user.
+ *    parameters:
+ *      - name: uid
+ *        in: path
+ *        description: Id of the user whose requests are to be fetched.
+ *        required: true
+ *        schema:
+ *          type: integer
+ *    responses:
+ *      '200':
+ *        description: OK. Requests retrieved successfully.
+ *        content:
+ *         application/json:
+ *           schema:
+ *             type: 'object'
+ *             properties:
+ *               results:
+ *                 type: 'array'
+ *                 items:
+ *                   $ref: '#/components/schemas/Request'
+ *      '401':
+ *        description: Authorization information is missing or invalid.
+ *        content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/singleError'
+ *      '500':
+ *        'description': Server or Database connection failure.
+ *        content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/singleError'
+ *    security:
+ *    - bearerAuth: []
+ */
+router.get(
+  '/user/:uid',
+  [
+    validateAuthToken,
+    requesterIsAdminOrSelf,
+    param('uid', '40003').isNumeric().toInt(),
+    validateResults
+  ],
+  getRequestsByUserId
+);
 
 export default router;

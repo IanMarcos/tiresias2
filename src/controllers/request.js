@@ -49,4 +49,14 @@ const updateRequest = async (req, res) => {
   return res.status(200).send();
 };
 
-export { createRequest, getAllRequests, updateRequest };
+const getRequestsByUserId = async (req, res) => {
+  const { uid } = req.params;
+
+  const result = await RequestService.getAllRequestFromUser(uid);
+  const { results, statusCode } = formatHTTPResponse(400, result);
+
+  res.status(statusCode).json({ results });
+
+}
+
+export { createRequest, getAllRequests, updateRequest, getRequestsByUserId };
