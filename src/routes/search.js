@@ -13,7 +13,7 @@ const router = Router();
  *    tags:
  *      - search
  *    summary: Search of materials and authors
- *    description: Performs a query on the database to find materials with a name similar to the search term, as well as look for authors whose names or last name contains the search term. Optionally, it can filter by accessible format (an id must be provided), and by category, which can be either an id or name.
+ *    description: Performs a query on the database to find materials with a name similar to the search term, as well as look for authors whose names or last name contains the search term. Optionally, it can filter by accessible format and by category. The accesiblle format must be and id, but the category can be either an id as an integer, or name as a string.
  *    parameters:
  *      - in: path
  *        name: limit
@@ -36,9 +36,9 @@ const router = Router();
  *              searchTerm:
  *                type: 'string'
  *              formatId:
- *                type: 'string'
+ *                type: 'integer'
  *              category:
- *                type: [string, integer]  
+ *                type: 'integer'  
  *            required:
  *              - searchTerm
  *    responses:
