@@ -6,7 +6,6 @@ import logger from '../helpers/loggers.js';
 class RequestService {
   static async createRequest(req) {
     try {
-
       const { id: requestStateId } = await RequestStateDAO.getByName(
         RequestState,
         { name: 'En tramite' }
@@ -26,6 +25,16 @@ class RequestService {
     try {
       const requests = await RequestDAO.getAll(RequestModel, limit, page);
       return requests;
+    } catch (error) {
+      logger.error(error);
+      return { err: error.message };
+    }
+  }
+
+  static async getRequestById(requestId) {
+    try {
+      const request = await RequestDAO.getById(RequestModel, requestId);
+      return request;
     } catch (error) {
       logger.error(error);
       return { err: error.message };

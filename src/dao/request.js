@@ -33,6 +33,11 @@ class RequestDAO {
     }
   }
 
+  /**
+   * Gets all requests, performing join operations with other tables, including many to many relations.
+   * @param {Model} Request - Instance of an objection.js model.
+   * @param {Number} id - Material's id
+   */
   static async getAll(Request, limit, page, errCode = 'EDA15') {
     try {
       return await Request.query()
@@ -45,49 +50,50 @@ class RequestDAO {
     }
   }
 
+  /**
+   * Gets a Request. Performs join operations with other tables, including many to many relations.
+   * @param {Model} Request - Instance of an objection.js model.
+   * @param {Number} id - Request's id
+   */
   static async getById(Request, id) {
     try {
-      // TODO: Is this query right?
       return await Request.query()
         .findById(id)
-        .select(
-          'Material.*',
-          'FormatoAccesible.nombre AS formatoAccesible',
-          'Editorial.nombre AS editorial',
-          'Productora.nombre AS productora',
-          'EstadoProduccion.nombre AS estadoProduccion'
-        )
-        .join(
-          'FormatoAccesible',
-          'Material.formato_accesible_id',
-          'FormatoAccesible.id'
-        )
-        .join('Editorial', 'Material.editorial_id', 'Editorial.id')
-        .join('Productora', 'Material.productora_id', 'Productora.id')
-        .join(
-          'EstadoProduccion',
-          'Material.estado_produccion_id',
-          'EstadoProduccion.id'
-        )
-        .where('eliminado', 0)
-        .withGraphFetched('personas')
-        .withGraphFetched('ciudadPublicacion')
-        .withGraphFetched('ciudadProduccion')
-        .withGraphFetched('categorias');
+        .select('Solicitud.*', 'Usuario.nombre AS usuario')
+        .join('Usuario', 'Solicitud.usuario_id', 'Usuario.id')
+        .withGraphFetched('estadoSolicitud')
+        .withGraphFetched('formatoAccesible');
     } catch (error) {
       logger.error(error);
-      const errorMsg = extractSqlError(error) || 'EDA15';
-      throw new Error(errorMsg);
+      const erroMsg = extractSqlError(error) || 'EDA01';
+      throw new Error(erroMsg);
     }
   }
 
+  /**
+   * Gets a request without performing join operations with other tables
+   * @param {Model} Request - Instance of an objection.js model.
+   * @param {Number} id
+   */
+  static async getByIdNoJoins(Request, id) {
+    try {
+      return await Request.query().findById(id);
+    } catch (error) {
+      logger.error(error);
+      const erroMsg = extractSqlError(error) || 'EDA01';
+      throw new Error(erroMsg);
+    }
+  }
+
+  /**
+   * Gets requests by user id. Performs join operations with other tables, including many to many relations.
+   * @param {Model} Request - Instance of an objection.js model.
+   * @param {Number} uid - user's uid
+   */
   static async getRequestsByUserId(Request, uid) {
     try {
       return await Request.query()
-        .select(
-          'Solicitud.*',
-          'FormatoAccesible.nombre AS formatoAccesible'
-        )
+        .select('Solicitud.*', 'FormatoAccesible.nombre AS formatoAccesible')
         .join(
           'FormatoAccesible',
           'Solicitud.formato_accesible_id',

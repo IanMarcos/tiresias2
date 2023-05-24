@@ -1,13 +1,18 @@
+import { param } from 'express-validator';
 import { Router } from 'express';
-import { requesterIsAdmin, requesterIsAdminOrSelf, validateAuthToken } from '../middlewares/auth-validations.js';
+import {
+  requesterIsAdmin,
+  requesterIsAdminOrSelf,
+  validateAuthToken,
+} from '../middlewares/auth-validations.js';
 import {
   createRequest,
   getAllRequests,
+  getRequestById,
   getRequestsByUserId,
   updateRequest,
 } from '../controllers/request.js';
 import { validateResults } from '../middlewares/fields-validator.js';
-import { param } from 'express-validator';
 
 const router = Router();
 
@@ -63,11 +68,50 @@ router.get('/', [validateAuthToken, validateResults], getAllRequests);
 
 /**
  * @swagger
+ * /requests/{id}:
+ *  get:
+ *    tags:
+ *      - requests
+ *    summary: Get a request by ID
+ *    description: Retrieves a specific request from the Tiresias Database by its ID.
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        description: ID of the request to retrieve.
+ *        schema:
+ *          type: string
+ *        required: true
+ *    responses:
+ *      '200':
+ *        description: OK. Request retrieved successfully.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Request'
+ *      '401':
+ *        description: Authorization information is missing or invalid.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/singleError'
+ *      '500':
+ *        description: Server or Database connection failure.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/singleError'
+ *    security:
+ *      - bearerAuth: []
+ */
+router.get('/:id', [validateAuthToken, validateResults], getRequestById);
+
+/**
+ * @swagger
  * /requests/:
  *  post:
  *    tags:
  *      - requests
- *    summary: Create a request for a new material 
+ *    summary: Create a request for a new material
  *    description: Creates a request for a new material to be added.
  *    requestBody:
  *      content:
@@ -156,7 +200,11 @@ router.post('/', [validateAuthToken, validateResults], createRequest);
  *    security:
  *    - bearerAuth: []
  */
-router.patch('/:id', [validateAuthToken, requesterIsAdmin, validateResults], updateRequest);
+router.patch(
+  '/:id',
+  [validateAuthToken, requesterIsAdmin, validateResults],
+  updateRequest
+);
 
 /**
  * @swagger
@@ -206,7 +254,7 @@ router.get(
     validateAuthToken,
     requesterIsAdminOrSelf,
     param('uid', '40003').isNumeric().toInt(),
-    validateResults
+    validateResults,
   ],
   getRequestsByUserId
 );

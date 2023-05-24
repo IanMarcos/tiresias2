@@ -24,6 +24,19 @@ const getAllRequests = async (req, res) => {
   return res.status(statusCode).json({ results });
 };
 
+const getRequestById = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await RequestService.getRequestById(id);
+
+  if (result.err) {
+    const { results, statusCode } = formatHTTPResponse(401, result);
+    return res.status(statusCode).json({ results });
+  }
+
+  return res.status(200).json({ result });
+};
+
 const updateRequest = async (req, res) => {
   const { id } = req.params;
 
@@ -44,7 +57,12 @@ const getRequestsByUserId = async (req, res) => {
   const { results, statusCode } = formatHTTPResponse(200, result);
 
   res.status(statusCode).json({ results });
+};
 
-}
-
-export { createRequest, getAllRequests, updateRequest, getRequestsByUserId };
+export {
+  createRequest,
+  getAllRequests,
+  getRequestById,
+  updateRequest,
+  getRequestsByUserId,
+};
