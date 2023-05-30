@@ -52,11 +52,12 @@ const mockMaterials = [
 
 it('should get products list', async () => {
   jest.unstable_mockModule('../../src/services/material.js', () => ({
-    getMaterials: jest.fn(async () => ({ materials: mockMaterials })),
+    default: {
+      getMaterials: jest.fn(async () => ({ materials: mockMaterials })),
+    },
   }));
 
   const { getAllMaterials } = await import('../../src/controllers/material.js');
-
   // mock
   const response = httpMocks.createResponse();
   const request = httpMocks.createRequest();
@@ -66,5 +67,6 @@ it('should get products list', async () => {
   // expect(mockMaterialService).toHaveBeenCalledTimes(1);
   expect(response.statusCode).toEqual(200);
   // expect(response._isEndCalled()).toBeTruthy();
-  expect(response._getJSONData().products.length).toEqual(1);
+  // console.log(response);
+  expect(response._getJSONData().results.materials.length).toEqual(1);
 });
