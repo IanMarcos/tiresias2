@@ -1,0 +1,34 @@
+[
+  {
+    "codigo": "DE",
+    "nombre": "Alemán"
+  },
+  {
+    "codigo": "ZH",
+    "nombre": "Chino"
+  },
+  {
+    "codigo": "ES",
+    "nombre": "Español"
+  },
+  {
+    "codigo": "FR",
+    "nombre": "Francés"
+  },
+  {
+    "codigo": "EN",
+    "nombre": "Inglés"
+  },
+  {
+    "codigo": "IT",
+    "nombre": "Italiano"
+  },
+  {
+    "codigo": "PT",
+    "nombre": "Portugués"
+  },
+  {
+    "codigo": "RU",
+    "nombre": "Ruso"
+  }
+]
