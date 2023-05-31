@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "titulo": "Libro",
+    "edicion": null,
+    "isbn": 123,
+    "idiomaCodigo": "ES",
+    "anioPublicacion": 2020,
+    "anioProduccion": 2021,
+    "destinatarios": null,
+    "duracion": null,
+    "tamanioFichero": 33.3,
+    "resumen": null,
+    "urlArchivo": "1684597175223",
+    "formatoAccesible": "Daisy 2.02 solo audio",
+    "editorial": "Planeta",
+    "productora": "UdeA",
+    "estadoProduccion": "Disponible",
+    "personas": [],
+    "ciudadPublicacion": {
+      "nombre": "Bogota",
+      "paisCodigo": "CO"
+    },
+    "ciudadProduccion": {
+      "nombre": "Houston",
+      "paisCodigo": "US"
+    },
+    "categorias": [],
+    "autores": [
+      {
+        "id": 1,
+        "apellido": "RODAS",
+        "nombres": "JUANA"
+      }
+    ],
+    "contribuidores": [],
+    "narrador": {
+      "id": 2,
+      "apellido": "DOE",
+      "nombres": "JOHN"
+    }
+  }
+]

@@ -1,0 +1,7 @@
+[
+  { "id": 1, "nombre": "Autor" },
+  { "id": 2, "nombre": "Contribuidor" },
+  { "id": 4, "nombre": "Editor" },
+  { "id": 3, "nombre": "Narrador" },
+  { "id": 5, "nombre": "Traductor" }
+]
