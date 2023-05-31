@@ -14,7 +14,7 @@ class RequestService {
 
       const requestData = translateKeysToSpanish(req);
       const newRequest = await RequestDAO.create(RequestModel, requestData);
-      return newRequest.id;
+      return { id: newRequest.id };
     } catch (error) {
       logger.error(error);
       return { err: error.message };
