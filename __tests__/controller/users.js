@@ -10,6 +10,8 @@ describe('Users Controller', () => {
       return {
         getUsers: jest.fn(async () => ({ users: mockUsers })),
         createUser: jest.fn(async () => ({ uid: 1 })),
+        getUserById: jest.fn(async () => ({ user: mockUsers[0] })),
+        deleteUser: jest.fn(async () => ({})),
       };
     },
   }));
@@ -42,5 +44,44 @@ describe('Users Controller', () => {
     // Assert
     expect(response.statusCode).toEqual(201);
     expect(response._getJSONData().results.user.uid).toEqual(1);
+  });
+
+  it('should get a user by id', async () => {
+    // Arrange
+    const { getUser } = await import(
+      '../../src/controllers/users.js'
+    );
+
+    // Act
+    const response = httpMocks.createResponse();
+    const request = httpMocks.createRequest({
+      params: {
+        id: 1,
+      },
+    });
+    await getUser(request, response);
+
+    // Assert
+    expect(response.statusCode).toEqual(200);
+    expect(response._getJSONData().results.user.id).toEqual(1);
+  });
+
+  it('should delete a user by id', async () => {
+    // Arrange
+    const { deleteUser } = await import(
+      '../../src/controllers/users.js'
+    );
+
+    // Act
+    const response = httpMocks.createResponse();
+    const request = httpMocks.createRequest({
+      params: {
+        id: 1,
+      },
+    });
+    await deleteUser(request, response);
+
+    // Assert
+    expect(response.statusCode).toEqual(200);
   });
 });
