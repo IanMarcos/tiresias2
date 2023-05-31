@@ -1,0 +1,23 @@
+{
+  "body": {
+    "title": "1000 y una noche",
+    "author": "Ortiz, Ian",
+    "accessibleFormatId": 1,
+    "publisher": "Planeta",
+    "publishYear": 2020,
+    "edition": 4,
+    "volume": 2,
+    "textPart": "Página",
+    "observations": "Pretty good book",
+    "stateNote": "No se ha revisado",
+    "languageCode": "ES",
+    "partDescription": "From the time i was born..."
+  },
+  "requester": {
+    "uid": 1,
+    "name": "admin",
+    "role": "Administrador",
+    "iat": 1677443509,
+    "exp": 4801645909
+  }
+}
