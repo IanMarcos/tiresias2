@@ -1,0 +1,71 @@
+{
+  "materials": [
+    {
+      "id": 1,
+      "titulo": "Libro",
+      "edicion": null,
+      "anioPublicacion": 2020,
+      "editorial": "Planeta",
+      "formatoAccesible": "Daisy 2.02 solo audio",
+      "categorias": [],
+      "autores": [
+        {
+          "id": 1,
+          "apellido": "RODAS",
+          "nombres": "JUANA"
+        }
+      ],
+      "contribuidores": [],
+      "narrador": {
+        "id": 2,
+        "apellido": "DOE",
+        "nombres": "JOHN"
+      }
+    },
+    {
+      "id": 3,
+      "titulo": "Libro",
+      "edicion": null,
+      "anioPublicacion": 2020,
+      "editorial": "Planeta",
+      "formatoAccesible": "Daisy 2.02 solo audio",
+      "categorias": [],
+      "autores": [
+        {
+          "id": 1,
+          "apellido": "RODAS",
+          "nombres": "JUANA"
+        }
+      ],
+      "contribuidores": [],
+      "narrador": {
+        "id": 2,
+        "apellido": "DOE",
+        "nombres": "JOHN"
+      }
+    },
+    {
+      "id": 4,
+      "titulo": "Libro",
+      "edicion": null,
+      "anioPublicacion": 2020,
+      "editorial": "Planeta",
+      "formatoAccesible": "Daisy 2.02 solo audio",
+      "categorias": [],
+      "autores": [
+        {
+          "id": 1,
+          "apellido": "RODAS",
+          "nombres": "JUANA"
+        }
+      ],
+      "contribuidores": [],
+      "narrador": {
+        "id": 2,
+        "apellido": "DOE",
+        "nombres": "JOHN"
+      }
+    }
+  ],
+  "authors": []
+}
