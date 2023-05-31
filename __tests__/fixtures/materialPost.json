@@ -1,0 +1,34 @@
+{
+  "body": {
+    "title": "Libro",
+    "author": "rodas, juana",
+    "isbn": 4,
+    "language": "es",
+    "format": "Daisy 2.02 solo audio",
+    "publisher": "Planeta",
+    "publishCity": "Bogota",
+    "publishCountry": "co",
+    "publishYear": 2020,
+    "producer": "UdeA",
+    "productionCity": "Houston",
+    "productionCountry": "us",
+    "productionYear": 2021,
+    "narrator": "Doe, John",
+    "filePath": "1685555125695",
+    "fileSize": 0.09806537628173828,
+    "edition": null,
+    "contributors": [],
+    "recipients": null,
+    "categories": [],
+    "duration": null,
+    "resume": null,
+    "productionState": "Disponible"
+  },
+  "requester": {
+    "uid": 1,
+    "name": "admin",
+    "role": "Administrador",
+    "iat": 1677443509,
+    "exp": 4801645909
+  }
+}
